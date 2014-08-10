@@ -10,21 +10,38 @@ function lex(input){
     }
 
     while(i < input.length){
-        if(input[0] == '='){
+        if(input[i] == ' '){
+            i++;
+        }
+        else if(input[i] == '='){
             addToken(TokenEnum.Equals, input[0]);
             i++;
         }
-        if(/\d+/.test()){
+        else if(/\d+/.test(input[i])){
             // loop looking for digits
+            var number = '';
+            do{
+                number += input[i];
+                i++;
+            }while(/\d+/.test(input[i]) && i < input.length)
+            addToken(TokenEnum.Number, number);
         }
-        if(/[\+\*-/]/.test(input[0])){
-            addToken(TokenEnum.ArithmeticOperator, input[0]);
+        else if(/[\+\*-/]/.test(input[i])){
+            addToken(TokenEnum.ArithmeticOperator, input[i]);
+            i++;
+        }
+        else{
+            addToken(TokenEnum.Unknown, input[i]);
+            i++;
         }
     }
+
+    return tokens;
 }
 
 var TokenEnum = Object.freeze({
     Equals : 'Equals',
     ArithmeticOperator : 'ArithmeticOperator',
-    Number : 'Number'
+    Number : 'Number',
+    Unknown : 'Unknown'
 });
