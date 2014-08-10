@@ -10,14 +10,14 @@ function lex(input){
     }
 
     while(i < input.length){
-        if(input[i] == ' '){
+        if(input[i] == ' '){ //Whitespace
             i++;
         }
-        else if(input[i] == '='){
+        else if(input[i] == '='){ //Equals
             addToken(TokenEnum.Equals, input[0]);
             i++;
         }
-        else if(/\d+/.test(input[i])){
+        else if(/\d+/.test(input[i])){ // Number
             // loop looking for digits
             var number = '';
             do{
@@ -26,7 +26,7 @@ function lex(input){
             }while(/\d+/.test(input[i]) && i < input.length)
             addToken(TokenEnum.Number, number);
         }
-        else if(/[\+\*-/]/.test(input[i])){
+        else if(/[\+\*-/]/.test(input[i])){ //Arithmetic Symbol
             addToken(TokenEnum.ArithmeticOperator, input[i]);
             i++;
         }
