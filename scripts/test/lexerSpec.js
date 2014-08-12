@@ -24,4 +24,9 @@ describe("Lexer Test Suite", function(){
 
         expect(lex("=23+7")).toEqual(expectedResult);
     })
+
+    it("can read a long number", function(){
+       var expectedResult = "7894561336565";
+        expect(lex("7894561336565")[0].value).toEqual(expectedResult);
+    });
 });
