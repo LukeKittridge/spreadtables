@@ -3,7 +3,7 @@
  */
 
 function parse(tokens){
-    toPostfix(tokens);
+    return toPostfix(tokens);
 }
 
 function toPostfix(tokens){
@@ -13,7 +13,7 @@ function toPostfix(tokens){
     tokens.forEach(function (token) {
 
         if(token.type == TokenEnum.Number){
-           queue.enqueue(token.value);
+           queue.enqueue(token);
         }
 
         if(token.type == TokenEnum.ArithmeticOperator){
@@ -24,7 +24,7 @@ function toPostfix(tokens){
                 while (greaterPrecedence && stack.length > 0) {
                     topStack = stack.pop();
                     if (topStack.type == TokenEnum.ArithmeticOperator && token.precedence < topStack.precedence || token.associativity == AssociationEnum.Left && token.precedence == topStack.precedence) {
-                        queue.enqueue(topStack.value);
+                        queue.enqueue(topStack);
                     }
                     else {
                         greaterPrecedence = false;
@@ -44,7 +44,7 @@ function toPostfix(tokens){
     var j = stack.length;
     for(var i =0; i < j; i++){
         topStack = stack.pop();
-        queue.enqueue(topStack.value);
+        queue.enqueue(topStack);
     }
 
     return queue;

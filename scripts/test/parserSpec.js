@@ -9,13 +9,28 @@ describe("Parser Test Suite", function(){
         var actualResult = queueToArray(toPostfix(lexResult));
         expect(actualResult).toEqual(expectedResult);
     });
+
+    it("Converts 53+412*94-152/14 to postfix", function(){
+       var lexResult = lex("53+412*94-152/14");
+        var expectedResult = ['53','412','94','*','+','152','14','/','-'];
+        var actualResult = queueToArray(toPostfix(lexResult));
+        expect(actualResult).toEqual(expectedResult);
+    });
+
+    it("Converts 5/3 to postfix", function(){
+        var lexResult = lex("5/3");
+        var expectedResult = ['5','3','/'];
+        var actualResult = queueToArray(toPostfix(lexResult));
+        expect(actualResult).toEqual(expectedResult);
+    });
+
 })
 
 function queueToArray(queue){
     var array = [];
     var j = queue.getLength();
     for(var i =0; i < j; i++){
-        array.push(queue.dequeue());
+        array.push(queue.dequeue().value);
     }
     return array;
 }
