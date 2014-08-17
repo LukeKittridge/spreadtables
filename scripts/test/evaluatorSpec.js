@@ -25,5 +25,21 @@ describe("Evaluator Test Suite", function () {
         var expectedResult = 1.6667;
         var actualResult = evaluate(parserResult);
         expect(actualResult).toEqual(expectedResult);
-    })
+    });
+
+    it("-3+4", function () {
+        var lexResult = lex("-3+4");
+        var parserResult = parse(lexResult);
+        var expectedResult = 1;
+        var actualResult = evaluate(parserResult);
+        expect(actualResult).toEqual(expectedResult);
+    });
+
+/*    it("Can handle unary operators", function() {
+        var lexResult = lex("9*+56/23----4---75");
+        var parserResult = parse(lexResult);
+        var expectedResult = -49.087;
+        var actualResult = evaluate(parserResult);
+        expect(actualResult).toEqual(expectedResult);
+    });*/
 });

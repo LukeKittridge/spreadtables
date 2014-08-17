@@ -29,4 +29,49 @@ describe("Lexer Test Suite", function(){
        var expectedResult = "7894561336565";
         expect(lex("7894561336565")[0].value).toEqual(expectedResult);
     });
+
+    it("can handle negative numbers", function(){
+       var expectedResult = "-35";
+        expect(lex("-35")[0].value).toEqual(expectedResult);
+    });
+
+    it("can handle double negative numbers", function(){
+        var expectedResult = "35";
+        expect(lex("--35")[0].value).toEqual(expectedResult);
+    });
+
+    it("can handle more complex expressions with negative numbers", function(){
+       var expectedResult = [
+           {
+               type: TokenEnum.Number,
+               value:'73'
+           },
+           {
+               type: TokenEnum.ArithmeticOperator,
+               value:'+'
+           },
+           {
+               type: TokenEnum.Number,
+               value:'-35'
+           },
+           {
+               type: TokenEnum.ArithmeticOperator,
+               value:'*'
+           },
+           {
+               type: TokenEnum.Number,
+               value:'4'
+           },
+           {
+               type: TokenEnum.ArithmeticOperator,
+               value:'+'
+           },
+           {
+               type: TokenEnum.Number,
+               value:'-2'
+           }
+       ];
+        expect(lex("73+-35*+4+---2")).toEqual(expectedResult);
+    });
+
 });
