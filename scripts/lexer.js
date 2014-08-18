@@ -17,13 +17,13 @@ function lex(input){
             addToken(TokenEnum.Equals, input[0]);
             i++;
         }
-        else if(/\d/.test(input[i])){ // Number
+        else if(/[\d\.]/.test(input[i])){ // Number
             // loop looking for digits
             var number = '';
             do{
                 number += input[i];
                 i++;
-            }while(/\d/.test(input[i]) && i < input.length)
+            }while(/[\d\.]/.test(input[i]) && i < input.length)
             addToken(TokenEnum.Number, number);
         }
         else if(/[\+\*-/]/.test(input[i])){ //Arithmetic Symbol
@@ -46,7 +46,7 @@ function lex(input){
                 do{
                     number += input[i];
                     i++;
-                }while(/\d/.test(input[i]) && i < input.length)
+                }while(/[\d\.]/.test(input[i]) && i < input.length)
 
 
                 addToken(TokenEnum.Number, number);
@@ -56,6 +56,10 @@ function lex(input){
                 i++;
             }
 
+        }
+        else if (/[\(\)]/.test(input[i])){
+            addToken(TokenEnum.Bracket, input[i]);
+            i++;
         }
         else{
             addToken(TokenEnum.Unknown, input[i]);
@@ -70,5 +74,6 @@ var TokenEnum = Object.freeze({
     Equals : 'Equals',
     ArithmeticOperator : 'ArithmeticOperator',
     Number : 'Number',
+    Bracket : 'Bracket',
     Unknown : 'Unknown'
 });

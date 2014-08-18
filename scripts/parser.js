@@ -40,6 +40,24 @@ function toPostfix(tokens){
             }
         }
 
+        if(token.type == TokenEnum.Bracket){
+            if(token.value == '('){
+                stack.push(token);
+            }
+            else{
+                var rightBracket = false;
+                while(!rightBracket){
+                    var topStack = stack.pop();
+                    if(topStack.value != '('){
+                        queue.enqueue(topStack);
+                    }
+                    else{
+                        rightBracket = true;
+                    }
+                }
+            }
+        }
+
     });
     var j = stack.length;
     for(var i =0; i < j; i++){

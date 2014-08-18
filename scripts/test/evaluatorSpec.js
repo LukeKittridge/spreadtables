@@ -35,11 +35,43 @@ describe("Evaluator Test Suite", function () {
         expect(actualResult).toEqual(expectedResult);
     });
 
-/*    it("Can handle unary operators", function() {
+    it("Can handle unary operators", function() {
         var lexResult = lex("9*+56/23----4---75");
         var parserResult = parse(lexResult);
         var expectedResult = -49.087;
         var actualResult = evaluate(parserResult);
         expect(actualResult).toEqual(expectedResult);
-    });*/
+    });
+
+    it("Can handle negative subtraction", function() {
+       var lexResult = lex("4--5");
+        var parserResult = parse(lexResult);
+        var expectedResult = 9;
+        var actualResult = evaluate(parserResult);
+        expect(actualResult).toEqual(expectedResult);
+    });
+
+    it("Can handle decimals", function () {
+        var lexResult = lex("4.375+9.422");
+        var parserResult = parse(lexResult);
+        var expectedResult = 13.797;
+        var actualResult = evaluate(parserResult);
+        expect(actualResult).toEqual(expectedResult);
+    });
+
+    it("can handle brackets", function () {
+        var lexResult = lex("(4+3)*9");
+        var parserResult = parse(lexResult);
+        var expectedResult = 63;
+        var actualResult = evaluate(parserResult);
+        expect(actualResult).toEqual(expectedResult);
+    })
+
+    it("can handle multiple brackets", function () {
+        var lexResult = lex("(7/(4+3))*9");
+        var parserResult = parse(lexResult);
+        var expectedResult = 9;
+        var actualResult = evaluate(parserResult);
+        expect(actualResult).toEqual(expectedResult);
+    })
 });
