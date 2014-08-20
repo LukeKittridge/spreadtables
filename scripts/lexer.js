@@ -26,7 +26,7 @@ function lex(input){
             }while(/[\d\.]/.test(input[i]) && i < input.length)
             addToken(TokenEnum.Number, number);
         }
-        else if(/[\+\*-/]/.test(input[i])){ //Arithmetic Symbol
+        else if(/[\+\*-/^]/.test(input[i])){ //Arithmetic Symbol
 
             var minusCount =0;
             var number = '';
@@ -52,7 +52,7 @@ function lex(input){
                 addToken(TokenEnum.Number, number);
             }
             else{
-                addToken(TokenEnum.ArithmeticOperator, input[i]);
+                addToken(TokenEnum.Operator, input[i]);
                 i++;
             }
 
@@ -72,7 +72,7 @@ function lex(input){
 
 var TokenEnum = Object.freeze({
     Equals : 'Equals',
-    ArithmeticOperator : 'ArithmeticOperator',
+    Operator : 'Operator',
     Number : 'Number',
     Bracket : 'Bracket',
     Unknown : 'Unknown'

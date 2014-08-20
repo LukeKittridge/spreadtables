@@ -15,7 +15,7 @@ describe("Lexer Test Suite", function(){
             type : TokenEnum.Number,
             value : '23'
         },{
-            type : TokenEnum.ArithmeticOperator,
+            type : TokenEnum.Operator,
             value : '+'
         },{
             type : TokenEnum.Number,
@@ -47,7 +47,7 @@ describe("Lexer Test Suite", function(){
                value:'73'
            },
            {
-               type: TokenEnum.ArithmeticOperator,
+               type: TokenEnum.Operator,
                value:'+'
            },
            {
@@ -55,7 +55,7 @@ describe("Lexer Test Suite", function(){
                value:'-35'
            },
            {
-               type: TokenEnum.ArithmeticOperator,
+               type: TokenEnum.Operator,
                value:'*'
            },
            {
@@ -63,7 +63,7 @@ describe("Lexer Test Suite", function(){
                value:'4'
            },
            {
-               type: TokenEnum.ArithmeticOperator,
+               type: TokenEnum.Operator,
                value:'+'
            },
            {

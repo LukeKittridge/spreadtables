@@ -16,14 +16,14 @@ function toPostfix(tokens){
            queue.enqueue(token);
         }
 
-        if(token.type == TokenEnum.ArithmeticOperator){
+        if(token.type == TokenEnum.Operator){
             setPrecedence(token);
 
             var greaterPrecedence = true;
             if(stack.length > 0) {
                 while (greaterPrecedence && stack.length > 0) {
                     topStack = stack.pop();
-                    if (topStack.type == TokenEnum.ArithmeticOperator && token.precedence < topStack.precedence || token.associativity == AssociationEnum.Left && token.precedence == topStack.precedence) {
+                    if (topStack.type == TokenEnum.Operator && token.precedence < topStack.precedence || token.associativity == AssociationEnum.Left && token.precedence == topStack.precedence) {
                         queue.enqueue(topStack);
                     }
                     else {
@@ -70,6 +70,14 @@ function toPostfix(tokens){
 
 function setPrecedence(token) {
     switch (token.value) {
+        case '+':
+            token.precedence = 11;
+            token.associativity = AssociationEnum.Left;
+            break;
+        case '-':
+            token.precedence = 11;
+            token.associativity = AssociationEnum.Left;
+            break;
         case '/':
             token.precedence = 12;
             token.associativity = AssociationEnum.Left;
@@ -78,13 +86,9 @@ function setPrecedence(token) {
             token.precedence = 12;
             token.associativity = AssociationEnum.Left;
             break;
-        case '+':
-            token.precedence = 11;
-            token.associativity = AssociationEnum.Left;
-            break;
-        case '-':
-            token.precedence = 11;
-            token.associativity = AssociationEnum.Left;
+        case '^':
+            token.precedence = 13;
+            token.associativity = AssociationEnum.Right;
             break;
     }
 }

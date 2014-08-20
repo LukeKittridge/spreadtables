@@ -65,7 +65,7 @@ describe("Evaluator Test Suite", function () {
         var expectedResult = 63;
         var actualResult = evaluate(parserResult);
         expect(actualResult).toEqual(expectedResult);
-    })
+    });
 
     it("can handle multiple brackets", function () {
         var lexResult = lex("(7/(4+3))*9");
@@ -73,5 +73,21 @@ describe("Evaluator Test Suite", function () {
         var expectedResult = 9;
         var actualResult = evaluate(parserResult);
         expect(actualResult).toEqual(expectedResult);
-    })
+    });
+
+    it("can handle simple exponents", function () {
+        var lexResult = lex("2^3");
+        var parserResult = parse(lexResult);
+        var expectedResult = 8;
+        var actualResult = evaluate(parserResult);
+        expect(actualResult).toEqual(expectedResult);
+    });
+
+    it("can handle complex exponents", function () {
+        var lexResult = lex("2^(3*6-4^-2)");
+        var parserResult = parse(lexResult);
+        var expectedResult = 251029.9544;
+        var actualResult = evaluate(parserResult);
+        expect(actualResult).toEqual(expectedResult);
+    });
 });

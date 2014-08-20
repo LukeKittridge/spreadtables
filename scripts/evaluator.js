@@ -11,7 +11,7 @@ function evaluate(prefixExpression){
             stack.push(token.value);
         }
 
-        if(token.type == TokenEnum.ArithmeticOperator){
+        if(token.type == TokenEnum.Operator){
             var arg2 = parseFloat(stack.pop());
             var arg1 = parseFloat(stack.pop());
 
@@ -27,6 +27,9 @@ function evaluate(prefixExpression){
                     break;
                 case '/':
                     stack.push(arg1 / arg2);
+                    break;
+                case '^':
+                    stack.push(Math.pow(arg1, arg2));
                     break;
             }
         }
