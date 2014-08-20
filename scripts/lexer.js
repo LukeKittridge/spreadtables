@@ -61,6 +61,15 @@ function lex(input){
             addToken(TokenEnum.Bracket, input[i]);
             i++;
         }
+        else if (/[a-zA-Z]/.test(input[i])){
+            var variableName = "";
+            do{
+                 variableName += input[i];
+                i++;
+            }while(/[a-zA-z\d]/.test(input[i]) && i < input.length)
+
+            addToken(TokenEnum.Variable, variableName);
+        }
         else{
             addToken(TokenEnum.Unknown, input[i]);
             i++;
@@ -75,5 +84,6 @@ var TokenEnum = Object.freeze({
     Operator : 'Operator',
     Number : 'Number',
     Bracket : 'Bracket',
+    Variable : 'Variable',
     Unknown : 'Unknown'
 });

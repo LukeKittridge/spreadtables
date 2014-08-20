@@ -74,4 +74,22 @@ describe("Lexer Test Suite", function(){
         expect(lex("73+-35*+4+---2")).toEqual(expectedResult);
     });
 
+    it("can handle variable names", function(){
+        var expectedResult = [{ type: TokenEnum.Variable, value: "test" }];
+        var result = lex("test");
+        expect(result).toEqual(expectedResult);
+    });
+
+    it("can handle variable names in formulas", function(){
+        var expectedResult = [
+            { type: TokenEnum.Number, value: 5 },
+            { type: TokenEnum.Operator, value: '+' },
+            { type: TokenEnum.Variable, value: "test12" },
+            { type: TokenEnum.Operator, value: '/' },
+            { type: TokenEnum.Number, value: 3 }
+        ];
+        var result = lex("5+test12/3");
+        expect(result).toEqual(expectedResult);
+    });
+
 });
