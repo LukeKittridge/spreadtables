@@ -82,11 +82,11 @@ describe("Lexer Test Suite", function(){
 
     it("can handle variable names in formulas", function(){
         var expectedResult = [
-            { type: TokenEnum.Number, value: 5 },
+            { type: TokenEnum.Number, value: '5' },
             { type: TokenEnum.Operator, value: '+' },
             { type: TokenEnum.Variable, value: "test12" },
             { type: TokenEnum.Operator, value: '/' },
-            { type: TokenEnum.Number, value: 3 }
+            { type: TokenEnum.Number, value: '3' }
         ];
         var result = lex("5+test12/3");
         expect(result).toEqual(expectedResult);

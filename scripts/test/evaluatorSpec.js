@@ -90,4 +90,8 @@ describe("Evaluator Test Suite", function () {
         var actualResult = evaluate(parserResult);
         expect(actualResult).toEqual(expectedResult);
     });
+
+/*    it("can handle looking up variables", function () {
+
+    })*/
 });

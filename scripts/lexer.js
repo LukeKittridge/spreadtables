@@ -61,12 +61,12 @@ function lex(input){
             addToken(TokenEnum.Bracket, input[i]);
             i++;
         }
-        else if (/[a-zA-Z]/.test(input[i])){
+        else if (/[#a-zA-Z]/.test(input[i])){
             var variableName = "";
             do{
                  variableName += input[i];
                 i++;
-            }while(/[a-zA-z\d]/.test(input[i]) && i < input.length)
+            }while(/[#\.\w]/.test(input[i]) && i < input.length)
 
             addToken(TokenEnum.Variable, variableName);
         }
