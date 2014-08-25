@@ -23,14 +23,14 @@ function lex(input){
             do{
                 number += input[i];
                 i++;
-            }while(/[\d\.]/.test(input[i]) && i < input.length)
+            }while(/[\d\.]/.test(input[i]) && i < input.length);
             addToken(TokenEnum.Number, number);
         }
         else if(/[\+\*-/^]/.test(input[i])){ //Arithmetic Symbol
 
             var minusCount =0;
-            var number = '';
-            var unary = false
+            number = '';
+            var unary = false;
             while(/[\+-]/.test(input[i]) && !/\d/.test(input[i - 1])  && i < input.length) {
                 if(/-/.test(input[i])){
                     minusCount++;
@@ -46,7 +46,7 @@ function lex(input){
                 do{
                     number += input[i];
                     i++;
-                }while(/[\d\.]/.test(input[i]) && i < input.length)
+                }while(/[\d\.]/.test(input[i]) && i < input.length);
 
 
                 addToken(TokenEnum.Number, number);
@@ -66,9 +66,9 @@ function lex(input){
             do{
                  variableName += input[i];
                 i++;
-            }while(/[#\.\w]/.test(input[i]) && i < input.length)
+            }while(/[#\.\w]/.test(input[i]) && i < input.length);
 
-            addToken(TokenEnum.Variable, variableName);
+            addToken(getVariableType(variableName), variableName);
         }
         else{
             addToken(TokenEnum.Unknown, input[i]);
@@ -79,11 +79,36 @@ function lex(input){
     return tokens;
 }
 
+function getVariableType(variableName){
+    if(/^#\w+$/.test(variableName)){
+        return TokenEnum.TableName;
+    }
+    else if(/^[a-zA-Z](?:[a-zA-Z][a-zA-Z]\w*)?$/.test(variableName)){
+        return TokenEnum.LocalCellName;
+    }
+    else if(/^[a-zA-Z]{1,2}[1-9]\d?$/.test(variableName)){
+        return TokenEnum.LocalCell;
+    }
+    else if(/^#\w+.[a-zA-Z](?:[a-zA-Z][a-zA-Z]\w*)?$/.test(variableName)){
+       return TokenEnum.GlobalCellName;
+    }
+    else if(/^#\w+.[a-zA-Z]{1,2}[1-9]\d?$/.test(variableName)){
+        return TokenEnum.GlobalCell;
+    }
+    else{
+        return TokenEnum.Unknown;
+    }
+}
+
 var TokenEnum = Object.freeze({
     Equals : 'Equals',
     Operator : 'Operator',
     Number : 'Number',
     Bracket : 'Bracket',
-    Variable : 'Variable',
+    TableName : 'TableName',
+    LocalCellName : 'LocalCellName',
+    LocalCell : 'LocalCell',
+    GlobalCellName : 'GlobalCellName',
+    GlobalCell : 'GlobalCell',
     Unknown : 'Unknown'
 });
