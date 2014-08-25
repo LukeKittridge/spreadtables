@@ -14,4 +14,13 @@ describe("Table Test Suite", function() {
        expect(Table.tables['test'].cells[1][26].id).toEqual('test.AA2');
        expect(Table.tables['test'].cells[29][26].id).toEqual('test.AA30');
    });
+
+    it("can get the specified cell from the table", function(){
+        var table = new Table('test',30,100);
+        expect(table.getCell("A1").id).toEqual("test.A1");
+        expect(table.getCell("CV24").id).toEqual("test.CV24");
+        expect(table.getCell("BB12").id).toEqual("test.BB12");
+        expect(table.getCell("A23").id).toEqual("test.A23");
+        expect(table.getCell("AD1").id).toEqual("test.AD1");
+    });
 });

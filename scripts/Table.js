@@ -28,8 +28,7 @@ for(var i =0; i < rows; i++){
         cellLetters += String.fromCharCode(letterCount+65);
 
         cellId = name + '.' + cellLetters + (i+1);
-        var cell = new Cell(cellId);
-        this.cells[i][j] = cell;
+        this.cells[i][j] = new Cell(cellId);
         letterCount++;
 
         if(letterCount == 26){
@@ -41,6 +40,22 @@ for(var i =0; i < rows; i++){
     columnReset = 0;
 }
 
-};
+}
+
+Table.prototype.getCell = function(cellIdentifier){
+    var regGroups = /([a-zA-Z]+)(\d+)/.exec(cellIdentifier);
+    var columnLetters = regGroups[1].toUpperCase();
+    var row = regGroups[2]-1;
+    var columnPos = 0;
+
+    if(columnLetters.length == 1){
+        columnPos = columnLetters.charCodeAt(0) - 65;
+    }
+    else{
+        columnPos = ((columnLetters.charCodeAt(0) - 64) * 26) + (columnLetters.charCodeAt(1) - 65);
+    }
+
+    return this.cells[row][columnPos];
+}
 
 Table.tables = {};
