@@ -91,7 +91,16 @@ describe("Evaluator Test Suite", function () {
         expect(actualResult).toEqual(expectedResult);
     });
 
-/*    it("can handle looking up variables", function () {
+   it("can handle looking up global variables", function () {
+        var table = new Table('test', 30, 100);
+       Table.tables[table.name] = table;
+       Table.tables['test'].cells[0][99].value = 32;
+       addVariable("testVar", "#test.CV1");
 
-    })*/
+       var lexResult = lex("7+#test.testVar");
+       var parserResult = parse(lexResult);
+       var expectedResult = 39;
+       var actualResult = evaluate(parserResult);
+       expect(actualResult).toEqual(expectedResult);
+    })
 });

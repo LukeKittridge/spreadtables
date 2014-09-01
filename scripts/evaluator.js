@@ -11,6 +11,20 @@ function evaluate(prefixExpression){
             stack.push(token.value);
         }
 
+        if(token.type == (TokenEnum.GlobalCellName || TokenEnum.GlobalCell)){
+            var cellNames = splitGlobalCells(token.value);
+
+            var cell;
+            if(token.type == TokenEnum.GlobalCellName)
+                cell = variables[cellNames.Cell];
+            else if (token.type == TokenEnum.GlobalCell){
+                var table = Table.tables[cellNames.TableName];
+                cell = table.getCell(cellNames.Cell);
+            }
+
+            stack.push(cell.value);
+        }
+
         if(token.type == TokenEnum.Operator){
             var arg2 = parseFloat(stack.pop());
             var arg1 = parseFloat(stack.pop());

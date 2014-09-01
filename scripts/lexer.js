@@ -61,7 +61,7 @@ function lex(input){
             addToken(TokenEnum.Bracket, input[i]);
             i++;
         }
-        else if (/[#a-zA-Z]/.test(input[i])){
+        else if (/[#a-zA-Z]/.test(input[i])){ //Variable
             var variableName = "";
             do{
                  variableName += input[i];
