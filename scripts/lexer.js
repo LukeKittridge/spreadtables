@@ -31,7 +31,7 @@ function lex(input){
             var minusCount =0;
             number = '';
             var unary = false;
-            while(/[\+-]/.test(input[i]) && !/\d/.test(input[i - 1])  && i < input.length) {
+            while(/[\+-]/.test(input[i]) && !/\w/.test(input[i - 1])  && i < input.length) {
                 if(/-/.test(input[i])){
                     minusCount++;
                 }

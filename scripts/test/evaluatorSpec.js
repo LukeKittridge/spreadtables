@@ -114,5 +114,19 @@ describe("Evaluator Test Suite", function () {
         var expectedResult = 21;
         var actualResult = evaluate(parserResult);
         expect(actualResult).toEqual(expectedResult);
+
+        var lexResult = lex("#test.CV1 + 5/2");
+        var parserResult = parse(lexResult);
+        var expectedResult = 34.5;
+        var actualResult = evaluate(parserResult);
+        expect(actualResult).toEqual(expectedResult);
+    });
+
+    it("can evaluate single numbers", function () {
+       var lexResult = lex("35");
+        var parserResult = parse(lexResult);
+        var expectedResult = 35;
+        var actualResult = evaluate(parserResult);
+        expect(actualResult).toEqual(expectedResult);
     });
 });

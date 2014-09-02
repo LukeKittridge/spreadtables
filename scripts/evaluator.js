@@ -8,7 +8,7 @@ function evaluate(prefixExpression){
         var token = prefixExpression.dequeue();
 
         if(token.type == TokenEnum.Number){
-            stack.push(token.value);
+            stack.push(parseFloat(token.value));
         }
 
         if(token.type == TokenEnum.GlobalCellName || token.type == TokenEnum.GlobalCell){
@@ -26,8 +26,8 @@ function evaluate(prefixExpression){
         }
 
         if(token.type == TokenEnum.Operator){
-            var arg2 = parseFloat(stack.pop());
-            var arg1 = parseFloat(stack.pop());
+            var arg2 = stack.pop();
+            var arg1 = stack.pop();
 
             switch(token.value){
                 case '+':

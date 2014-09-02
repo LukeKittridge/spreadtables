@@ -56,6 +56,12 @@ Table.prototype.getCell = function(cellIdentifier){
     }
 
     return this.cells[row][columnPos];
-}
+};
 
 Table.tables = {};
+
+function getGlobalCell(globalCellIdentifier){
+    var cellNames = splitGlobalCells(globalCellIdentifier);
+    var cell = Table.tables[cellNames.TableName].getCell(cellNames.Cell);
+    return cell;
+}

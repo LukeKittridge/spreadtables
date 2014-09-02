@@ -58,12 +58,6 @@ function toPostfix(tokens){
             }
         }
 
-        if(token.type == TokenEnum.Variable){
-            if(/[a-zA-Z]\w*$/.test(token.value)){
-                //Local Cell Name
-            }
-        }
-
     });
     var j = stack.length;
     for(var i =0; i < j; i++){
