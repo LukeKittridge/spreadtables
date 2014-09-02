@@ -103,4 +103,16 @@ describe("Evaluator Test Suite", function () {
        var actualResult = evaluate(parserResult);
        expect(actualResult).toEqual(expectedResult);
     })
+
+    it("can handle global cells", function () {
+        var table = new Table('test', 30, 100);
+        Table.tables[table.name] = table;
+        Table.tables['test'].cells[0][99].value = 32;
+
+        var lexResult = lex("5+#test.CV1/2");
+        var parserResult = parse(lexResult);
+        var expectedResult = 21;
+        var actualResult = evaluate(parserResult);
+        expect(actualResult).toEqual(expectedResult);
+    });
 });

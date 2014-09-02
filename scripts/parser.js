@@ -12,8 +12,8 @@ function toPostfix(tokens){
     var topStack;
     tokens.forEach(function (token) {
 
-        if(token.type == TokenEnum.Number){
-           queue.enqueue(token);
+        if (token.type == TokenEnum.Number || token.type == TokenEnum.GlobalCellName || token.type == TokenEnum.GlobalCell) {
+            queue.enqueue(token);
         }
 
         if(token.type == TokenEnum.Operator){

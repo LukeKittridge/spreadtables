@@ -11,7 +11,7 @@ function evaluate(prefixExpression){
             stack.push(token.value);
         }
 
-        if(token.type == (TokenEnum.GlobalCellName || TokenEnum.GlobalCell)){
+        if(token.type == TokenEnum.GlobalCellName || token.type == TokenEnum.GlobalCell){
             var cellNames = splitGlobalCells(token.value);
 
             var cell;
