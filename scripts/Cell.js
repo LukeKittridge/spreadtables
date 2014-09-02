@@ -8,7 +8,7 @@ function Cell(id){
     this.contentEditable = 'true';
     this.value = '';
     this.formula = '';
-    this.referencedBy = [];
+    this.referencedBy = {};
 }
 
 function splitGlobalCells(globalCellName){
@@ -31,11 +31,13 @@ Cell.prototype.evaluate = function(){
 
     for(var i =0; i < lexResult.length; i++){
         if(lexResult[i].type == TokenEnum.GlobalCell){
-            this.referencedBy[lexResult[i].value] = getGlobalCell(lexResult[i].value);
+            getGlobalCell(lexResult[i].value).referencedBy[this.id] = this;
         }
     }
 
-    this.referencedBy.forEach(function(cell){
+    for(var cellId in this.referencedBy){
+        var cell = this.referencedBy[cellId];
         cell.evaluate();
-    })
+    }
+
 };

@@ -9,11 +9,11 @@ function lex(input){
         });
     }
 
+    //Strip all whitespace
+    input = input.replace(/\s+/g,'');
+
     while(i < input.length){
-        if(input[i] == ' '){ //Whitespace
-            i++;
-        }
-        else if(input[i] == '='){ //Equals
+        if(input[i] == '='){ //Equals
             addToken(TokenEnum.Equals, input[0]);
             i++;
         }
@@ -31,7 +31,7 @@ function lex(input){
             var minusCount =0;
             number = '';
             var unary = false;
-            while(/[\+-]/.test(input[i]) && !/\w/.test(input[i - 1])  && i < input.length) {
+            while(/[\+-]/.test(input[i]) && (!/\w/.test(input[i - 1]) || i ==0)  && i < input.length) {
                 if(/-/.test(input[i])){
                     minusCount++;
                 }
