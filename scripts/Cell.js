@@ -9,6 +9,7 @@ function Cell(id){
     this.value = '';
     this.formula = '';
     this.referencedBy = {};
+    this.references = {};
 }
 
 function splitGlobalCells(globalCellName){
@@ -24,6 +25,12 @@ Cell.prototype.evaluateNewFormula = function(formula){
 };
 
 Cell.prototype.evaluate = function(){
+
+    for(var cellId in this.references){
+        var cell = this.references[cellId];
+        delete cell.referencedBy[this.id];
+    }
+
     var lexResult = lex(this.formula);
     var parseResult = parse(lexResult);
     var evaluationResult = evaluate(parseResult);
@@ -31,7 +38,9 @@ Cell.prototype.evaluate = function(){
 
     for(var i =0; i < lexResult.length; i++){
         if(lexResult[i].type == TokenEnum.GlobalCell){
-            getGlobalCell(lexResult[i].value).referencedBy[this.id] = this;
+            var cell = getGlobalCell(lexResult[i].value);
+            cell.referencedBy[this.id] = this;
+            this.references[cell.id] = cell;
         }
     }
 

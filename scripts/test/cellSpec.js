@@ -18,5 +18,9 @@ describe("Cell Test Suite", function() {
        cell1.evaluateNewFormula("100");
        expect(cell2.value).toEqual(105);
 
+       expect(cell1.referencedBy[cell2.id]).toBeDefined();
+        cell2.evaluateNewFormula("23");
+       expect(cell1.referencedBy[cell2.id]).toBeUndefined();
+
    });
 });
