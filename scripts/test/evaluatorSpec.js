@@ -129,4 +129,19 @@ describe("Evaluator Test Suite", function () {
         var actualResult = evaluate(parserResult);
         expect(actualResult).toEqual(expectedResult);
     });
+
+    it("Can handle formulas with local cells.", function () {
+        var table = new Table('test', 30, 100);
+        Table.tables[table.name] = table;
+
+        var cell1 = getGlobalCell("#test.B1");
+        cell1.evaluateNewFormula("10");
+        var cell2 = getGlobalCell("#test.B2");
+        cell2.evaluateNewFormula("23");
+
+        var cell3 = getGlobalCell("#test.B3");
+        cell3.evaluateNewFormula("B1+B2");
+
+        expect(cell3.value).toEqual(33);
+    });
 });

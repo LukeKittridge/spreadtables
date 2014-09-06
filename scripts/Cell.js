@@ -14,7 +14,14 @@ function Cell(id){
 
 function splitGlobalCells(globalCellName){
     var splitResult = globalCellName.split('.');
-    var tableName = splitResult[0].substring(1,splitResult[0].length);
+    var tableName;
+    if(splitResult[0][0] == '#'){
+        tableName = splitResult[0].substring(1,splitResult[0].length);
+    }
+    else{
+        tableName = splitResult[0];
+    }
+
     var cell = splitResult[1];
     return { TableName : tableName, Cell : cell };
 }
@@ -33,7 +40,7 @@ Cell.prototype.evaluate = function(){
 
     var lexResult = lex(this.formula);
     var parseResult = parse(lexResult);
-    var evaluationResult = evaluate(parseResult);
+    var evaluationResult = evaluate(parseResult, this);
     this.value = evaluationResult;
 
     for(var i =0; i < lexResult.length; i++){

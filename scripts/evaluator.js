@@ -2,7 +2,7 @@
  * Created by Luke Kittridge on 14/08/2014.
  */
 
-function evaluate(prefixExpression){
+function evaluate(prefixExpression, currentCell){
     var stack = [];
     while(prefixExpression.getLength() > 0){
         var token = prefixExpression.dequeue();
@@ -21,6 +21,15 @@ function evaluate(prefixExpression){
                 var table = Table.tables[cellNames.TableName];
                 cell = table.getCell(cellNames.Cell);
             }
+
+            stack.push(cell.value);
+        }
+
+        if(token.type == TokenEnum.LocalCell){
+            var cellNames = splitGlobalCells(currentCell.id);
+            var table = Table.tables[cellNames.TableName];
+
+            var cell = table.getCell(token.value);
 
             stack.push(cell.value);
         }
