@@ -95,7 +95,7 @@ describe("Evaluator Test Suite", function () {
         var table = new Table('test', 30, 100);
        Table.tables[table.name] = table;
        Table.tables['test'].cells[0][99].value = 32;
-       addVariable("testVar", "#test.CV1");
+       table.addVariable("testVar", Table.tables['test'].cells[0][99]);
 
        var lexResult = lex("7+#test.testVar");
        var parserResult = parse(lexResult);
@@ -143,5 +143,18 @@ describe("Evaluator Test Suite", function () {
         cell3.evaluateNewFormula("B1+B2");
 
         expect(cell3.value).toEqual(33);
+    });
+
+    it("Can handle formulas with local cell names.", function(){
+       var table = new Table("test", 30, 100);
+        Table.tables[table.name] = table;
+
+        var cell1 = getGlobalCell("#test.B1");
+        cell1.evaluateNewFormula("23");
+        table.addVariable("cell1", cell1);
+
+        var cell2 = getGlobalCell("#test.C1");
+        cell2.evaluateNewFormula("cell1 + 15");
+        expect(cell2.value).toEqual(38);
     });
 });

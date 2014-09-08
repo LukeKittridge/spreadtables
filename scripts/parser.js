@@ -12,7 +12,7 @@ function toPostfix(tokens){
     var topStack;
     tokens.forEach(function (token) {
 
-        if (token.type == TokenEnum.Number || token.type == TokenEnum.GlobalCellName || token.type == TokenEnum.GlobalCell || token.type == TokenEnum.LocalCell) {
+        if (token.type == TokenEnum.Number || token.type == TokenEnum.GlobalCellName || token.type == TokenEnum.GlobalCell || token.type == TokenEnum.LocalCell || token.type == TokenEnum.LocalCellName) {
             queue.enqueue(token);
         }
 

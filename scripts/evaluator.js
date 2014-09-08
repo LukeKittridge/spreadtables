@@ -13,23 +13,28 @@ function evaluate(prefixExpression, currentCell){
 
         if(token.type == TokenEnum.GlobalCellName || token.type == TokenEnum.GlobalCell){
             var cellNames = splitGlobalCells(token.value);
-
+            var table = Table.tables[cellNames.TableName];
             var cell;
             if(token.type == TokenEnum.GlobalCellName)
-                cell = variables[cellNames.Cell];
+                cell = table.variables[cellNames.Cell];
             else if (token.type == TokenEnum.GlobalCell){
-                var table = Table.tables[cellNames.TableName];
                 cell = table.getCell(cellNames.Cell);
             }
 
             stack.push(cell.value);
         }
 
-        if(token.type == TokenEnum.LocalCell){
+        if(token.type == TokenEnum.LocalCell || token.type == TokenEnum.LocalCellName){
             var cellNames = splitGlobalCells(currentCell.id);
+            var cell;
             var table = Table.tables[cellNames.TableName];
+            if(token.type == TokenEnum.LocalCell){
+                cell = table.getCell(token.value);
+            }
+            else{
+                cell = table.variables[token.value];
+            }
 
-            var cell = table.getCell(token.value);
 
             stack.push(cell.value);
         }

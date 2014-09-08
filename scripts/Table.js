@@ -4,6 +4,7 @@
 
 Table.prototype.cells;
 Table.prototype.name;
+Table.prototype.variables;
 
 function Table(name, rows, columns){
     this.name = name;
@@ -17,6 +18,7 @@ function Table(name, rows, columns){
     var columnReset = 0;
     var letterCount =0;
     var cellLetters;
+    this.variables = {};
     //TODO Error handling, this will only allow 702 columns
 for(var i =0; i < rows; i++){
 
@@ -57,6 +59,10 @@ Table.prototype.getCell = function(cellIdentifier){
 
     return this.cells[row][columnPos];
 };
+
+Table.prototype.addVariable = function(name,cell){
+    this.variables[name] = cell;
+}
 
 Table.tables = {};
 

@@ -13,11 +13,11 @@ describe("Variable Test Suite", function() {
         var table = new Table('test',30,100);
         Table.tables[table.name] = table;
         Table.tables['test'].cells[0][99].value = 32;
-        addVariable("testVar", "#test.CV1");
-        expect(variables["testVar"].value).toEqual(32);
+        table.addVariable("testVar", Table.tables['test'].cells[0][99]);
+        expect(table.variables["testVar"].value).toEqual(32);
 
         Table.tables['test'].cells[0][99].value = 505;
-        expect(variables["testVar"].value).toEqual(505);
+        expect(table.variables["testVar"].value).toEqual(505);
 
     });
 });
