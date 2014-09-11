@@ -8,7 +8,7 @@ function evaluate(prefixExpression, currentCell){
         var token = prefixExpression.dequeue();
 
         if(token.type == TokenEnum.Number){
-            stack.push(parseFloat(token.value));
+            stack.push({token:token, value : parseFloat(token.value)});
         }
 
         if(token.type == TokenEnum.GlobalCellName || token.type == TokenEnum.GlobalCell){
@@ -21,7 +21,7 @@ function evaluate(prefixExpression, currentCell){
                 cell = table.getCell(cellNames.Cell);
             }
 
-            stack.push(cell.value);
+            stack.push({token:token,value:cell.value});
         }
 
         if(token.type == TokenEnum.LocalCell || token.type == TokenEnum.LocalCellName){
@@ -36,31 +36,63 @@ function evaluate(prefixExpression, currentCell){
             }
 
 
-            stack.push(cell.value);
+            stack.push({token:token,value:cell.value});
         }
 
         if(token.type == TokenEnum.Operator){
             var arg2 = stack.pop();
             var arg1 = stack.pop();
+            stack.push(calculate(token.value, arg1, arg2));
 
-            switch(token.value){
-                case '+':
-                    stack.push(arg1 + arg2);
-                    break;
-                case '-':
-                    stack.push(arg1 - arg2);
-                    break;
-                case '*':
-                    stack.push(arg1 * arg2);
-                    break;
-                case '/':
-                    stack.push(arg1 / arg2);
-                    break;
-                case '^':
-                    stack.push(Math.pow(arg1, arg2));
-                    break;
-            }
         }
     }
-    return +stack.pop().toFixed(4); //Round to 4 decimal places and drop extra 0s
+    return +stack.pop().value.toFixed(4); //Round to 4 decimal places and drop extra 0s
+}
+
+function add(arg1, arg2){
+    var result = arg1.value+arg2.value;
+    return result;
+}
+
+function subtract(arg1, arg2){
+    var result = arg1.value - arg2.value;
+    return result;
+}
+
+function divide(arg1, arg2){
+    var result = arg1.value/arg2.value;
+    return result;
+}
+
+function multiply(arg1, arg2){
+    var result = arg1.value * arg2.value;
+    return result;
+}
+
+function power(arg1, arg2){
+    var result = Math.pow(arg1.value, arg2.value);
+    return result;
+}
+
+function calculate(operator, arg1, arg2){
+    var tokens = [arg1, arg2];
+    var result;
+    switch(operator){
+        case '+':
+            result = add(arg1,arg2);
+            break;
+        case '-':
+            result = subtract(arg1,arg2);
+            break;
+        case '*':
+            result = multiply(arg1,arg2);
+            break;
+        case '/':
+            result = divide(arg1,arg2);
+            break;
+        case '^':
+            result  = power(arg1,arg2);
+            break;
+    }
+    return {type: TokenEnum.Result, tokens: tokens, value:result};
 }

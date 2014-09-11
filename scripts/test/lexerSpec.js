@@ -10,16 +10,24 @@ describe("Lexer Test Suite", function(){
     it("returns equals, number, arithmetic, number", function(){
         var expectedResult = [{
             type : TokenEnum.Equals,
-            value : '='
+            value : '=',
+            start : 0,
+            end:0
         },{
             type : TokenEnum.Number,
-            value : '23'
+            value : '23',
+            start:1,
+            end:2
         },{
             type : TokenEnum.Operator,
-            value : '+'
+            value : '+',
+            start:3,
+            end:3
         },{
             type : TokenEnum.Number,
-            value : '7'
+            value : '7',
+            start:4,
+            end:4
         }];
 
         expect(lex("=23+7")).toEqual(expectedResult);
@@ -49,85 +57,99 @@ describe("Lexer Test Suite", function(){
        var expectedResult = [
            {
                type: TokenEnum.Number,
-               value:'73'
+               value:'73',
+               start:0,
+               end:1
            },
            {
                type: TokenEnum.Operator,
-               value:'+'
+               value:'+',
+               start:2,
+               end:2
            },
            {
                type: TokenEnum.Number,
-               value:'-35'
+               value:'-35',
+               start:3,
+               end:5
            },
            {
                type: TokenEnum.Operator,
-               value:'*'
+               value:'*',
+               start:6,
+               end:6
            },
            {
                type: TokenEnum.Number,
-               value:'4'
+               value:'4',
+               start:7,
+               end:8
            },
            {
                type: TokenEnum.Operator,
-               value:'+'
+               value:'+',
+               start:9,
+               end:9
            },
            {
                type: TokenEnum.Number,
-               value:'-2'
+               value:'-2',
+               start:10,
+               end:13
            }
        ];
         expect(lex("73+-35*+4+---2")).toEqual(expectedResult);
     });
 
     it("can handle local cell names", function(){
-        var expectedResult = [{ type: TokenEnum.LocalCellName, value: "test" }];
+        var expectedResult = [{ type: TokenEnum.LocalCellName, value: "test", start:0, end:3 }];
         var result = lex("test");
         expect(result).toEqual(expectedResult);
     });
 
     it("can handle table names", function(){
-        var expectedResult = [{ type: TokenEnum.TableName, value: "#testTable" }];
+        var expectedResult = [{ type: TokenEnum.TableName, value: "#testTable", start:0, end:9 }];
         var result = lex("#testTable");
         expect(result).toEqual(expectedResult);
     });
 
     it("can handle local cells", function(){
-        var expectedResult = [{ type: TokenEnum.LocalCell, value: "A1" }];
+        var expectedResult = [{ type: TokenEnum.LocalCell, value: "A1", start:0, end:1 }];
         var result = lex("A1");
         expect(result).toEqual(expectedResult);
     });
 
     it("can handle local cells", function(){
-        var expectedResult = [{ type: TokenEnum.LocalCell, value: "AA1" }];
+        var expectedResult = [{ type: TokenEnum.LocalCell, value: "AA1", start:0, end:2 }];
         var result = lex("AA1");
         expect(result).toEqual(expectedResult);
     });
 
     it("can handle global cell names", function(){
-        var expectedResult = [{ type: TokenEnum.GlobalCellName, value: "#test.testCell" }];
+        var expectedResult = [{ type: TokenEnum.GlobalCellName, value: "#test.testCell", start:0, end:13 }];
         var result = lex("#test.testCell");
         expect(result).toEqual(expectedResult);
     });
 
     it("can handle global cells", function(){
-        var expectedResult = [{ type: TokenEnum.GlobalCell, value: "#test.A1" }];
+        var expectedResult = [{ type: TokenEnum.GlobalCell, value: "#test.A1", start:0, end:7 }];
         var result = lex("#test.A1");
         expect(result).toEqual(expectedResult);
     });
 
     it("can return unknown for variables", function(){
-        var expectedResult = [{ type: TokenEnum.Unknown, value: "#test..A1" }];
+        var expectedResult = [{ type: TokenEnum.Unknown, value: "#test..A1", start:0, end:8 }];
         var result = lex("#test..A1");
         expect(result).toEqual(expectedResult);
     });
 
     it("can handle local cell names in formulas", function(){
         var expectedResult = [
-            { type: TokenEnum.Number, value: '5' },
-            { type: TokenEnum.Operator, value: '+' },
-            { type: TokenEnum.LocalCellName, value: "test12" },
-            { type: TokenEnum.Operator, value: '/' },
-            { type: TokenEnum.Number, value: '3' }
+            { type: TokenEnum.Number, value: '5', start:0,end:0 },
+            { type: TokenEnum.Operator, value: '+',start:1,end:1 },
+            { type: TokenEnum.LocalCellName, value: "test12",start:2,end:7 },
+            { type: TokenEnum.Operator, value: '/', start:8, end:8 },
+            { type: TokenEnum.Number, value: '3', start:9,end:9 }
         ];
         var result = lex("5+test12/3");
         expect(result).toEqual(expectedResult);

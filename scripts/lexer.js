@@ -2,10 +2,12 @@ function lex(input){
     var i =0;
     var tokens = [];
 
-    function addToken(type, value){
+    function addToken(type, value, start, end){
         tokens.push({
             type : type,
-            value : value
+            value : value,
+            start : start,
+            end : end
         });
     }
 
@@ -14,21 +16,23 @@ function lex(input){
 
     while(i < input.length){
         if(input[i] == '='){ //Equals
-            addToken(TokenEnum.Equals, input[0]);
+            addToken(TokenEnum.Equals, input[i],i,i);
             i++;
         }
         else if(/[\d\.]/.test(input[i])){ // Number
             // loop looking for digits
             var number = '';
+            var start = i;
             do{
                 number += input[i];
                 i++;
             }while(/[\d\.]/.test(input[i]) && i < input.length);
-            addToken(TokenEnum.Number, number);
+            addToken(TokenEnum.Number, number, start, i-1);
         }
         else if(/[\+\*-/^]/.test(input[i])){ //Arithmetic Symbol
 
             var minusCount =0;
+            start = i;
             number = '';
             var unary = false;
             while(/[\+-]/.test(input[i]) && (!/\w/.test(input[i - 1]) || i ==0)  && i < input.length) {
@@ -49,29 +53,30 @@ function lex(input){
                 }while(/[\d\.]/.test(input[i]) && i < input.length);
 
 
-                addToken(TokenEnum.Number, number);
+                addToken(TokenEnum.Number, number, start, i-1);
             }
             else{
-                addToken(TokenEnum.Operator, input[i]);
+                addToken(TokenEnum.Operator, input[i], start, i);
                 i++;
             }
 
         }
         else if (/[\(\)]/.test(input[i])){
-            addToken(TokenEnum.Bracket, input[i]);
+            addToken(TokenEnum.Bracket, input[i],i,i);
             i++;
         }
         else if (/[#a-zA-Z]/.test(input[i])){ //Variable
             var variableName = "";
+            start = i;
             do{
                  variableName += input[i];
                 i++;
             }while(/[#\.\w]/.test(input[i]) && i < input.length);
 
-            addToken(getVariableType(variableName), variableName);
+            addToken(getVariableType(variableName), variableName,start,i-1);
         }
         else{
-            addToken(TokenEnum.Unknown, input[i]);
+            addToken(TokenEnum.Unknown, input[i],i,i);
             i++;
         }
     }
@@ -110,5 +115,6 @@ var TokenEnum = Object.freeze({
     LocalCell : 'LocalCell',
     GlobalCellName : 'GlobalCellName',
     GlobalCell : 'GlobalCell',
+    Result : 'Result',
     Unknown : 'Unknown'
 });

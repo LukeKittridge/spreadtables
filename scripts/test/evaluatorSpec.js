@@ -102,7 +102,7 @@ describe("Evaluator Test Suite", function () {
        var expectedResult = 39;
        var actualResult = evaluate(parserResult);
        expect(actualResult).toEqual(expectedResult);
-    })
+    });
 
     it("can handle global cells", function () {
         var table = new Table('test', 30, 100);
