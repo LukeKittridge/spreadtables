@@ -49,30 +49,7 @@ function evaluate(prefixExpression, currentCell){
     return +stack.pop().value.toFixed(4); //Round to 4 decimal places and drop extra 0s
 }
 
-function add(arg1, arg2){
-    var result = arg1.value+arg2.value;
-    return result;
-}
 
-function subtract(arg1, arg2){
-    var result = arg1.value - arg2.value;
-    return result;
-}
-
-function divide(arg1, arg2){
-    var result = arg1.value/arg2.value;
-    return result;
-}
-
-function multiply(arg1, arg2){
-    var result = arg1.value * arg2.value;
-    return result;
-}
-
-function power(arg1, arg2){
-    var result = Math.pow(arg1.value, arg2.value);
-    return result;
-}
 
 function calculate(operator, arg1, arg2){
     var tokens = [arg1, arg2];
@@ -95,4 +72,32 @@ function calculate(operator, arg1, arg2){
             break;
     }
     return {type: TokenEnum.Result, tokens: tokens, value:result};
+}
+
+function add(arg1, arg2){
+    var result = arg1.value+arg2.value;
+    return result;
+}
+
+function subtract(arg1, arg2){
+    var result = arg1.value - arg2.value;
+    return result;
+}
+
+function divide(arg1, arg2){
+    if(arg2.value == 0){
+        throw {type:ErrorEnum.DivideByZero,location:arg2}
+    }
+    var result = arg1.value/arg2.value;
+    return result;
+}
+
+function multiply(arg1, arg2){
+    var result = arg1.value * arg2.value;
+    return result;
+}
+
+function power(arg1, arg2){
+    var result = Math.pow(arg1.value, arg2.value);
+    return result;
 }
