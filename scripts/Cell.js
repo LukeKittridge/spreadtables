@@ -12,6 +12,8 @@ function Cell(id){
     this.references = {};
 }
 
+Cell.cellsEvaluated = [];
+
 function splitGlobalCells(globalCellName){
     var splitResult = globalCellName.split('.');
     var tableName;
@@ -28,10 +30,24 @@ function splitGlobalCells(globalCellName){
 
 Cell.prototype.evaluateNewFormula = function(formula){
   this.formula = formula;
+  Cell.cellsEvaluated = [];
   this.evaluate();
 };
 
+
 Cell.prototype.evaluate = function(){
+
+    if(Cell.cellsEvaluated[this.id] >= IterationCount){
+        throw{type:ErrorEnum.CircularReference,cell:this};
+    }
+
+    if(Cell.cellsEvaluated[this.id] == null){
+        Cell.cellsEvaluated[this.id] = 1;
+    }
+    else{
+        Cell.cellsEvaluated[this.id]++;
+    }
+
 
     for(var cellId in this.references){
         var cell = this.references[cellId];
@@ -44,8 +60,17 @@ Cell.prototype.evaluate = function(){
     this.value = evaluationResult;
 
     for(var i =0; i < lexResult.length; i++){
-        if(lexResult[i].type == TokenEnum.GlobalCell){
-            var cell = getGlobalCell(lexResult[i].value);
+        if(lexResult[i].type == TokenEnum.GlobalCell || lexResult[i].type == TokenEnum.GlobalCellName || lexResult[i].type == TokenEnum.LocalCell){
+            var cell;
+            if(lexResult[i].type == TokenEnum.LocalCell){
+                var cellNames = splitGlobalCells(this.id);
+                var table = Table.tables[cellNames.TableName];
+                cell = table.getCell(lexResult[i].value);
+            }
+            else{
+                cell = getGlobalCell(lexResult[i].value);
+            }
+
             cell.referencedBy[this.id] = this;
             this.references[cell.id] = cell;
         }
@@ -53,7 +78,15 @@ Cell.prototype.evaluate = function(){
 
     for(var cellId in this.referencedBy){
         var cell = this.referencedBy[cellId];
-        cell.evaluate();
+        try{
+            cell.evaluate();
+            Cell.cellsEvaluated = [];
+        }
+        catch(e){
+            if(!IterationsAllowed){
+                throw e;
+            }
+        }
     }
 
 };

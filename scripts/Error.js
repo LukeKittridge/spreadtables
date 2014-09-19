@@ -3,5 +3,6 @@
  */
 
 var ErrorEnum  = Object.freeze({
-   DivideByZero : 'DivideByZero'
+   DivideByZero : 'DivideByZero',
+   CircularReference : 'CircularReference'
 });

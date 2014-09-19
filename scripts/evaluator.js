@@ -20,7 +20,9 @@ function evaluate(prefixExpression, currentCell){
             else if (token.type == TokenEnum.GlobalCell){
                 cell = table.getCell(cellNames.Cell);
             }
-
+            if(cell.value == ""){
+                cell.value = 0;
+            }
             stack.push({token:token,value:cell.value});
         }
 
@@ -35,7 +37,9 @@ function evaluate(prefixExpression, currentCell){
                 cell = table.variables[token.value];
             }
 
-
+            if(cell.value == ""){
+                cell.value = 0;
+            }
             stack.push({token:token,value:cell.value});
         }
 
