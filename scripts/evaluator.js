@@ -30,12 +30,7 @@ function evaluate(prefixExpression, currentCell){
             var cellNames = splitGlobalCells(currentCell.id);
             var cell;
             var table = Table.tables[cellNames.TableName];
-            if(token.type == TokenEnum.LocalCell){
-                cell = table.getCell(token.value);
-            }
-            else{
-                cell = table.variables[token.value];
-            }
+            cell = table.getCell(token.value);
 
             if(cell.value == ""){
                 cell.value = 0;

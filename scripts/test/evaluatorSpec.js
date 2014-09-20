@@ -115,10 +115,10 @@ describe("Evaluator Test Suite", function () {
         var actualResult = evaluate(parserResult);
         expect(actualResult).toEqual(expectedResult);
 
-        var lexResult = lex("#test.CV1 + 5/2");
-        var parserResult = parse(lexResult);
-        var expectedResult = 34.5;
-        var actualResult = evaluate(parserResult);
+        lexResult = lex("#test.CV1 + 5/2");
+        parserResult = parse(lexResult);
+        expectedResult = 34.5;
+        actualResult = evaluate(parserResult);
         expect(actualResult).toEqual(expectedResult);
     });
 
@@ -156,5 +156,14 @@ describe("Evaluator Test Suite", function () {
         var cell2 = getGlobalCell("#test.C1");
         cell2.evaluateNewFormula("cell1 + 15");
         expect(cell2.value).toEqual(38);
+    });
+
+    it("Can handle uninitiated global cells", function(){
+        var table = new Table("test", 30, 100);
+        Table.tables[table.name] = table;
+
+        var cell1 = getGlobalCell("#test.B1");
+        cell1.evaluateNewFormula("#test.B2 + 5");
+        expect(cell1.value).toEqual(5);
     });
 });

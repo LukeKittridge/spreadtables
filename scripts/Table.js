@@ -45,19 +45,29 @@ for(var i =0; i < rows; i++){
 }
 
 Table.prototype.getCell = function(cellIdentifier){
-    var regGroups = /([a-zA-Z]+)(\d+)/.exec(cellIdentifier);
-    var columnLetters = regGroups[1].toUpperCase();
-    var row = regGroups[2]-1;
-    var columnPos = 0;
 
-    if(columnLetters.length == 1){
-        columnPos = columnLetters.charCodeAt(0) - 65;
+    var cell;
+
+    if(/^[a-zA-Z]{1,2}[1-9]\d?$/.test(cellIdentifier)) { //If local cell identifier
+        var regGroups = /([a-zA-Z]+)(\d+)/.exec(cellIdentifier);
+        var columnLetters = regGroups[1].toUpperCase();
+        var row = regGroups[2]-1;
+        var columnPos = 0;
+
+        if(columnLetters.length == 1){
+            columnPos = columnLetters.charCodeAt(0) - 65;
+        }
+        else{
+            columnPos = ((columnLetters.charCodeAt(0) - 64) * 26) + (columnLetters.charCodeAt(1) - 65);
+        }
+
+        cell = this.cells[row][columnPos];
     }
-    else{
-        columnPos = ((columnLetters.charCodeAt(0) - 64) * 26) + (columnLetters.charCodeAt(1) - 65);
+    else{ //it's a cell name
+        cell = this.variables[cellIdentifier];
     }
 
-    return this.cells[row][columnPos];
+    return cell;
 };
 
 Table.prototype.addVariable = function(name,cell){

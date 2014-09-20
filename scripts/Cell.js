@@ -56,19 +56,18 @@ Cell.prototype.evaluate = function(){
 
     var lexResult = lex(this.formula);
     var parseResult = parse(lexResult);
-    var evaluationResult = evaluate(parseResult, this);
-    this.value = evaluationResult;
+    this.value = evaluate(parseResult, this);
 
     for(var i =0; i < lexResult.length; i++){
-        if(lexResult[i].type == TokenEnum.GlobalCell || lexResult[i].type == TokenEnum.GlobalCellName || lexResult[i].type == TokenEnum.LocalCell){
-            var cell;
-            if(lexResult[i].type == TokenEnum.LocalCell){
+        var token = lexResult[i];
+        if(token.type == TokenEnum.GlobalCell || token.type == TokenEnum.GlobalCellName || token.type == TokenEnum.LocalCell || token.type == TokenEnum.LocalCellName ){
+            if(token.type == TokenEnum.LocalCell || token.type == TokenEnum.LocalCellName){
                 var cellNames = splitGlobalCells(this.id);
                 var table = Table.tables[cellNames.TableName];
-                cell = table.getCell(lexResult[i].value);
+                cell = table.getCell(token.value);
             }
             else{
-                cell = getGlobalCell(lexResult[i].value);
+                cell = getGlobalCell(token.value);
             }
 
             cell.referencedBy[this.id] = this;
@@ -76,8 +75,8 @@ Cell.prototype.evaluate = function(){
         }
     }
 
-    for(var cellId in this.referencedBy){
-        var cell = this.referencedBy[cellId];
+    for(cellId in this.referencedBy){
+        cell = this.referencedBy[cellId];
         try{
             cell.evaluate();
             Cell.cellsEvaluated = [];
