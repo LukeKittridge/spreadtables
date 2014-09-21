@@ -22,6 +22,7 @@ function drawTable(table){
             docCell.contentEditable = "true";
             docCell.style.left = left + "px";
             docCell.style.top = top + "px";
+            docCell.onblur = function(docCell){update(docCell.target)};
             docTable.appendChild(docCell);
             left +=100;
         }
@@ -32,8 +33,20 @@ function drawTable(table){
     document.body.appendChild(docTable);
 }
 
-function update(cell){
-    var target = document.getElementById('1');
-    //TODO replace eval with some sort of language parser
-    target.innerHTML =  eval(cell.innerHTML);
+function update(docCell){
+    var cell = getGlobalCell(docCell.id);
+    cell.evaluateNewFormula(docCell.innerHTML);
+
+    updateReferencedCells(cell);
+
+    docCell.innerHTML = cell.value;
 };
+
+function updateReferencedCells(cell){
+    for(var cellId in cell.referencedBy){
+        var refCell = cell.referencedBy[cellId];
+        var docReferencedCell = document.getElementById(refCell.id);
+        docReferencedCell.innerHTML = refCell.value;
+        updateReferencedCells(refCell);
+    }
+}

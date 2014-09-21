@@ -31,4 +31,28 @@ describe("Cell Test Suite", function() {
        expect(cell3.value).toEqual(123);
 
    });
+
+    it("Can handle chains of references", function(){
+        var table = new Table('test', 30, 100);
+        Table.tables[table.name] = table;
+
+        var cell1 = getGlobalCell("#test.A1");
+        cell1.evaluateNewFormula("1");
+
+        var cell2 = getGlobalCell("#test.B1");
+        cell2.evaluateNewFormula("2");
+
+        var cell3 = getGlobalCell("#test.C1");
+        cell3.evaluateNewFormula("A1+B1");
+        expect(cell3.value).toEqual(3);
+
+        var cell4 = getGlobalCell("#test.D1");
+        cell4.evaluateNewFormula("C1");
+        expect(cell4.value).toEqual(3);
+
+        cell1.evaluateNewFormula("3");
+        expect(cell3.value).toEqual(5);
+
+        expect(cell4.value).toEqual(5);
+    });
 });
