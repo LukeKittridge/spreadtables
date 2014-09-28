@@ -10,6 +10,7 @@ function Cell(id){
     this.formula = '';
     this.referencedBy = {};
     this.references = {};
+    this.text = '';
 }
 
 Cell.cellsEvaluated = [];
@@ -29,9 +30,16 @@ function splitGlobalCells(globalCellName){
 }
 
 Cell.prototype.evaluateNewFormula = function(formula){
-  this.formula = formula;
-  Cell.cellsEvaluated = [];
-  this.evaluate();
+    if(formula[0] == '='){
+        this.formula = formula;
+    }
+    else{
+        this.text = formula;
+        this.formula = '';
+    }
+    Cell.cellsEvaluated = [];
+    this.evaluate();
+
 };
 
 

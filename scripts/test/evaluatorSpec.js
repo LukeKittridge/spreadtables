@@ -135,12 +135,12 @@ describe("Evaluator Test Suite", function () {
         Table.tables[table.name] = table;
 
         var cell1 = getGlobalCell("#test.B1");
-        cell1.evaluateNewFormula("10");
+        cell1.evaluateNewFormula("=10");
         var cell2 = getGlobalCell("#test.B2");
-        cell2.evaluateNewFormula("23");
+        cell2.evaluateNewFormula("=23");
 
         var cell3 = getGlobalCell("#test.B3");
-        cell3.evaluateNewFormula("B1+B2");
+        cell3.evaluateNewFormula("=B1+B2");
 
         expect(cell3.value).toEqual(33);
     });
@@ -150,11 +150,11 @@ describe("Evaluator Test Suite", function () {
         Table.tables[table.name] = table;
 
         var cell1 = getGlobalCell("#test.B1");
-        cell1.evaluateNewFormula("23");
+        cell1.evaluateNewFormula("=23");
         table.addVariable("cell1", cell1);
 
         var cell2 = getGlobalCell("#test.C1");
-        cell2.evaluateNewFormula("cell1 + 15");
+        cell2.evaluateNewFormula("=cell1 + 15");
         expect(cell2.value).toEqual(38);
     });
 
@@ -163,7 +163,7 @@ describe("Evaluator Test Suite", function () {
         Table.tables[table.name] = table;
 
         var cell1 = getGlobalCell("#test.B1");
-        cell1.evaluateNewFormula("#test.B2 + 5");
+        cell1.evaluateNewFormula("=#test.B2 + 5");
         expect(cell1.value).toEqual(5);
     });
 });

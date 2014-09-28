@@ -9,14 +9,14 @@ describe("Error Test Suite", function(){
 
        var cell1 = getGlobalCell("#test.B1");
        try{
-           cell1.evaluateNewFormula("4/0");
+           cell1.evaluateNewFormula("=4/0");
        }
        catch(e){
            expect(e.type).toEqual(ErrorEnum.DivideByZero);
        }
 
        try{
-           cell1.evaluateNewFormula("3/0.000");
+           cell1.evaluateNewFormula("=3/0.000");
        }
        catch(e){
            expect(e.type).toEqual(ErrorEnum.DivideByZero);
@@ -28,12 +28,12 @@ describe("Error Test Suite", function(){
         Table.tables[table.name] = table;
 
         var cell1 = getGlobalCell("#test.A1");
-        cell1.evaluateNewFormula("B1");
+        cell1.evaluateNewFormula("=B1");
 
         var cell2 = getGlobalCell("#test.B1");
         //cell2.evaluateNewFormula("A1");
 
-        expect(function(){cell2.evaluateNewFormula("A1")}).toThrow();
+        expect(function(){cell2.evaluateNewFormula("=A1")}).toThrow();
     });
 
 //    it("Can handle circular references with global cells", function(){
