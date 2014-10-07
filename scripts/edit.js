@@ -8,6 +8,8 @@ function createTable(name, rows, columns) {
     drawTable(table);
 };
 
+var selectedBorder = '1px solid red';
+var normalBorder = '1px solid black';
 
 function drawTable(table){
     var docTable = document.createElement('div');
@@ -28,14 +30,7 @@ function drawTable(table){
                 docTable.appendChild(axisCell);
             }
             else{
-                var docCell = document.createElement('div');
-                docCell.className = "cell";
-                docCell.id = table.cells[i][j].id;
-                docCell.contentEditable = "true";
-                docCell.style.left = left + "px";
-                docCell.style.top = top + "px";
-                docCell.onblur = function(docCell){update(docCell.target)};
-                docTable.appendChild(docCell);
+                createDocCell(table, i, j, left, top, docTable);
             }
 
             left +=100;
@@ -48,9 +43,10 @@ function drawTable(table){
 }
 
 function update(docCell){
+    docCell.style.border = selectedBorder;
+
     var cell = getGlobalCell(docCell.id);
     cell.evaluateNewFormula(docCell.innerHTML);
-
     updateReferencedCells(cell);
 
     docCell.innerHTML = cell.value;
@@ -92,3 +88,29 @@ function createAxisCell(left, top, j, i, columnReset, letterCount) {
     }
     return {axisCell: axisCell, left: left, columnReset: columnReset, letterCount: letterCount};
 }
+
+function createDocCell(table, i, j, left, top, docTable) {
+    var docCell = document.createElement('div');
+    docCell.className = "cell";
+    docCell.id = table.cells[i][j].id;
+    docCell.contentEditable = "true";
+    docCell.style.left = left + "px";
+    docCell.style.top = top + "px";
+    docCell.onkeypress = function (e){
+        handleKeyPress(e);
+    };
+    docCell.onblur = function (e) {
+        update(e.target)
+    };
+    docTable.appendChild(docCell);
+    return docCell;
+}
+
+function handleKeyPress(event){
+    var docCell = event.target;
+    if(event.charCode == 13){
+        docCell.style.border = normalBorder;
+        document.activeElement.blur();
+    }
+
+};
