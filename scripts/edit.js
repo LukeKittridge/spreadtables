@@ -113,4 +113,11 @@ function handleKeyPress(event){
         document.activeElement.blur();
     }
 
+
 };
+
+function splitCellId(cellId){
+    var cell = cellId.split('.')[1];
+    var regGroups = /([a-zA-Z]+)(\d+)/.exec(cellIdentifier);
+    return {letters : regGroups[0], numbers : regGroups[1]};
+}
