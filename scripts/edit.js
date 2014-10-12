@@ -9,7 +9,10 @@ function createTable(name, rows, columns) {
 };
 
 var selectedBorder = '1px solid red';
-var normalBorder = '1px solid black';
+var normalBorder = '1px solid #d9d9d9';
+var currentCell;
+
+window.onkeydown = handleKeyDown;
 
 function drawTable(table){
     var docTable = document.createElement('div');
@@ -50,7 +53,7 @@ function update(docCell){
     updateReferencedCells(cell);
 
     docCell.innerHTML = cell.value;
-};
+}
 
 function updateReferencedCells(cell){
     for(var cellId in cell.referencedBy){
@@ -96,28 +99,55 @@ function createDocCell(table, i, j, left, top, docTable) {
     docCell.contentEditable = "true";
     docCell.style.left = left + "px";
     docCell.style.top = top + "px";
-    docCell.onkeypress = function (e){
-        handleKeyPress(e);
-    };
     docCell.onblur = function (e) {
         update(e.target)
     };
+    docCell.onfocus = function (e){
+        currentCell = e.target;
+    }
     docTable.appendChild(docCell);
     return docCell;
 }
 
-function handleKeyPress(event){
-    var docCell = event.target;
-    if(event.charCode == 13){
-        docCell.style.border = normalBorder;
+function handleKeyDown(event){
+    if(event.keyCode == 13){ //return
+        currentCell.style.border = normalBorder;
         document.activeElement.blur();
     }
 
+    if(event.keyCode == 37){ //left arrow
+        currentCell.style.border = normalBorder;
+        var leftCellId = getCellIdToLeft(currentCell.id);
+        var leftCell = document.getElementById(leftCellId);
+        leftCell.style.border = selectedBorder;
+        currentCell = leftCell;
+    }
 
-};
+}
+
+function getCellIdToLeft(cellId){
+    var cellParts = splitCellId(cellId);
+    var letters = cellParts.letters;
+
+    if(letters.length==1){
+        if(letters.charCodeAt(0) > 65){
+            letters = String.fromCharCode(letters.charCodeAt(0)-1);
+        }
+    }
+    else if (letters.charCodeAt(1) > 65) {
+        letters = letters.replaceCharAt(1, String.fromCharCode(letters.charCodeAt(1) - 1));
+    }
+    else if (letters.charCodeAt(0) > 65) {
+        letters = String.fromCharCode(letters.charCodeAt(0) - 1) + 'Z';
+    } else {
+        letters = 'Z';
+    }
+    return cellParts.table + '.' + letters + cellParts.numbers;
+}
 
 function splitCellId(cellId){
-    var cell = cellId.split('.')[1];
-    var regGroups = /([a-zA-Z]+)(\d+)/.exec(cellIdentifier);
-    return {letters : regGroups[0], numbers : regGroups[1]};
+    var parts = cellId.split('.');
+    var cell = parts[1];
+    var regGroups = /([a-zA-Z]+)(\d+)/.exec(cell);
+    return {table:parts[0],  letters : regGroups[1], numbers : regGroups[2]};
 }
