@@ -123,6 +123,30 @@ function handleKeyDown(event){
         currentCell = leftCell;
     }
 
+    if(event.keyCode == 38){ //up arrow
+        currentCell.style.border = normalBorder;
+        var aboveCellId = getCellIdAbove(currentCell.id);
+        var aboveCell = document.getElementById(aboveCellId);
+        aboveCell.style.border = selectedBorder;
+        currentCell = aboveCell;
+    }
+
+    if(event.keyCode == 39){ //right arrow
+        currentCell.style.border = normalBorder;
+        var rightCellId = getCellIdToRight(currentCell.id);
+        var rightCell = document.getElementById(rightCellId);
+        rightCell.style.border = selectedBorder;
+        currentCell = rightCell;
+    }
+
+    if(event.keyCode == 40){ //down arrow
+        currentCell.style.border = normalBorder;
+        var belowCellId = getCellIdBelow(currentCell.id);
+        var belowCell = document.getElementById(belowCellId);
+        belowCell.style.border = selectedBorder;
+        currentCell = belowCell;
+    }
+
 }
 
 function getCellIdToLeft(cellId){
@@ -143,6 +167,48 @@ function getCellIdToLeft(cellId){
         letters = 'Z';
     }
     return cellParts.table + '.' + letters + cellParts.numbers;
+}
+
+function getCellIdToRight(cellId){
+    var cellParts = splitCellId(cellId);
+    var letters = cellParts.letters;
+
+    if(letters.length ==1){
+        if(letters.charCodeAt(0) < 90){
+            letters = String.fromCharCode(letters.charCodeAt(0)+1);
+        }
+        else{
+            letters = 'AA';
+        }
+
+    }
+    else{
+        if(letters.charCodeAt(1) < 90){
+            letters = letters.replaceCharAt(1, String.fromCharCode(letters.charCodeAt(1)+1));
+        }
+        else if(letters.charCodeAt(0) <90){
+            letters = String.fromCharCode((letters.charCodeAt(0)+1)) + 'A';
+        }
+    }
+
+    return cellParts.table + '.' + letters + cellParts.numbers;
+}
+
+function getCellIdBelow(cellId){
+    var cellParts = splitCellId(cellId);
+    var numbers = cellParts.numbers;
+    numbers =  parseInt(numbers,10)+1;
+
+    return cellParts.table + '.' + cellParts.letters + numbers;
+}
+
+function getCellIdAbove(cellId){
+    var cellParts = splitCellId(cellId);
+    var numbers = parseInt(cellParts.numbers,10);
+    if(numbers > 1){
+        numbers--;
+    }
+    return cellParts.table + '.' + cellParts.letters + numbers;
 }
 
 function splitCellId(cellId){

@@ -19,7 +19,7 @@ function Table(name, rows, columns){
     var letterCount =0;
     var cellLetters;
     this.variables = {};
-    //TODO Error handling, this will only allow 702 columns
+    //TODO Error handling, this will only allow 702 columns (ZZ)
 for(var i =0; i < rows; i++){
 
     for(var j = 0; j < columns; j++){

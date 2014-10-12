@@ -32,8 +32,52 @@ describe("Edit Test Suite", function(){
     it("Should return the same cell ID", function(){
         var cellId = "#test.A14";
         var expectedResult = "#test.A14";
-        actualResult = getCellIdToLeft(cellId);
+        var actualResult = getCellIdToLeft(cellId);
 
         expect(actualResult).toEqual(expectedResult);
-    })
+    });
+
+    if("Should return the ID of the cell to the right of the given ID", function(){
+       var cellId = "#test.A1";
+        var expectedResult = "#test.B1";
+        var actualResult = getCellIdToRight(cellId);
+
+        expect(actualResult).toEqual(expectedResult);
+
+        var cellId = "#test.Z1";
+        var expectedResult = "#test.AA1";
+        var actualResult = getCellIdToRight(cellId);
+
+        expect(actualResult).toEqual(expectedResult);
+
+        var cellId = "#test.AA1";
+        var expectedResult = "#test.AB1";
+        var actualResult = getCellIdToRight(cellId);
+
+        expect(actualResult).toEqual(expectedResult);
+
+        var cellId = "#test.AZ1";
+        var expectedResult = "#test.BA1";
+        var actualResult = getCellIdToRight(cellId);
+
+        expect(actualResult).toEqual(expectedResult);
+    });
+
+    it("Should return the ID of the cell below the given ID", function(){
+       var cellId = "#test.A1";
+        var expectedResult = "#test.A2";
+        var actualResult = getCellIdBelow(cellId);
+
+        expect(actualResult).toEqual(expectedResult);
+
+    });
+
+    it("Should return the ID of the cell above the given ID", function(){
+        var cellId = "#test.A2";
+        var expectedResult = "#test.A1";
+        var actualResult = getCellIdAbove(cellId);
+
+        expect(actualResult).toEqual(expectedResult);
+
+    });
 });
