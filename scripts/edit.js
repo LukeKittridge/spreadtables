@@ -43,16 +43,24 @@ function drawTable(table){
     }
 
     document.body.appendChild(docTable);
+    currentCell = document.getElementById(table.name + '.A1');
+    currentCell.style.border = selectedBorder;
 }
 
 function update(docCell){
     docCell.style.border = selectedBorder;
 
     var cell = getGlobalCell(docCell.id);
-    cell.evaluateNewFormula(docCell.innerHTML);
+        cell.evaluateNewFormula(docCell.innerHTML);
+    if(docCell.innerHTML[0] == '='){
+        docCell.innerHTML = cell.value;
+    }
+    else{
+        docCell.innerHTML = cell.text;
+    }
     updateReferencedCells(cell);
 
-    docCell.innerHTML = cell.value;
+
 }
 
 function updateReferencedCells(cell){
@@ -96,7 +104,7 @@ function createDocCell(table, i, j, left, top, docTable) {
     var docCell = document.createElement('div');
     docCell.className = "cell";
     docCell.id = table.cells[i][j].id;
-    docCell.contentEditable = "true";
+    docCell.contentEditable = "false";
     docCell.style.left = left + "px";
     docCell.style.top = top + "px";
     docCell.onblur = function (e) {
@@ -105,14 +113,23 @@ function createDocCell(table, i, j, left, top, docTable) {
     docCell.onfocus = function (e){
         currentCell = e.target;
     }
+    docCell.onclick = function (e){
+        currentCell.style.border = normalBorder;
+        currentCell = e.target;
+        docCell.style.border = selectedBorder;
+    }
     docTable.appendChild(docCell);
     return docCell;
 }
 
 function handleKeyDown(event){
     if(event.keyCode == 13){ //return
-        currentCell.style.border = normalBorder;
         document.activeElement.blur();
+        var belowCellId = getCellIdBelow(currentCell.id);
+        belowCell = document.getElementById(belowCellId);
+        currentCell.style.border = normalBorder;
+        belowCell.style.border = selectedBorder;
+        currentCell = belowCell;
     }
 
     if(event.keyCode == 37){ //left arrow
@@ -145,6 +162,11 @@ function handleKeyDown(event){
         var belowCell = document.getElementById(belowCellId);
         belowCell.style.border = selectedBorder;
         currentCell = belowCell;
+    }
+
+    if((event.keyCode >= 48 && event.keyCode <= 90) || (event.keyCode >= 96 && event.keyCode <= 111) || (event.keyCode >= 186 && event.keyCode <= 222)){
+        currentCell.contentEditable = true;
+        currentCell.focus();
     }
 
 }

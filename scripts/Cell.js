@@ -32,13 +32,13 @@ function splitGlobalCells(globalCellName){
 Cell.prototype.evaluateNewFormula = function(formula){
     if(formula[0] == '='){
         this.formula = formula;
+        Cell.cellsEvaluated = [];
+        this.evaluate();
     }
     else{
         this.text = formula;
         this.formula = '';
     }
-    Cell.cellsEvaluated = [];
-    this.evaluate();
 
 };
 
