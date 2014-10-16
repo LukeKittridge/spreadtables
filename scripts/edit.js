@@ -128,6 +128,7 @@ function handleKeyDown(event){
         var belowCellId = getCellIdBelow(currentCell.id);
         belowCell = document.getElementById(belowCellId);
         currentCell.style.border = normalBorder;
+        currentCell.contentEditable = false;
         belowCell.style.border = selectedBorder;
         currentCell = belowCell;
     }
