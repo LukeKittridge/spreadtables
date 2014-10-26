@@ -16,10 +16,12 @@ window.onkeydown = handleKeyDown;
 
 function drawTable(table){
     var docTable = document.createElement('div');
+    docTable.className = "drag"
+    createTableTitleBar(table,docTable);
     docTable.id = table.name;
     //ToDo Improve the drawing process
     var left = 0;
-    var top = 0;
+    var top = titleBarHeight;
     var columnReset =0;
     var letterCount =0;
     for(var i =-1; i < table.cells.length; i++){
@@ -36,15 +38,26 @@ function drawTable(table){
                 createDocCell(table, i, j, left, top, docTable);
             }
 
-            left +=100;
+            left +=cellWidth;
         }
         left =0;
-        top+=22;
+        top+=cellHeight;
     }
 
     document.body.appendChild(docTable);
     currentCell = document.getElementById(table.name + '.A1');
     currentCell.style.border = selectedBorder;
+}
+
+function createTableTitleBar(table,docTable){
+    var tableTitleBar = document.createElement('div');
+    tableTitleBar.className = 'table-title-bar';
+    tableTitleBar.style.width = cellWidth * table.cells.length + yAxisCellWidth + 2 + 'px'; //+2 accounts for 1px borders
+    var ttbText = document.createElement('div');
+    ttbText.className = 'ttb-text';
+    ttbText.innerHTML = table.name;
+    tableTitleBar.appendChild(ttbText);
+    docTable.appendChild(tableTitleBar);
 }
 
 function update(docCell){

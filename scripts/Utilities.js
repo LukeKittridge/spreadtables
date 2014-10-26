@@ -11,3 +11,6 @@
 String.prototype.replaceCharAt = function(index, character){
     return this.substring(0,index) + character + this.substring(index+1);
 }
+
+
+const cellWidth = 100, cellHeight = 22, titleBarHeight = 15, yAxisCellWidth = 50;
