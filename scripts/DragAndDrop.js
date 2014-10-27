@@ -28,16 +28,20 @@ function onMouseDown(e){
 
     //IE left click = 1
     //otherwise 0
-    if((e.button ==1 && window.event != null || e.button ==0) && target.parentNode.className == 'drag'){
+    if((e.button ==1 && window.event != null || e.button ==0) && target.parentNode.className == 'drag' || target.parentNode.parentNode.className == 'drag'){
         _startX = e.clientX;
         _startY = e.clientY;
+
+        if(target.parentNode.parentNode.className == 'drag'){
+                target = target.parentNode;
+        }
 
         _offsetX = ExtractNumber(target.parentNode.style.left);
         _offsetY = ExtractNumber(target.parentNode.style.top);
 
         //bring clicked element to front
-        _oldZIndex = target.style.zIndex;
-        target.style.zIndex = 10000;
+        _oldZIndex = target.parentNode.style.zIndex;
+        target.parentNode.style.zIndex = 10000;
 
         _dragElement = target.parentNode;
 
@@ -47,7 +51,7 @@ function onMouseDown(e){
 
         //prevent text and image selection in IE
         document.onselectstart = function(){return false;};
-        target.ondragstart = function() {return false;};
+        target.parentNode.ondragstart = function() {return false;};
 
         return false;
     }

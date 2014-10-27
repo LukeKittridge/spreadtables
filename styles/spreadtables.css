@@ -31,6 +31,8 @@
     width: 100%;
     background-color: #808080;
     height: 50px;
+    top: 0px;
+    left: 0px;
 }
 
 .table-title-bar{
@@ -40,3 +42,13 @@
 }
 
 .drag { position: relative; }
+
+.button {
+}
+
+#add-button{
+    background-color: #ffffff;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+}
