@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
-    <link rel="stylesheet" type="text/css" href="styles/spreadtables.css"/>
+    <link rel="stylesheet" type="text/css" href="css/spreadtables.css"/>
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
     <script src="scripts/edit.js" type="text/javascript"></script>
     <script src="scripts/Cell.js"></script>
     <script src="scripts/Error.js"></script>
@@ -18,8 +19,17 @@
 <body onload="createTable('test',10,10)">
 
 <div id="button-bar">
-    <div id="add-button">
+    <div id="add-button" onclick="showCreateTableDialogue()">
+        <i class="fa fa-plus fa-lg"></i>
+    </div>
+</div>
 
+<div class="dialogue" id="add-table-dialogue">
+    <div class="dialogue-title">
+        Add Table
+    </div>
+    <div class="dialogue-content">
+        Table Name:
     </div>
 </div>
 
