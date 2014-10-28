@@ -72,9 +72,63 @@
 
     z-index: 1000;
 
-    padding: 20px;
     background: white;
     color: white;
-    text-align: center;
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.50);
+    height: 400px;
+}
+
+.dialogue-header {
+    background-color: #00897b;
+    height: 50px;
+    text-align: center;
+    box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.50);
+}
+
+.dialogue-title-text {
+    line-height: 50px;
+    font-size: xx-large;
+    text-shadow: 1px 1px black;
+}
+
+.dialogue-content {
+    padding: 50px;
+    color: #000000;
+    font-size: x-large;
+    height: 200px;
+}
+
+.dialogue ul{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    text-align: right;
+    float: left;
+}
+
+.dialogue li{
+    margin-bottom: 40px;
+    text-align: left;
+    text-shadow: 0 1px 1px #fff;
+}
+
+.dialogue label input{
+    float: right;
+}
+
+.dialogue-footer {
+    background-color: #00897b;
+    height: 50px;
+    box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.50);
+}
+
+.dialogue-button{
+    height: 30px;
+    background-color: #ffffff;
+    margin: 10px 10px 0 0;
+    line-height: 30px;
+    text-align: center;
+    color: #000000;
+    padding: 0 7px 0 7px;
+    float: right;
 }
