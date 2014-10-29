@@ -1,6 +1,10 @@
 #table1 {
 }
 
+body{
+    font-family: 'Roboto', sans-serif;
+}
+
 .cell{
     width: 100px;
     height: 22px;
@@ -38,7 +42,7 @@
 .table-title-bar{
     position: relative;
     height: 15px;
-    background-color: #000088;
+    background-color: #4db6ac;
 }
 
 .drag { position: relative; }
@@ -131,4 +135,20 @@
     color: #000000;
     padding: 0 7px 0 7px;
     float: right;
+    cursor: default;
+}
+
+.dialogue-button:hover{
+    background-color: #e0f2f1;
+}
+
+.negative-button{
+    background-color: #00695c;
+}
+.negative-button:hover{
+    background-color: #004d40;
+}
+
+#add-table-dialogue {
+    visibility: hidden;
 }

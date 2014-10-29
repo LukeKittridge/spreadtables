@@ -3,6 +3,7 @@
 <head lang="en">
     <link rel="stylesheet" type="text/css" href="css/spreadtables.css"/>
     <link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
     <script src="scripts/edit.js" type="text/javascript"></script>
     <script src="scripts/Cell.js"></script>
     <script src="scripts/Error.js"></script>
@@ -13,6 +14,7 @@
     <script src="scripts/Table.js"></script>
     <script src="scripts/Utilities.js"></script>
     <script src="scripts/DragAndDrop.js"></script>
+    <script src="scripts/MenuActions.js"></script>
     <script src="scripts/3rdParty/Queue.src.js"></script>
     <title></title>
 </head>
@@ -31,22 +33,23 @@
     <div class="dialogue-content">
         <ul>
             <li>
-                <label>Table Name: &nbsp <input type="text"/> </label>
+                <label>Table Name: &nbsp <input type="text" id="at-table-name"/> </label>
             </li>
             <li>
-                <label>Rows: <input type="text" size="2"/> </label>
+                <label>Columns: <input type="text" size="2" id="at-table-columns"/> </label>
             </li>
             <li>
-                <label>Columns: <input type="text" size="2"/> </label>
+                <label>Rows: <input type="text" size="2" id="at-table-rows"/> </label>
             </li>
+
         </ul>
 
     </div>
     <div class="dialogue-footer">
-    <div class="dialogue-button">
+    <div class="dialogue-button" onclick="addTable()">
         Add Table
     </div>
-        <div class="dialogue-button">
+        <div class="dialogue-button negative-button" onclick="hideCreateTableDialogue()">
             Cancel
         </div>
     </div>

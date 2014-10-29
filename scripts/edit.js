@@ -14,9 +14,17 @@ var currentCell;
 
 window.onkeydown = handleKeyDown;
 
+var ApplicationStates = Object.freeze({
+    CellSelected : 'CellSelected',
+    CellEntry: 'CellEntry',
+    Menu: 'Menu'
+});
+
+var applicationState = ApplicationStates.CellSelected;
+
 function drawTable(table){
     var docTable = document.createElement('div');
-    docTable.className = "drag"
+    docTable.className = "drag";
     createTableTitleBar(table,docTable);
     docTable.id = table.name;
     //ToDo Improve the drawing process
@@ -52,7 +60,7 @@ function drawTable(table){
 function createTableTitleBar(table,docTable){
     var tableTitleBar = document.createElement('div');
     tableTitleBar.className = 'table-title-bar';
-    tableTitleBar.style.width = cellWidth * table.cells.length + yAxisCellWidth + 2 + 'px'; //+2 accounts for 1px borders
+    tableTitleBar.style.width = cellWidth * table.cells[0].length + yAxisCellWidth + 2 + 'px'; //+2 accounts for 1px borders
     var ttbText = document.createElement('div');
     ttbText.className = 'ttb-text';
     ttbText.innerHTML = table.name;
@@ -136,6 +144,11 @@ function createDocCell(table, i, j, left, top, docTable) {
 }
 
 function handleKeyDown(event){
+
+    if(applicationState == ApplicationStates.Menu){
+        return null;
+    }
+
     if(event.keyCode == 13){ //return
         document.activeElement.blur();
         var belowCellId = getCellIdBelow(currentCell.id);
@@ -253,3 +266,4 @@ function splitCellId(cellId){
     var regGroups = /([a-zA-Z]+)(\d+)/.exec(cell);
     return {table:parts[0],  letters : regGroups[1], numbers : regGroups[2]};
 }
+

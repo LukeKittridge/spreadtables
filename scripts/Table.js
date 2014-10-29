@@ -41,7 +41,7 @@ for(var i =0; i < rows; i++){
     letterCount = 0;
     columnReset = 0;
 }
-
+    Table.tablesCreated++;
 }
 
 Table.prototype.getCell = function(cellIdentifier){
@@ -75,6 +75,7 @@ Table.prototype.addVariable = function(name,cell){
 }
 
 Table.tables = {};
+Table.tablesCreated =0;
 
 function getGlobalCell(globalCellIdentifier){
     var cellNames = splitGlobalCells(globalCellIdentifier);
