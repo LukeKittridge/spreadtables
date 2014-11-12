@@ -41,8 +41,16 @@ body{
 
 .table-title-bar{
     position: relative;
-    height: 15px;
+    height: 20px;
     background-color: #4db6ac;
+}
+
+.table-min-button{
+    float: right;
+    height: 10px;
+    top: -21px;
+    position: relative;
+    margin-right: 5px;
 }
 
 .drag { position: relative; }
@@ -151,4 +159,23 @@ body{
 
 #add-table-dialogue {
     visibility: hidden;
+}
+
+#table-side-bar {
+}
+
+.side-bar-element{
+    background-color: #4db6ac;
+    width: 70px;
+    height: 20px;
+    position: relative;
+    top: 60px;
+    left: -10px;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.side-bar-element-plus{
+    visibility: hidden;
+    float: right;
 }

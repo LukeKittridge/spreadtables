@@ -25,8 +25,8 @@ var applicationState = ApplicationStates.CellSelected;
 function drawTable(table){
     var docTable = document.createElement('div');
     docTable.className = "drag";
-    createTableTitleBar(table,docTable);
     docTable.id = table.name;
+    createTableTitleBar(table,docTable);
     //ToDo Improve the drawing process
     var left = 0;
     var top = titleBarHeight;
@@ -65,6 +65,33 @@ function createTableTitleBar(table,docTable){
     ttbText.className = 'ttb-text';
     ttbText.innerHTML = table.name;
     tableTitleBar.appendChild(ttbText);
+    var sideBarElement = document.createElement('div');
+    sideBarElement.className = "side-bar-element";
+    sideBarElement.id = docTable.id + '_sideBarElement';
+    var sideBar = document.getElementById('table-side-bar');
+    sideBar.appendChild(sideBarElement);
+    sideBarElement.innerHTML = docTable.id;
+    var elementPlus = document.createElement('div');
+    elementPlus.className = 'side-bar-element-plus';
+    elementPlus.innerHTML = "<i class=\'fa fa-plus\'></i>";
+    elementPlus.id = docTable.id + '_element-plus';
+    sideBarElement.appendChild(elementPlus);
+    sideBarElement.onclick = function (e) {
+        var tableId = e.target.id.split('_')[0] == '' ? e.target.parentNode.parentNode.id.split('_')[0] : e.target.id.split('_')[0];
+        var table = document.getElementById(tableId);
+        var elementPlus = document.getElementById(tableId+'_element-plus');
+        elementPlus.style.visibility = 'hidden';
+        table.style.visibility = 'visible';
+    }
+    var minimiseButton = document.createElement('div');
+    minimiseButton.className = 'table-min-button';
+    minimiseButton.innerHTML = "<i class=\'fa fa-minus\'></i>";
+    minimiseButton.onclick = function (e){
+        e.target.parentNode.parentNode.parentNode.style.visibility = 'hidden';
+        var sideElement = document.getElementById(e.target.parentNode.parentNode.parentNode.id + '_sideBarElement');
+        sideElement.children[0].style.visibility = 'visible';
+    }
+    tableTitleBar.appendChild(minimiseButton);
     docTable.appendChild(tableTitleBar);
 }
 
@@ -133,12 +160,12 @@ function createDocCell(table, i, j, left, top, docTable) {
     };
     docCell.onfocus = function (e){
         currentCell = e.target;
-    }
+    };
     docCell.onclick = function (e){
         currentCell.style.border = normalBorder;
         currentCell = e.target;
         docCell.style.border = selectedBorder;
-    }
+    };
     docTable.appendChild(docCell);
     return docCell;
 }
