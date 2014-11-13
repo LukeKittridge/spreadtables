@@ -175,6 +175,10 @@ body{
     margin-bottom: 10px;
 }
 
+.side-bar-element:hover{
+    width: 85px;
+}
+
 .side-bar-element-plus{
     visibility: hidden;
     float: right;
