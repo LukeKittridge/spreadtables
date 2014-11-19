@@ -54,6 +54,10 @@ function drawTable(table){
                 columnReset = __ret.columnReset;
                 letterCount = __ret.letterCount;
                 docTable.appendChild(axisCell);
+                if(j == (table.cells[0].length -1)){
+                    table.maxTableLetters = __ret.axisCell.innerHTML;
+                    table.maxTableNumbers = table.cells.length;
+                }
             }
             else{
                 createDocCell(table, i, j, left, top, docTable);
@@ -257,22 +261,24 @@ function getCellIdToLeft(cellId){
 function getCellIdToRight(cellId){
     var cellParts = splitCellId(cellId);
     var letters = cellParts.letters;
+    var table = Table.tables[cellParts.table];
+    if(table.maxTableLetters != letters){
+        if(letters.length ==1){
+            if(letters.charCodeAt(0) < 90){
+                letters = String.fromCharCode(letters.charCodeAt(0)+1);
+            }
+            else{
+                letters = 'AA';
+            }
 
-    if(letters.length ==1){
-        if(letters.charCodeAt(0) < 90){
-            letters = String.fromCharCode(letters.charCodeAt(0)+1);
         }
         else{
-            letters = 'AA';
-        }
-
-    }
-    else{
-        if(letters.charCodeAt(1) < 90){
-            letters = letters.replaceCharAt(1, String.fromCharCode(letters.charCodeAt(1)+1));
-        }
-        else if(letters.charCodeAt(0) <90){
-            letters = String.fromCharCode((letters.charCodeAt(0)+1)) + 'A';
+            if(letters.charCodeAt(1) < 90){
+                letters = letters.replaceCharAt(1, String.fromCharCode(letters.charCodeAt(1)+1));
+            }
+            else if(letters.charCodeAt(0) <90){
+                letters = String.fromCharCode((letters.charCodeAt(0)+1)) + 'A';
+            }
         }
     }
 
@@ -280,10 +286,13 @@ function getCellIdToRight(cellId){
 }
 
 function getCellIdBelow(cellId){
+
     var cellParts = splitCellId(cellId);
     var numbers = cellParts.numbers;
-    numbers =  parseInt(numbers,10)+1;
-
+    if(numbers < Table.tables[cellParts.table].maxTableNumbers){
+        numbers =  parseInt(numbers,10)+1;
+    }
+    
     return cellParts.table + '.' + cellParts.letters + numbers;
 }
 
