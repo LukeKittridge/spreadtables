@@ -183,3 +183,13 @@ body{
     visibility: hidden;
     float: right;
 }
+
+#formula-bar {
+    width: 70%;
+    height: 30px;
+    position: absolute;
+    top: 50px;
+    border: 1px solid black;
+    left: 15%;
+    right: 30%;
+}

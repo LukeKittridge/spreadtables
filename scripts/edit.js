@@ -17,11 +17,15 @@ window.onkeydown = handleKeyDown;
 var ApplicationStates = Object.freeze({
     CellSelected : 'CellSelected',
     CellEntry: 'CellEntry',
-    Menu: 'Menu'
-
+    Menu: 'Menu',
+    FormularBar: 'FormulaBar'
 });
 
 var applicationState = ApplicationStates.CellSelected;
+
+function formulaBarSelected(){
+    applicationState = ApplicationStates.FormularBar;
+}
 
 function changeCell(newCell){
     if(newCell != currentCell) {
@@ -32,6 +36,10 @@ function changeCell(newCell){
         }
         newCell.style.border = selectedBorder;
         currentCell = newCell;
+
+        var cell = getGlobalCell(currentCell.id);
+        var formularBar = document.getElementById('formula-bar');
+        formularBar.innerHTML = cell.formula;
     }
 }
 
@@ -190,51 +198,65 @@ function handleKeyDown(event){
         return null;
     }
 
-    if(event.keyCode >= 37 && event.keyCode <= 40){ //arrow keys
-        event.preventDefault();
+    if(applicationState != ApplicationStates.FormularBar){
+        if(event.keyCode >= 37 && event.keyCode <= 40){ //arrow keys
+            event.preventDefault();
 
-        if(event.keyCode == 37){ //left arrow
-            var leftCellId = getCellIdToLeft(currentCell.id);
-            var leftCell = document.getElementById(leftCellId);
-            changeCell(leftCell);
+            if(event.keyCode == 37){ //left arrow
+                var leftCellId = getCellIdToLeft(currentCell.id);
+                var leftCell = document.getElementById(leftCellId);
+                changeCell(leftCell);
+            }
+
+            if(event.keyCode == 38){ //up arrow
+                var aboveCellId = getCellIdAbove(currentCell.id);
+                var aboveCell = document.getElementById(aboveCellId);
+                changeCell(aboveCell);
+            }
+
+            if(event.keyCode == 39){ //right arrow
+                var rightCellId = getCellIdToRight(currentCell.id);
+                var rightCell = document.getElementById(rightCellId);
+                changeCell(rightCell);
+            }
+
+            if(event.keyCode == 40){ //down arrow
+                var belowCellId = getCellIdBelow(currentCell.id);
+                var belowCell = document.getElementById(belowCellId);
+                changeCell(belowCell);
+            }
         }
 
-        if(event.keyCode == 38){ //up arrow
-            var aboveCellId = getCellIdAbove(currentCell.id);
-            var aboveCell = document.getElementById(aboveCellId);
-            changeCell(aboveCell);
-        }
-
-        if(event.keyCode == 39){ //right arrow
-            var rightCellId = getCellIdToRight(currentCell.id);
-            var rightCell = document.getElementById(rightCellId);
-            changeCell(rightCell);
-        }
-
-        if(event.keyCode == 40){ //down arrow
-            var belowCellId = getCellIdBelow(currentCell.id);
-            var belowCell = document.getElementById(belowCellId);
-            changeCell(belowCell);
+        if((event.keyCode >= 48 && event.keyCode <= 90) || (event.keyCode >= 96 && event.keyCode <= 111) || (event.keyCode >= 186 && event.keyCode <= 222)){
+            currentCell.contentEditable = true;
+            currentCell.focus();
+            console.log("Cell focused");
         }
     }
 
+
     if(event.keyCode == 13){ //return
+        if(applicationState == ApplicationStates.FormularBar){
+            var formulaBar = document.getElementById('formula-bar');
+            formulaBar.blur();
+            formulaBar.contentEditable = false;
+            currentCell.innerHTML = formulaBar.innerHTML;
+            applicationState = ApplicationStates.CellSelected;
+            update(currentCell);
+            formulaBar.contentEditable = true;
+        }
         document.activeElement.blur();
         var belowCellId = getCellIdBelow(currentCell.id);
         belowCell = document.getElementById(belowCellId);
         currentCell.style.border = normalBorder;
         currentCell.contentEditable = false;
         belowCell.style.border = selectedBorder;
-        currentCell = belowCell;
+        changeCell(belowCell);
     }
 
 
 
-    if((event.keyCode >= 48 && event.keyCode <= 90) || (event.keyCode >= 96 && event.keyCode <= 111) || (event.keyCode >= 186 && event.keyCode <= 222)){
-        currentCell.contentEditable = true;
-        currentCell.focus();
-        console.log("Cell focused");
-    }
+
 
 }
 
@@ -292,7 +314,7 @@ function getCellIdBelow(cellId){
     if(numbers < Table.tables[cellParts.table].maxTableNumbers){
         numbers =  parseInt(numbers,10)+1;
     }
-    
+
     return cellParts.table + '.' + cellParts.letters + numbers;
 }
 
