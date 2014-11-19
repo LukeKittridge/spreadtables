@@ -18,9 +18,22 @@ var ApplicationStates = Object.freeze({
     CellSelected : 'CellSelected',
     CellEntry: 'CellEntry',
     Menu: 'Menu'
+
 });
 
 var applicationState = ApplicationStates.CellSelected;
+
+function changeCell(newCell){
+    if(newCell != currentCell) {
+        if (currentCell != null) {
+            currentCell.blur();
+            currentCell.style.border = normalBorder;
+
+        }
+        newCell.style.border = selectedBorder;
+        currentCell = newCell;
+    }
+}
 
 function drawTable(table){
     var docTable = document.createElement('div');
@@ -53,8 +66,7 @@ function drawTable(table){
     }
 
     document.body.appendChild(docTable);
-    currentCell = document.getElementById(table.name + '.A1');
-    currentCell.style.border = selectedBorder;
+    changeCell(document.getElementById(table.name + '.A1'));
 }
 
 function createTableTitleBar(table,docTable){
@@ -159,12 +171,10 @@ function createDocCell(table, i, j, left, top, docTable) {
         update(e.target)
     };
     docCell.onfocus = function (e){
-        currentCell = e.target;
+        changeCell(e.target);
     };
     docCell.onclick = function (e){
-        currentCell.style.border = normalBorder;
-        currentCell = e.target;
-        docCell.style.border = selectedBorder;
+        changeCell(e.target);
     };
     docTable.appendChild(docCell);
     return docCell;
@@ -174,6 +184,34 @@ function handleKeyDown(event){
 
     if(applicationState == ApplicationStates.Menu){
         return null;
+    }
+
+    if(event.keyCode >= 37 && event.keyCode <= 40){ //arrow keys
+        event.preventDefault();
+
+        if(event.keyCode == 37){ //left arrow
+            var leftCellId = getCellIdToLeft(currentCell.id);
+            var leftCell = document.getElementById(leftCellId);
+            changeCell(leftCell);
+        }
+
+        if(event.keyCode == 38){ //up arrow
+            var aboveCellId = getCellIdAbove(currentCell.id);
+            var aboveCell = document.getElementById(aboveCellId);
+            changeCell(aboveCell);
+        }
+
+        if(event.keyCode == 39){ //right arrow
+            var rightCellId = getCellIdToRight(currentCell.id);
+            var rightCell = document.getElementById(rightCellId);
+            changeCell(rightCell);
+        }
+
+        if(event.keyCode == 40){ //down arrow
+            var belowCellId = getCellIdBelow(currentCell.id);
+            var belowCell = document.getElementById(belowCellId);
+            changeCell(belowCell);
+        }
     }
 
     if(event.keyCode == 13){ //return
@@ -186,41 +224,12 @@ function handleKeyDown(event){
         currentCell = belowCell;
     }
 
-    if(event.keyCode == 37){ //left arrow
-        currentCell.style.border = normalBorder;
-        var leftCellId = getCellIdToLeft(currentCell.id);
-        var leftCell = document.getElementById(leftCellId);
-        leftCell.style.border = selectedBorder;
-        currentCell = leftCell;
-    }
 
-    if(event.keyCode == 38){ //up arrow
-        currentCell.style.border = normalBorder;
-        var aboveCellId = getCellIdAbove(currentCell.id);
-        var aboveCell = document.getElementById(aboveCellId);
-        aboveCell.style.border = selectedBorder;
-        currentCell = aboveCell;
-    }
-
-    if(event.keyCode == 39){ //right arrow
-        currentCell.style.border = normalBorder;
-        var rightCellId = getCellIdToRight(currentCell.id);
-        var rightCell = document.getElementById(rightCellId);
-        rightCell.style.border = selectedBorder;
-        currentCell = rightCell;
-    }
-
-    if(event.keyCode == 40){ //down arrow
-        currentCell.style.border = normalBorder;
-        var belowCellId = getCellIdBelow(currentCell.id);
-        var belowCell = document.getElementById(belowCellId);
-        belowCell.style.border = selectedBorder;
-        currentCell = belowCell;
-    }
 
     if((event.keyCode >= 48 && event.keyCode <= 90) || (event.keyCode >= 96 && event.keyCode <= 111) || (event.keyCode >= 186 && event.keyCode <= 222)){
         currentCell.contentEditable = true;
         currentCell.focus();
+        console.log("Cell focused");
     }
 
 }
