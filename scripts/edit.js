@@ -18,13 +18,18 @@ var ApplicationStates = Object.freeze({
     CellSelected : 'CellSelected',
     CellEntry: 'CellEntry',
     Menu: 'Menu',
-    FormularBar: 'FormulaBar'
+    FormulaBar: 'FormulaBar'
 });
 
 var applicationState = ApplicationStates.CellSelected;
 
 function formulaBarSelected(){
-    applicationState = ApplicationStates.FormularBar;
+    if(applicationState == ApplicationStates.CellSelected || applicationState == ApplicationStates.CellEntry){
+        var formulaBar =document.getElementById('formula-bar');
+        formulaBar.contentEditable = 'true';
+        formulaBar.focus();
+    }
+    applicationState = ApplicationStates.FormulaBar;
 }
 
 function changeCell(newCell){
@@ -45,7 +50,7 @@ function changeCell(newCell){
 
 function drawTable(table){
     var docTable = document.createElement('div');
-    docTable.className = "drag";
+    docTable.className = "table";
     docTable.id = table.name;
     createTableTitleBar(table,docTable);
     //ToDo Improve the drawing process
@@ -83,7 +88,7 @@ function drawTable(table){
 
 function createTableTitleBar(table,docTable){
     var tableTitleBar = document.createElement('div');
-    tableTitleBar.className = 'table-title-bar';
+    tableTitleBar.className = 'table-title-bar drag';
     tableTitleBar.style.width = cellWidth * table.cells[0].length + yAxisCellWidth + 2 + 'px'; //+2 accounts for 1px borders
     var ttbText = document.createElement('div');
     ttbText.className = 'ttb-text';
@@ -180,17 +185,27 @@ function createDocCell(table, i, j, left, top, docTable) {
     docCell.style.left = left + "px";
     docCell.style.top = top + "px";
     docCell.onblur = function (e) {
-        update(e.target)
+        if(applicationState != applicationState.FormulaBar){
+            update(e.target)
+        }
+        applicationState = ApplicationStates.CellSelected;
     };
     docCell.onfocus = function (e){
         changeCell(e.target);
     };
     docCell.onclick = function (e){
-        changeCell(e.target);
+        if(applicationState == ApplicationStates.CellEntry){
+            currentCell.innerHTML += e.target.id;
+        }
+    else{
+            changeCell(e.target);
+        }
+
     };
     docCell.addEventListener("input", function(e){
         var formulaBar = document.getElementById('formula-bar');
         formulaBar.innerHTML = e.currentTarget.innerHTML;
+        applicationState = ApplicationStates.CellEntry;
     });
     docTable.appendChild(docCell);
     return docCell;
@@ -202,7 +217,7 @@ function handleKeyDown(event) {
         return null;
     }
 
-    if(applicationState != ApplicationStates.FormularBar){
+    if(applicationState != ApplicationStates.FormulaBar){
         if(event.keyCode >= 37 && event.keyCode <= 40){ //arrow keys
             event.preventDefault();
 
@@ -240,7 +255,7 @@ function handleKeyDown(event) {
 
 
     if(event.keyCode == 13){ //return
-        if(applicationState == ApplicationStates.FormularBar){
+        if(applicationState == ApplicationStates.FormulaBar){
             var formulaBar = document.getElementById('formula-bar');
             formulaBar.blur();
             formulaBar.contentEditable = false;

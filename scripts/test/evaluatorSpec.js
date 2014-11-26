@@ -97,7 +97,7 @@ describe("Evaluator Test Suite", function () {
        Table.tables['test'].cells[0][99].value = 32;
        table.addVariable("testVar", Table.tables['test'].cells[0][99]);
 
-       var lexResult = lex("7+#test.testVar");
+       var lexResult = lex("7+test.testVar");
        var parserResult = parse(lexResult);
        var expectedResult = 39;
        var actualResult = evaluate(parserResult);
@@ -109,13 +109,13 @@ describe("Evaluator Test Suite", function () {
         Table.tables[table.name] = table;
         Table.tables['test'].cells[0][99].value = 32;
 
-        var lexResult = lex("5+#test.CV1/2");
+        var lexResult = lex("5+test.CV1/2");
         var parserResult = parse(lexResult);
         var expectedResult = 21;
         var actualResult = evaluate(parserResult);
         expect(actualResult).toEqual(expectedResult);
 
-        lexResult = lex("#test.CV1 + 5/2");
+        lexResult = lex("test.CV1 + 5/2");
         parserResult = parse(lexResult);
         expectedResult = 34.5;
         actualResult = evaluate(parserResult);
@@ -163,7 +163,7 @@ describe("Evaluator Test Suite", function () {
         Table.tables[table.name] = table;
 
         var cell1 = getGlobalCell("#test.B1");
-        cell1.evaluateNewFormula("=#test.B2 + 5");
+        cell1.evaluateNewFormula("=test.B2 + 5");
         expect(cell1.value).toEqual(5);
     });
 });

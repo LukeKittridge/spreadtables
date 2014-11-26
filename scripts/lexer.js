@@ -94,10 +94,10 @@ function getVariableType(variableName){
     else if(/^[a-zA-Z]{1,2}[1-9]\d?$/.test(variableName)){
         return TokenEnum.LocalCell;
     }
-    else if(/^#\w+.[a-zA-Z](?:[a-zA-Z][a-zA-Z]\w*)?$/.test(variableName)){
+    else if(/^\w+.[a-zA-Z](?:[a-zA-Z][a-zA-Z]\w*)?$/.test(variableName)){
        return TokenEnum.GlobalCellName;
     }
-    else if(/^#\w+.[a-zA-Z]{1,2}[1-9]\d?$/.test(variableName)){
+    else if(/^\w+.[a-zA-Z]{1,2}[1-9]\d?$/.test(variableName)){
         return TokenEnum.GlobalCell;
     }
     else{

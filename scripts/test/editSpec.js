@@ -64,8 +64,11 @@ describe("Edit Test Suite", function(){
     });
 
     it("Should return the ID of the cell below the given ID", function(){
-       var cellId = "#test.A1";
-        var expectedResult = "#test.A2";
+        var table = new Table('test',30,100); //Now need to create the table as the code expects it to exist.
+        table.maxTableNumbers = table.cells.length;
+        Table.tables[table.name] = table;
+       var cellId = "test.A1";
+        var expectedResult = "test.A2";
         var actualResult = getCellIdBelow(cellId);
 
         expect(actualResult).toEqual(expectedResult);

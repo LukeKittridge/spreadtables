@@ -126,14 +126,14 @@ describe("Lexer Test Suite", function(){
     });
 
     it("can handle global cell names", function(){
-        var expectedResult = [{ type: TokenEnum.GlobalCellName, value: "#test.testCell", start:0, end:13 }];
-        var result = lex("#test.testCell");
+        var expectedResult = [{ type: TokenEnum.GlobalCellName, value: "test.testCell", start:0, end:12 }];
+        var result = lex("test.testCell");
         expect(result).toEqual(expectedResult);
     });
 
     it("can handle global cells", function(){
-        var expectedResult = [{ type: TokenEnum.GlobalCell, value: "#test.A1", start:0, end:7 }];
-        var result = lex("#test.A1");
+        var expectedResult = [{ type: TokenEnum.GlobalCell, value: "test.A1", start:0, end:6 }];
+        var result = lex("test.A1");
         expect(result).toEqual(expectedResult);
     });
 

@@ -6,6 +6,7 @@
 
 var _startX =0;
 var _startY =0;
+
 var _offsetX =0;
 var _offsetY =0;
 var _dragElement;
@@ -26,13 +27,9 @@ function onMouseDown(e){
 
     var target = e.target != null ? e.target : e.srcElement;
 
-    if(target.parentNode != null){
-        if(target.parentNode.parentNode != null && target.parentNode.parentNode.className == 'drag'){
-            target = target.parentNode.parentNode;
-        }
-        else{
+    if(target.parentNode != null && target.parentNode.classList.contains('drag')){
             target = target.parentNode;
-        }
+
     }
     else{
         return false;
@@ -40,13 +37,14 @@ function onMouseDown(e){
 
     //IE left click = 1
     //otherwise 0
-    if((e.button ==1 && window.event != null || e.button ==0) && target.className == 'drag'){
+    if((e.button ==1 && window.event != null || e.button ==0) && target.classList.contains('drag')){
         _startX = e.clientX;
         _startY = e.clientY;
 
 
-        _offsetX = ExtractNumber(target.style.left);
-        _offsetY = ExtractNumber(target.style.top);
+        _offsetX = ExtractNumber(target.parentNode.style.left);
+        _offsetY = ExtractNumber(target.parentNode.style.top);
+
 
         //bring clicked element to front
         _oldZIndex = target.style.zIndex;
@@ -71,8 +69,9 @@ function onMouseMove(e)
     if(e == null)
          e = window.event;
 
-    _dragElement.style.left = (_offsetX + e.clientX - _startX) + 'px';
-    _dragElement.style.top = (_offsetY + e.clientY - _startY) + 'px';
+    _dragElement.parentNode.style.left = (_offsetX + e.clientX - _startX) + 'px';
+    _dragElement.parentNode.style.top = (_offsetY + e.clientY - _startY) + 'px';
+
 
 }
 

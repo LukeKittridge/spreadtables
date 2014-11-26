@@ -14,8 +14,8 @@ describe("Cell Test Suite", function() {
        var cell2 = getGlobalCell("#test.C1");
        var cell3 = getGlobalCell("#test.CB14");
 
-       cell2.evaluateNewFormula("=#test.B1 + 5");
-       cell3.evaluateNewFormula("=#test.C1 + #test.B1");
+       cell2.evaluateNewFormula("=test.B1 + 5");
+       cell3.evaluateNewFormula("=test.C1 + test.B1");
        expect(cell2.value).toEqual(50);
        expect(cell3.value).toEqual(95);
 
