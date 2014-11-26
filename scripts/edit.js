@@ -188,11 +188,15 @@ function createDocCell(table, i, j, left, top, docTable) {
     docCell.onclick = function (e){
         changeCell(e.target);
     };
+    docCell.addEventListener("input", function(e){
+        var formulaBar = document.getElementById('formula-bar');
+        formulaBar.innerHTML = e.currentTarget.innerHTML;
+    });
     docTable.appendChild(docCell);
     return docCell;
 }
 
-function handleKeyDown(event){
+function handleKeyDown(event) {
 
     if(applicationState == ApplicationStates.Menu){
         return null;
