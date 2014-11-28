@@ -2,29 +2,16 @@
  * Created by Luke Kittridge on 27/07/2014.
  */
 
-function createTable(name, rows, columns) {
-    var table = new Table(name, rows, columns);
-    Table.tables[table.name] = table;
-    drawTable(table);
-};
 
-var selectedBorder = '1px solid red';
-var normalBorder = '1px solid #d9d9d9';
-var currentCell;
+
+
 
 window.onkeydown = handleKeyDown;
 
-var ApplicationStates = Object.freeze({
-    CellSelected : 'CellSelected',
-    CellEntry: 'CellEntry',
-    Menu: 'Menu',
-    FormulaBar: 'FormulaBar'
-});
 
-var applicationState = ApplicationStates.CellSelected;
 
 function formulaBarSelected(){
-    if(applicationState == ApplicationStates.CellSelected || applicationState == ApplicationStates.CellEntry){
+    if(applicationState == ApplicationStates.CellSelected || applicationState == ApplicationStates.EditingCell){
         var formulaBar =document.getElementById('formula-bar');
         formulaBar.contentEditable = 'true';
         formulaBar.focus();
@@ -32,21 +19,7 @@ function formulaBarSelected(){
     applicationState = ApplicationStates.FormulaBar;
 }
 
-function changeCell(newCell){
-    if(newCell != currentCell) {
-        if (currentCell != null) {
-            currentCell.blur();
-            currentCell.style.border = normalBorder;
 
-        }
-        newCell.style.border = selectedBorder;
-        currentCell = newCell;
-
-        var cell = getGlobalCell(currentCell.id);
-        var formularBar = document.getElementById('formula-bar');
-        formularBar.innerHTML = cell.formula;
-    }
-}
 
 function drawTable(table){
     var docTable = document.createElement('div');
@@ -94,24 +67,8 @@ function createTableTitleBar(table,docTable){
     ttbText.className = 'ttb-text';
     ttbText.innerHTML = table.name;
     tableTitleBar.appendChild(ttbText);
-    var sideBarElement = document.createElement('div');
-    sideBarElement.className = "side-bar-element";
-    sideBarElement.id = docTable.id + '_sideBarElement';
-    var sideBar = document.getElementById('table-side-bar');
-    sideBar.appendChild(sideBarElement);
-    sideBarElement.innerHTML = docTable.id;
-    var elementPlus = document.createElement('div');
-    elementPlus.className = 'side-bar-element-plus';
-    elementPlus.innerHTML = "<i class=\'fa fa-plus\'></i>";
-    elementPlus.id = docTable.id + '_element-plus';
-    sideBarElement.appendChild(elementPlus);
-    sideBarElement.onclick = function (e) {
-        var tableId = e.target.id.split('_')[0] == '' ? e.target.parentNode.parentNode.id.split('_')[0] : e.target.id.split('_')[0];
-        var table = document.getElementById(tableId);
-        var elementPlus = document.getElementById(tableId+'_element-plus');
-        elementPlus.style.visibility = 'hidden';
-        table.style.visibility = 'visible';
-    }
+
+
     var minimiseButton = document.createElement('div');
     minimiseButton.className = 'table-min-button';
     minimiseButton.innerHTML = "<i class=\'fa fa-minus\'></i>";
@@ -194,7 +151,7 @@ function createDocCell(table, i, j, left, top, docTable) {
         changeCell(e.target);
     };
     docCell.onclick = function (e){
-        if(applicationState == ApplicationStates.CellEntry){
+        if(applicationState == ApplicationStates.EditingCell){
             currentCell.innerHTML += e.target.id;
         }
     else{
@@ -205,7 +162,7 @@ function createDocCell(table, i, j, left, top, docTable) {
     docCell.addEventListener("input", function(e){
         var formulaBar = document.getElementById('formula-bar');
         formulaBar.innerHTML = e.currentTarget.innerHTML;
-        applicationState = ApplicationStates.CellEntry;
+        applicationState = ApplicationStates.EditingCell;
     });
     docTable.appendChild(docCell);
     return docCell;
