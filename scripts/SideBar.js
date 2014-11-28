@@ -31,4 +31,5 @@ var SideBar = (function (){
         table.style.visibility = 'visible';
     }
 
+    return sideBar;
 }());

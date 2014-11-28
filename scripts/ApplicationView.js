@@ -65,8 +65,8 @@ var Application = (function (){
         if(element.id == 'formula-bar'){
             FormulaBar.handleClick(e);
         }
-        else if(element.id == ''){
-            
+        else if(element.id.indexOf('sideBarElement') > -1){
+            SideBar.handleElementClick(e);
         }
 
     }
