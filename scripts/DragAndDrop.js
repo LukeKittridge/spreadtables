@@ -27,7 +27,7 @@ function onMouseDown(e){
 
     var target = e.target != null ? e.target : e.srcElement;
 
-    if(target.parentNode != null && target.parentNode.classList.contains('drag')){
+    if(target.parentNode != null && target.parentNode.classList != null && target.parentNode.classList.contains('drag')){
             target = target.parentNode;
 
     }

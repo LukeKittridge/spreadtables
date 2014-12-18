@@ -5,10 +5,10 @@
 var FormulaBar = (function (){
 
     var formulaBar = {};
-    var docFormulaBar = document.getElementById('formula-bar');
+    var getDocFormulaBar = function(){return document.getElementById('formula-bar'); };
 
     formulaBar.updateDisplay = function(formula){
-      docFormulaBar.innerHTML = formula;
+      getDocFormulaBar().innerHTML = formula;
     };
 
     formulaBar.handleClick = function(e){

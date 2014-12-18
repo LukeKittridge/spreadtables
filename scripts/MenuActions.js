@@ -3,7 +3,7 @@
  */
 
 function showCreateTableDialogue(){
-    applicationState = ApplicationStates.Menu;
+    Application.setCurrentState(ApplicationStates.Menu);
 
     var addDialogue = document.getElementById('add-table-dialogue');
     addDialogue.style.visibility = 'visible';
@@ -29,7 +29,7 @@ function addTable(){
     var name = document.getElementById('at-table-name').value;
     var rows = document.getElementById('at-table-rows').value;
     var columns = document.getElementById('at-table-columns').value;
-    createTable(name,rows,columns);
+    Application.createTable(name,rows,columns);
 
     var addDialogue = document.getElementById('add-table-dialogue');
     addDialogue.style.visibility = 'hidden';

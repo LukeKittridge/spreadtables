@@ -6,7 +6,7 @@ var SideBar = (function (){
 
     var sideBar = {};
 
-    var docSideBar = document.getElementById('table-side-bar');
+    var docSideBar = function(){return document.getElementById('table-side-bar');};
 
     sideBar.addElement = function (tableId){
         var sideBarElement = document.createElement('div');
@@ -17,10 +17,10 @@ var SideBar = (function (){
         var elementPlus = document.createElement('div');
         elementPlus.className = 'side-bar-element-plus';
         elementPlus.innerHTML = "<i class=\'fa fa-plus\'></i>";
-        elementPlus.id = docTable.id + '_element-plus';
+        elementPlus.id = tableId + '_element-plus';
         sideBarElement.appendChild(elementPlus);
 
-        docSideBar.appendChild(sideBarElement);
+        docSideBar().appendChild(sideBarElement);
     }
 
     sideBar.handleElementClick = function(e){
