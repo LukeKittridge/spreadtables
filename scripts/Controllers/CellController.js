@@ -15,7 +15,7 @@ var CellController = (function (){
             CellView.selectNewCell(newCellId);
 
             var cell = getGlobalCell(CellView.getCurrentCellId());
-            FormulaBarView.updateDisplay(cell.formula);
+            FormulaBarController.updateFormula(cell.formula);
         }
     };
 

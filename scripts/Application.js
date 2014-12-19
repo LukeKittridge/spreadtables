@@ -53,27 +53,19 @@ var Application = (function (){
                 event.preventDefault();
 
                 if(event.keyCode == 37){ //left arrow
-                    var leftCellId = getCellIdToLeft(currentCell.id);
-                    var leftCell = document.getElementById(leftCellId);
-                    changeCell(leftCell);
+                    CellController.selectCellToLeft();
                 }
 
                 if(event.keyCode == 38){ //up arrow
-                    var aboveCellId = getCellIdAbove(currentCell.id);
-                    var aboveCell = document.getElementById(aboveCellId);
-                    changeCell(aboveCell);
+                    CellController.selectCellAbove();
                 }
 
                 if(event.keyCode == 39){ //right arrow
-                    var rightCellId = getCellIdToRight(currentCell.id);
-                    var rightCell = document.getElementById(rightCellId);
-                    changeCell(rightCell);
+                    CellController.selectCellToRight();
                 }
 
                 if(event.keyCode == 40){ //down arrow
-                    var belowCellId = getCellIdBelow(currentCell.id);
-                    var belowCell = document.getElementById(belowCellId);
-                    changeCell(belowCell);
+                    CellController.selectCellToLeft();
                 }
             }
 
