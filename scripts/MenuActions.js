@@ -19,7 +19,7 @@ function showCreateTableDialogue(){
 }
 
 function hideCreateTableDialogue(){
-    applicationState = ApplicationStates.CellSelected
+    Application.setCurrentState(ApplicationStates.CellSelected);
 
     var addDialogue = document.getElementById('add-table-dialogue');
     addDialogue.style.visibility = 'hidden';
@@ -33,5 +33,5 @@ function addTable(){
 
     var addDialogue = document.getElementById('add-table-dialogue');
     addDialogue.style.visibility = 'hidden';
-    applicationState = ApplicationStates.CellSelected;
+    Application.setCurrentState(ApplicationStates.CellSelected);
 }

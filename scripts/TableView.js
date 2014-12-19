@@ -40,7 +40,6 @@ var TableView = (function (){
         }
 
         document.body.appendChild(docTable);
-       Application.changeCurrentCell(document.getElementById(table.name + '.A1'));
     };
 
     function drawTableTitleBar(table,docTable){
@@ -52,7 +51,6 @@ var TableView = (function (){
         ttbText.innerHTML = table.name;
         tableTitleBar.appendChild(ttbText);
 
-
         var minimiseButton = document.createElement('div');
         minimiseButton.className = 'table-min-button';
         minimiseButton.innerHTML = "<i class=\'fa fa-minus\'></i>";
@@ -63,73 +61,6 @@ var TableView = (function (){
         };
         tableTitleBar.appendChild(minimiseButton);
         docTable.appendChild(tableTitleBar);
-    }
-
-    function getCellIdToLeft(cellId){
-        var cellParts = splitCellId(cellId);
-        var letters = cellParts.letters;
-
-        if(letters.length==1){
-            if(letters.charCodeAt(0) > 65){
-                letters = String.fromCharCode(letters.charCodeAt(0)-1);
-            }
-        }
-        else if (letters.charCodeAt(1) > 65) {
-            letters = letters.replaceCharAt(1, String.fromCharCode(letters.charCodeAt(1) - 1));
-        }
-        else if (letters.charCodeAt(0) > 65) {
-            letters = String.fromCharCode(letters.charCodeAt(0) - 1) + 'Z';
-        } else {
-            letters = 'Z';
-        }
-        return cellParts.table + '.' + letters + cellParts.numbers;
-    }
-
-    function getCellIdToRight(cellId){
-        var cellParts = splitCellId(cellId);
-        var letters = cellParts.letters;
-        var table = Table.tables[cellParts.table];
-        if(table.maxTableLetters != letters){
-            if(letters.length ==1){
-                if(letters.charCodeAt(0) < 90){
-                    letters = String.fromCharCode(letters.charCodeAt(0)+1);
-                }
-                else{
-                    letters = 'AA';
-                }
-
-            }
-            else{
-                if(letters.charCodeAt(1) < 90){
-                    letters = letters.replaceCharAt(1, String.fromCharCode(letters.charCodeAt(1)+1));
-                }
-                else if(letters.charCodeAt(0) <90){
-                    letters = String.fromCharCode((letters.charCodeAt(0)+1)) + 'A';
-                }
-            }
-        }
-
-        return cellParts.table + '.' + letters + cellParts.numbers;
-    }
-
-    function getCellIdBelow(cellId){
-
-        var cellParts = splitCellId(cellId);
-        var numbers = cellParts.numbers;
-        if(numbers < Table.tables[cellParts.table].maxTableNumbers){
-            numbers =  parseInt(numbers,10)+1;
-        }
-
-        return cellParts.table + '.' + cellParts.letters + numbers;
-    }
-
-    function getCellIdAbove(cellId){
-        var cellParts = splitCellId(cellId);
-        var numbers = parseInt(cellParts.numbers,10);
-        if(numbers > 1){
-            numbers--;
-        }
-        return cellParts.table + '.' + cellParts.letters + numbers;
     }
 
     return tableView;

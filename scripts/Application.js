@@ -5,21 +5,12 @@
 var selectedBorder = '1px solid red';
 var normalBorder = '1px solid #d9d9d9';
 
-
-var currentCell;
-
-
-
 var ApplicationStates = Object.freeze({
     CellSelected : 'CellSelected',
     EditingCell: 'EditingCell',
     Menu: 'Menu',
-    FormulaBar: 'FormulaBar'
+    FormulaBar: 'FormulaBarView'
 });
-
-
-
-
 
 var Application = (function (){
 
@@ -38,33 +29,12 @@ var Application = (function (){
         return currentState;
     };
 
-    app.createTable = function (name, rows, columns) {
-        var table = new Table(name, rows, columns);
-        Table.tables[table.name] = table;
-        TableView.drawTable(table);
-        SideBar.addElement(table.name);
-    };
-
-    app.changeCurrentCell = function (newCell){
-        if(newCell != currentCell) {
-            if (currentCell != null) {
-                currentCell.blur();
-                currentCell.style.border = normalBorder;
-
-            }
-            newCell.style.border = selectedBorder;
-            currentCell = newCell;
-
-            var cell = getGlobalCell(currentCell.id);
-            FormulaBar.updateDisplay(cell.formula);
-        }
-    };
 
     function clickHandler(e){
         var element = e.target;
 
         if(element.id == 'formula-bar'){
-            FormulaBar.handleClick(e);
+            FormulaBarController.handleClick(e);
         }
         else if(element.id.indexOf('sideBarElement') > -1){
             SideBar.handleElementClick(e);

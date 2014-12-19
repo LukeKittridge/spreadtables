@@ -5,6 +5,35 @@
 var CellView = (function (){
     var cellView = {};
 
+    var currentCellId;
+
+    cellView.getCurrentCellId = function(){
+        return currentCellId;
+    };
+
+    cellView.deselectCurrentCell = function () {
+        var docCell = document.getElementById(currentCellId);
+        docCell.blur();
+        docCell.style.border = normalBorder;
+    };
+
+    cellView.selectNewCell = function(newCellId){
+        currentCellId = newCellId;
+        document.getElementById(currentCellId).style.border = selectedBorder;
+    };
+
+    cellView.getCurrentCellFormula = function(){
+        return document.getElementById(currentCellId).innerHTML;
+    };
+
+    cellView.setCurrentCellText = function(text){
+        document.getElementById(currentCellId).innerHTML = text;
+    };
+
+    cellView.setCellText = function(cellId, text){
+        document.getElementById(cellId).innerHTML = text;
+    };
+
     cellView.createAxisCell = function(left, top, j, i, columnReset, letterCount){
         var axisCell = document.createElement('div');
 
@@ -66,37 +95,6 @@ var CellView = (function (){
         docTable.appendChild(docCell);
         return docCell;
     };
-
-    cellView.updateCell = function(docCell){
-        docCell.style.border = selectedBorder;
-
-        var cell = getGlobalCell(docCell.id);
-        cell.evaluateNewFormula(docCell.innerHTML);
-        if(docCell.innerHTML[0] == '='){
-            docCell.innerHTML = cell.value;
-        }
-        else{
-            docCell.innerHTML = cell.text;
-        }
-        updateReferencedCells(cell);
-
-    };
-
-    function updateReferencedCells(cell){
-        for(var cellId in cell.referencedBy){
-            var refCell = cell.referencedBy[cellId];
-            var docReferencedCell = document.getElementById(refCell.id);
-            docReferencedCell.innerHTML = refCell.value;
-            updateReferencedCells(refCell);
-        }
-    }
-
-    function splitCellId(cellId){
-        var parts = cellId.split('.');
-        var cell = parts[1];
-        var regGroups = /([a-zA-Z]+)(\d+)/.exec(cell);
-        return {table:parts[0],  letters : regGroups[1], numbers : regGroups[2]};
-    }
 
     return cellView;
 }());
