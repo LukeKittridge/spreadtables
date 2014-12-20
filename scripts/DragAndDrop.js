@@ -12,7 +12,7 @@ var _offsetY =0;
 var _dragElement;
 var _oldZIndex =0;
 
-InitDragDrop();
+//InitDragDrop();
 
 function InitDragDrop()
 {

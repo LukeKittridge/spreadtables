@@ -11,6 +11,10 @@ var CellView = (function (){
         return currentCellId;
     };
 
+    cellView.editCurrentCell = function(){
+        document.getElementById(currentCellId).focus();
+    };
+
     cellView.deselectCurrentCell = function () {
         var docCell = document.getElementById(currentCellId);
         docCell.blur();
@@ -66,27 +70,27 @@ var CellView = (function (){
         var docCell = document.createElement('div');
         docCell.className = "cell";
         docCell.id = table.cells[i][j].id;
-        docCell.contentEditable = "false";
+        docCell.contentEditable = "true";
         docCell.style.left = left + "px";
         docCell.style.top = top + "px";
-        docCell.onblur = function (e) {
-            if(applicationState != applicationState.FormulaBar){
-                update(e.target)
-            }
-            applicationState = ApplicationStates.CellSelected;
-        };
-        docCell.onfocus = function (e){
-            changeCell(e.target);
-        };
-        docCell.onclick = function (e){
-            if(applicationState == ApplicationStates.EditingCell){
-                currentCell.innerHTML += e.target.id;
-            }
-            else{
-                changeCell(e.target);
-            }
-
-        };
+        //docCell.onblur = function (e) {
+        //    if(applicationState != applicationState.FormulaBar){
+        //        update(e.target)
+        //    }
+        //    applicationState = ApplicationStates.CellSelected;
+        //};
+        //docCell.onfocus = function (e){
+        //    changeCell(e.target);
+        //};
+        //docCell.onclick = function (e){
+        //    if(applicationState == ApplicationStates.EditingCell){
+        //        currentCell.innerHTML += e.target.id;
+        //    }
+        //    else{
+        //        changeCell(e.target);
+        //    }
+        //
+        //};
         docCell.addEventListener("input", function(e){
             var formulaBar = document.getElementById('formula-bar');
             formulaBar.innerHTML = e.currentTarget.innerHTML;

@@ -20,13 +20,18 @@
     <script src="scripts/Views/CellView.js"></script>
     <script src="scripts/Views/FormulaBarView.js"></script>
     <script src="scripts/Views/SideBarView.js"></script>
+    <script src="scripts/Controllers/MenuBarController.js"></script>
+    <script src="scripts/Controllers/TableController.js"></script>
+    <script src="scripts/Controllers/SideBarController.js"></script>
+    <script src="scripts/Controllers/CellController.js"></script>
+    <script src="scripts/Controllers/FormulaBarController.js"></script>
     <script src="scripts/3rdParty/Queue.src.js"></script>
     <title></title>
 </head>
 <body>
 
 <div id="button-bar">
-    <div id="add-button" onclick="showCreateTableDialogue()">
+    <div id="add-button" onclick="MenuBarController.showCreateTableDialogue()">
         <i class="fa fa-plus fa-lg"></i>
     </div>
 </div>
@@ -55,10 +60,10 @@
 
     </div>
     <div class="dialogue-footer">
-    <div class="dialogue-button" onclick="addTable()">
+    <div class="dialogue-button" onclick="MenuBarController.addTableButtonPressed()">
         Add Table
     </div>
-        <div class="dialogue-button negative-button" onclick="hideCreateTableDialogue()">
+        <div class="dialogue-button negative-button" onclick="MenuBarController.hideCreateTableDialogue()">
             Cancel
         </div>
     </div>

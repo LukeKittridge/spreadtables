@@ -7,7 +7,7 @@ var CellController = (function (){
     var cellController = {};
 
 
-    CellController.changeCurrentCell = function (newCellId){
+    cellController.changeCurrentCell = function (newCellId){
         if(newCellId != CellView.getCurrentCellId()) {
             if (CellView.getCurrentCellId() != null) {
                 CellView.deselectCurrentCell();
@@ -17,6 +17,14 @@ var CellController = (function (){
             var cell = getGlobalCell(CellView.getCurrentCellId());
             FormulaBarController.updateFormula(cell.formula);
         }
+    };
+
+    cellController.handleClick = function(event){
+        cellController.changeCurrentCell(event.target.id);
+    };
+
+    cellController.editCurrentCell = function (){
+      CellView.editCurrentCell();
     };
 
 

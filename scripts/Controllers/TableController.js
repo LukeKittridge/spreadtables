@@ -8,7 +8,7 @@ var TableController = (function () {
         var table = new Table(name, rows, columns);
         Table.tables[table.name] = table;
         TableView.drawTable(table);
-        SideBar.addElement(table.name);
+        SideBarController.addElement(table.name);
         CellController.changeCurrentCell(name + '.A1');
     };
 

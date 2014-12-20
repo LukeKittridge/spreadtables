@@ -37,7 +37,10 @@ var Application = (function (){
             FormulaBarController.handleClick(e);
         }
         else if(element.id.indexOf('sideBarElement') > -1){
-            SideBar.handleElementClick(e);
+            SideBarController.handleClick(e);
+        }
+        else if(element.className == 'cell'){
+            CellController.handleClick(e);
         }
 
     }
@@ -65,14 +68,12 @@ var Application = (function (){
                 }
 
                 if(event.keyCode == 40){ //down arrow
-                    CellController.selectCellToLeft();
+                    CellController.selectCellBelow();
                 }
             }
 
             if((event.keyCode >= 48 && event.keyCode <= 90) || (event.keyCode >= 96 && event.keyCode <= 111) || (event.keyCode >= 186 && event.keyCode <= 222)){
-                currentCell.contentEditable = true;
-                currentCell.focus();
-                console.log("Cell focused");
+                CellController.editCurrentCell();
             }
         }
 
