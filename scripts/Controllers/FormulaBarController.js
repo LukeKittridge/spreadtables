@@ -14,5 +14,9 @@ var FormulaBarController = (function (){
         Application.setCurrentState(ApplicationStates.EditingCell);
     };
 
+    formulaBarController.executeFormula = function(){
+        
+    };
+
     return formulaBarController;
 }());

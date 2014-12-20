@@ -19,11 +19,21 @@ var CellController = (function (){
         }
     };
 
+    cellController.handleDoubleClick = function (event){
+      if(Application.getCurrentState() == ApplicationStates.CellSelected){
+          cellController.changeCurrentCell(event.target.id);
+          var cell = getGlobalCell(CellView.getCurrentCellId());
+          CellView.setCurrentCellText(cell.formula);
+          cellController.editCurrentCell();
+      }
+    };
+
     cellController.handleClick = function(event){
         cellController.changeCurrentCell(event.target.id);
     };
 
     cellController.editCurrentCell = function (){
+        Application.setCurrentState(ApplicationStates.EditingCell);
       CellView.editCurrentCell();
     };
 
@@ -36,7 +46,7 @@ var CellController = (function (){
       return CellView.createDocTableCell(table, i, j, left, top, docTable);
     };
 
-    cellController.updateCurrentCell = function(docCell){
+    cellController.updateCurrentCell = function(){
         var cell = getGlobalCell(CellView.getCurrentCellId());
         cell.evaluateNewFormula(CellView.getCurrentCellFormula());
         if(CellView.getCurrentCellFormula()[0] == '='){
@@ -46,6 +56,8 @@ var CellController = (function (){
             CellView.setCurrentCellText(cell.text);
         }
         updateReferencedCells(cell);
+        Application.setCurrentState(ApplicationStates.CellSelected);
+        cellController.selectCellBelow();
     };
 
     cellController.selectCellToLeft = function(){

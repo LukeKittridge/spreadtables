@@ -12,12 +12,13 @@ var CellView = (function (){
     };
 
     cellView.editCurrentCell = function(){
+        document.getElementById(currentCellId).contentEditable = 'true';
         document.getElementById(currentCellId).focus();
     };
 
     cellView.deselectCurrentCell = function () {
         var docCell = document.getElementById(currentCellId);
-        docCell.blur();
+        docCell.contentEditable = false;
         docCell.style.border = normalBorder;
     };
 
@@ -70,7 +71,7 @@ var CellView = (function (){
         var docCell = document.createElement('div');
         docCell.className = "cell";
         docCell.id = table.cells[i][j].id;
-        docCell.contentEditable = "true";
+        docCell.contentEditable = "false";
         docCell.style.left = left + "px";
         docCell.style.top = top + "px";
         //docCell.onblur = function (e) {
@@ -91,11 +92,11 @@ var CellView = (function (){
         //    }
         //
         //};
-        docCell.addEventListener("input", function(e){
-            var formulaBar = document.getElementById('formula-bar');
-            formulaBar.innerHTML = e.currentTarget.innerHTML;
-            applicationState = ApplicationStates.EditingCell;
-        });
+        //docCell.addEventListener("input", function(e){
+        //    var formulaBar = document.getElementById('formula-bar');
+        //    formulaBar.innerHTML = e.currentTarget.innerHTML;
+        //    applicationState = ApplicationStates.EditingCell;
+        //});
         docTable.appendChild(docCell);
         return docCell;
     };

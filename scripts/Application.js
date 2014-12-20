@@ -20,6 +20,7 @@ var Application = (function (){
 
     document.addEventListener('click', clickHandler,false);
     document.addEventListener('keydown', keyHandler, false);
+    document.addEventListener('dblclick', doubleClickHandler, false);
 
     app.setCurrentState = function(newState){
         currentState = newState;
@@ -45,13 +46,18 @@ var Application = (function (){
 
     }
 
+    function doubleClickHandler(e){
+        e.preventDefault();
+        CellController.handleDoubleClick(e);
+    }
+
     function keyHandler(event) {
 
         if(currentState == ApplicationStates.Menu){
             return null;
         }
 
-        if(currentState != ApplicationStates.FormulaBar){
+        if(currentState != ApplicationStates.FormulaBar && currentState != ApplicationStates.EditingCell){
             if(event.keyCode >= 37 && event.keyCode <= 40){ //arrow keys
                 event.preventDefault();
 
@@ -88,13 +94,8 @@ var Application = (function (){
                 update(currentCell);
                 formulaBar.contentEditable = true;
             }
-            document.activeElement.blur();
-            var belowCellId = getCellIdBelow(currentCell.id);
-            belowCell = document.getElementById(belowCellId);
-            currentCell.style.border = normalBorder;
-            currentCell.contentEditable = false;
-            belowCell.style.border = selectedBorder;
-            changeCell(belowCell);
+            event.preventDefault();
+            CellController.updateCurrentCell();
         }
 
     }
