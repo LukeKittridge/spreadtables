@@ -11,6 +11,10 @@ var CellView = (function (){
         return currentCellId;
     };
 
+    cellView.getCurrentCellText = function(){
+        return document.getElementById(currentCellId).innerHTML;
+    };
+
     cellView.editCurrentCell = function(){
         document.getElementById(currentCellId).contentEditable = 'true';
         document.getElementById(currentCellId).focus();

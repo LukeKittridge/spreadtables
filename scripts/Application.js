@@ -19,11 +19,13 @@ var Application = (function (){
     var currentCell;
 
     document.addEventListener('click', clickHandler,false);
-    document.addEventListener('keydown', keyHandler, false);
+    document.addEventListener('keydown', keyHandler, true);
+    document.addEventListener('keyup', keyHandler, false);
     document.addEventListener('dblclick', doubleClickHandler, false);
 
     app.setCurrentState = function(newState){
         currentState = newState;
+        console.log(newState);
    } ;
 
     app.getCurrentState = function(){
@@ -57,46 +59,60 @@ var Application = (function (){
             return null;
         }
 
-        if(currentState != ApplicationStates.FormulaBar && currentState != ApplicationStates.EditingCell){
-            if(event.keyCode >= 37 && event.keyCode <= 40){ //arrow keys
+        if(event.type == 'keydown'){
+            if(currentState != ApplicationStates.FormulaBar && currentState != ApplicationStates.EditingCell){
+                if(event.keyCode >= 37 && event.keyCode <= 40){ //arrow keys
+                    event.preventDefault();
+
+                    if(event.keyCode == 37){ //left arrow
+                        CellController.selectCellToLeft();
+                    }
+
+                    if(event.keyCode == 38){ //up arrow
+                        CellController.selectCellAbove();
+                    }
+
+                    if(event.keyCode == 39){ //right arrow
+                        CellController.selectCellToRight();
+                    }
+
+                    if(event.keyCode == 40){ //down arrow
+                        CellController.selectCellBelow();
+                    }
+                }
+
+                if((event.keyCode >= 48 && event.keyCode <= 90) || (event.keyCode >= 96 && event.keyCode <= 111) || (event.keyCode >= 186 && event.keyCode <= 222)){
+                    CellController.editCurrentCell();
+                }
+            }
+            if(event.keyCode == 13){ //return
+                //if(currentState == ApplicationStates.FormulaBar){
+                //    var formulaBar = document.getElementById('formula-bar');
+                //    formulaBar.blur();
+                //    formulaBar.contentEditable = false;
+                //    currentCell.innerHTML = formulaBar.innerHTML;
+                //    currentState = ApplicationStates.CellSelected;
+                //    update(currentCell);
+                //    formulaBar.contentEditable = true;
+                //}
                 event.preventDefault();
-
-                if(event.keyCode == 37){ //left arrow
-                    CellController.selectCellToLeft();
-                }
-
-                if(event.keyCode == 38){ //up arrow
-                    CellController.selectCellAbove();
-                }
-
-                if(event.keyCode == 39){ //right arrow
-                    CellController.selectCellToRight();
-                }
-
-                if(event.keyCode == 40){ //down arrow
-                    CellController.selectCellBelow();
-                }
+                CellController.updateCurrentCell();
             }
+        }
 
-            if((event.keyCode >= 48 && event.keyCode <= 90) || (event.keyCode >= 96 && event.keyCode <= 111) || (event.keyCode >= 186 && event.keyCode <= 222)){
-                CellController.editCurrentCell();
+        if(event.type == 'keyup'){
+            if(Application.getCurrentState() == ApplicationStates.EditingCell){
+                CellController.textChanged();
+            }
+            else if(Application.getCurrentState() == ApplicationStates.FormulaBar){
+                FormulaBarController.textChanged();
             }
         }
 
 
-        if(event.keyCode == 13){ //return
-            if(currentState == ApplicationStates.FormulaBar){
-                var formulaBar = document.getElementById('formula-bar');
-                formulaBar.blur();
-                formulaBar.contentEditable = false;
-                currentCell.innerHTML = formulaBar.innerHTML;
-                currentState = ApplicationStates.CellSelected;
-                update(currentCell);
-                formulaBar.contentEditable = true;
-            }
-            event.preventDefault();
-            CellController.updateCurrentCell();
-        }
+
+
+
 
     }
 

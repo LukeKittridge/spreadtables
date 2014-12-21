@@ -11,6 +11,9 @@ var FormulaBarView = (function (){
       getDocFormulaBar().innerHTML = formula;
     };
 
+    formulaBar.getText = function(){
+        return getDocFormulaBar().innerHTML;
+    }
 
     return formulaBar;
 

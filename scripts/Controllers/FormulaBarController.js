@@ -11,11 +11,15 @@ var FormulaBarController = (function (){
     };
 
     formulaBarController.handleClick = function(e){
-        Application.setCurrentState(ApplicationStates.EditingCell);
+        Application.setCurrentState(ApplicationStates.FormulaBar);
     };
 
     formulaBarController.executeFormula = function(){
 
+    };
+
+    formulaBarController.textChanged = function(){
+      CellController.setCurrentCellText(FormulaBarView.getText());
     };
 
     return formulaBarController;

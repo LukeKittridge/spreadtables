@@ -19,6 +19,10 @@ var CellController = (function (){
         }
     };
 
+    cellController.setCurrentCellText = function(text){
+      CellView.setCurrentCellText(text);
+    };
+
     cellController.handleDoubleClick = function (event){
       if(Application.getCurrentState() == ApplicationStates.CellSelected){
           cellController.changeCurrentCell(event.target.id);
@@ -34,7 +38,14 @@ var CellController = (function (){
 
     cellController.editCurrentCell = function (){
         Application.setCurrentState(ApplicationStates.EditingCell);
+
       CellView.editCurrentCell();
+    };
+
+    cellController.textChanged = function (){
+        if(Application.getCurrentState() == ApplicationStates.EditingCell){
+            FormulaBarController.updateFormula(CellView.getCurrentCellText());
+        }
     };
 
 
