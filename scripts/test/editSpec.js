@@ -2,7 +2,7 @@
  * Created by Luke Kittridge on 12/10/2014.
  */
 
-describe("Edit Test Suite", function(){
+xdescribe("Edit Test Suite", function(){
    it("Should return ID of the cell to the left of the given ID", function(){
        var cellId = "#test.C1";
        var expectedResult = "#test.B1";

@@ -15,7 +15,7 @@ var FormulaBarController = (function (){
     };
 
     formulaBarController.executeFormula = function(){
-        
+
     };
 
     return formulaBarController;
