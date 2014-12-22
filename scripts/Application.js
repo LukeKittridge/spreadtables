@@ -86,15 +86,6 @@ var Application = (function (){
                 }
             }
             if(event.keyCode == 13){ //return
-                //if(currentState == ApplicationStates.FormulaBar){
-                //    var formulaBar = document.getElementById('formula-bar');
-                //    formulaBar.blur();
-                //    formulaBar.contentEditable = false;
-                //    currentCell.innerHTML = formulaBar.innerHTML;
-                //    currentState = ApplicationStates.CellSelected;
-                //    update(currentCell);
-                //    formulaBar.contentEditable = true;
-                //}
                 event.preventDefault();
                 CellController.updateCurrentCell();
             }

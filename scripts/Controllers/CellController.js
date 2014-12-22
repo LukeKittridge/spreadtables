@@ -33,7 +33,12 @@ var CellController = (function (){
     };
 
     cellController.handleClick = function(event){
-        cellController.changeCurrentCell(event.target.id);
+        if(Application.getCurrentState() == ApplicationStates.EditingCell){
+            CellView.setCurrentCellText(CellView.getCurrentCellText() + event.target.id);
+        }
+        else if (Application.getCurrentState() == ApplicationStates.CellSelected){
+            cellController.changeCurrentCell(event.target.id);
+        }
     };
 
     cellController.editCurrentCell = function (){
