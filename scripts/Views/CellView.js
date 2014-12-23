@@ -11,6 +11,14 @@ var CellView = (function (){
         return currentCellId;
     };
 
+    cellView.getCaretPosition = function(){
+        return window.getSelection().baseOffset;
+    };
+
+    cellView.moveCaretToEnd = function(){
+      moveCaret(window,document.getElementById(currentCellId).innerHTML.length);
+    };
+
     cellView.getCurrentCellText = function(){
         return document.getElementById(currentCellId).innerHTML;
     };
@@ -41,6 +49,10 @@ var CellView = (function (){
 
     cellView.setCellText = function(cellId, text){
         document.getElementById(cellId).innerHTML = text;
+    };
+
+    cellView.focusCurrentCell = function(){
+      document.getElementById(currentCellId).focus();
     };
 
     cellView.createAxisCell = function(left, top, j, i, columnReset, letterCount){

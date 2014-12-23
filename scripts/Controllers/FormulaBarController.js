@@ -22,5 +22,13 @@ var FormulaBarController = (function (){
       CellController.setCurrentCellText(FormulaBarView.getText());
     };
 
+    formulaBarController.focusFormulaBar = function(){
+        FormulaBarView.focusFormulaBar();
+    };
+
+    formulaBarController.moveCaretToEnd = function(){
+        FormulaBarView.moveCaretToEnd();
+    }
+
     return formulaBarController;
 }());

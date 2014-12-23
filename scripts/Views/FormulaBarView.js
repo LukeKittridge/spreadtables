@@ -13,7 +13,15 @@ var FormulaBarView = (function (){
 
     formulaBar.getText = function(){
         return getDocFormulaBar().innerHTML;
-    }
+    };
+
+    formulaBar.focusFormulaBar = function(){
+      getDocFormulaBar().focus();
+    };
+
+    formulaBar.moveCaretToEnd = function(){
+        moveCaret(window,getDocFormulaBar().innerHTML.length);
+    };
 
     return formulaBar;
 

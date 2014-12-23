@@ -6,7 +6,6 @@ var CellController = (function (){
 
     var cellController = {};
 
-
     cellController.changeCurrentCell = function (newCellId){
         if(newCellId != CellView.getCurrentCellId()) {
             if (CellView.getCurrentCellId() != null) {
@@ -33,8 +32,19 @@ var CellController = (function (){
     };
 
     cellController.handleClick = function(event){
-        if(Application.getCurrentState() == ApplicationStates.EditingCell){
-            CellView.setCurrentCellText(CellView.getCurrentCellText() + event.target.id);
+        if(Application.getCurrentState() == ApplicationStates.EditingCell || Application.getCurrentState() == ApplicationStates.FormulaBar){
+            if(CellView.getCurrentCellId() != event.target.id){
+                CellView.setCurrentCellText(CellView.getCurrentCellText() + event.target.id);
+                cellController.textChanged();
+                if(Application.getCurrentState() == Application.EditingCell){
+                    CellView.focusCurrentCell();
+                    CellView.moveCaretToEnd();
+                }else{
+                    FormulaBarController.focusFormulaBar();
+                    FormulaBarController.moveCaretToEnd();
+                }
+
+            }
         }
         else if (Application.getCurrentState() == ApplicationStates.CellSelected){
             cellController.changeCurrentCell(event.target.id);
@@ -48,7 +58,7 @@ var CellController = (function (){
     };
 
     cellController.textChanged = function (){
-        if(Application.getCurrentState() == ApplicationStates.EditingCell){
+        if(Application.getCurrentState() == ApplicationStates.EditingCell || Application.getCurrentState() == ApplicationStates.FormulaBar){
             FormulaBarController.updateFormula(CellView.getCurrentCellText());
         }
     };
@@ -144,7 +154,7 @@ var CellController = (function (){
     function updateReferencedCells(cell){
         for(var cellId in cell.referencedBy){
             var refCell = cell.referencedBy[cellId];
-            CellView.setCellText(refCell, refCell.value);
+            CellView.setCellText(refCell.id, refCell.value);
             updateReferencedCells(refCell);
         }
     }
