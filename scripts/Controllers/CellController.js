@@ -74,14 +74,23 @@ var CellController = (function (){
 
     cellController.updateCurrentCell = function(){
         var cell = getGlobalCell(CellView.getCurrentCellId());
-        cell.evaluateNewFormula(CellView.getCurrentCellFormula());
-        if(CellView.getCurrentCellFormula()[0] == '='){
-            CellView.setCurrentCellText(cell.value);
+        var error = false;
+        try{
+            cell.evaluateNewFormula(CellView.getCurrentCellFormula());
+        }catch(e){
+            CellView.highlightError(e);
+            error = true;
         }
-        else{
-            CellView.setCurrentCellText(cell.text);
+        if(!error){
+            if(CellView.getCurrentCellFormula()[0] == '='){
+                CellView.setCurrentCellText(cell.value);
+            }
+            else{
+                CellView.setCurrentCellText(cell.text);
+            }
+            updateReferencedCells(cell);
         }
-        updateReferencedCells(cell);
+
         Application.setCurrentState(ApplicationStates.CellSelected);
         cellController.selectCellBelow();
     };

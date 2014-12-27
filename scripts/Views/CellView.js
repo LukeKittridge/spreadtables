@@ -90,31 +90,25 @@ var CellView = (function (){
         docCell.contentEditable = "false";
         docCell.style.left = left + "px";
         docCell.style.top = top + "px";
-        //docCell.onblur = function (e) {
-        //    if(applicationState != applicationState.FormulaBar){
-        //        update(e.target)
-        //    }
-        //    applicationState = ApplicationStates.CellSelected;
-        //};
-        //docCell.onfocus = function (e){
-        //    changeCell(e.target);
-        //};
-        //docCell.onclick = function (e){
-        //    if(applicationState == ApplicationStates.EditingCell){
-        //        currentCell.innerHTML += e.target.id;
-        //    }
-        //    else{
-        //        changeCell(e.target);
-        //    }
-        //
-        //};
-        //docCell.addEventListener("input", function(e){
-        //    var formulaBar = document.getElementById('formula-bar');
-        //    formulaBar.innerHTML = e.currentTarget.innerHTML;
-        //    applicationState = ApplicationStates.EditingCell;
-        //});
         docTable.appendChild(docCell);
         return docCell;
+    };
+
+    cellView.highlightError = function(e){
+        if(e.location.token.start){
+            var inHTML = '';
+            var text = CellView.getCurrentCellText();
+            for(var i =0; i < text.length; i++){
+                if(i == e.location.token.start){
+                    inHTML += '<span class="cellErrorHighlight">';
+                }
+                inHTML += text[i];
+                if(i == e.location.token.end){
+                    inHTML += '</span>';
+                }
+            }
+            CellView.setCurrentCellText(inHTML);
+        }
     };
 
     return cellView;

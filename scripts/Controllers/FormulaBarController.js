@@ -28,7 +28,7 @@ var FormulaBarController = (function (){
 
     formulaBarController.moveCaretToEnd = function(){
         FormulaBarView.moveCaretToEnd();
-    }
+    };
 
     return formulaBarController;
 }());
