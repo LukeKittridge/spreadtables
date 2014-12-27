@@ -200,3 +200,15 @@ body{
     left: 15%;
     right: 30%;
 }
+
+#error-bar{
+    width:70%;
+    height: 30px;
+    position: absolute;
+    top: 95%;
+    border: 1px solid black;
+    left: 15%;
+    right: 30%;
+    text-align: center;
+    visibility: hidden;
+}

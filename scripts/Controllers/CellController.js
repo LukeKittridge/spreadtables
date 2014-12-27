@@ -22,9 +22,19 @@ var CellController = (function (){
       CellView.setCurrentCellText(text);
     };
 
+    cellController.getCurrentCellId = function(){
+        return CellView.getCurrentCellId();
+    };
+
     cellController.handleDoubleClick = function (event){
+        var eventId;
+        if(event.target.className == 'cellErrorHighlight'){
+            eventId = event.target.parentNode.id;
+        }else{
+            eventId = event.target.id;
+        }
       if(Application.getCurrentState() == ApplicationStates.CellSelected){
-          cellController.changeCurrentCell(event.target.id);
+          cellController.changeCurrentCell(eventId);
           var cell = getGlobalCell(CellView.getCurrentCellId());
           CellView.setCurrentCellText(cell.formula);
           cellController.editCurrentCell();
@@ -80,8 +90,10 @@ var CellController = (function (){
         }catch(e){
             CellView.highlightError(e);
             error = true;
+            ErrorBarController.displayErrorMessage(e);
         }
         if(!error){
+            ErrorBarController.clearDisplay();
             if(CellView.getCurrentCellFormula()[0] == '='){
                 CellView.setCurrentCellText(cell.value);
             }
@@ -158,6 +170,10 @@ var CellController = (function (){
             numbers--;
         }
         cellController.changeCurrentCell(cellParts.table + '.' + cellParts.letters + numbers);
+    };
+
+    cellController.displayErrorMessage = function(e){
+
     };
 
     function updateReferencedCells(cell){

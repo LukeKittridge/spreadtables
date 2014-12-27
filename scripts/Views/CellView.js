@@ -4,7 +4,8 @@
 
 var CellView = (function (){
     var cellView = {};
-
+    var start;
+    var end;
     var currentCellId;
 
     cellView.getCurrentCellId = function(){
@@ -95,21 +96,53 @@ var CellView = (function (){
     };
 
     cellView.highlightError = function(e){
-        if(e.location.token.start){
+
             var inHTML = '';
             var text = CellView.getCurrentCellText();
+
+            start =text.length;
+            end = 0;
+
+        if(e.location.token){
+            start = e.location.token.start;
+            end = e.location.token.end;
+        }
+        else{
+            cellView.extractStartEnd(e.location.tokens);
+        }
+
+
             for(var i =0; i < text.length; i++){
-                if(i == e.location.token.start){
+                if(i == start){
                     inHTML += '<span class="cellErrorHighlight">';
                 }
                 inHTML += text[i];
-                if(i == e.location.token.end){
+                if(i == end){
                     inHTML += '</span>';
                 }
-            }
+
             CellView.setCurrentCellText(inHTML);
         }
     };
+
+    cellView.extractStartEnd = function (tokens){
+
+        for(var i =0; i < tokens.length; i++){
+          if(tokens[i].tokens){
+              cellView.extractStartEnd(tokens[i].tokens);
+          }
+          else{
+              if(tokens[i].token.start < start){
+                  start =tokens[i].token.start;
+              }
+              if(tokens[i].token.end > end){
+                  end = tokens[i].token.end;
+              }
+          }
+      }
+
+    };
+
 
     return cellView;
 }());
