@@ -97,3 +97,11 @@ Cell.prototype.evaluate = function(){
     }
 
 };
+
+Cell.prototype.findCircularReference = function(){
+  for(var cellId in this.references){
+      if(this.referencedBy[cellId]){
+          return cellId;
+      }
+  }
+};

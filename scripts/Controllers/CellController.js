@@ -88,6 +88,10 @@ var CellController = (function (){
         try{
             cell.evaluateNewFormula(CellView.getCurrentCellFormula());
         }catch(e){
+            if(e.type == ErrorEnum.CircularReference){
+               e = cellController.handleCircularReferenceError(e);
+            }
+
             CellView.highlightError(e);
             error = true;
             ErrorBarController.displayErrorMessage(e);
@@ -175,6 +179,17 @@ var CellController = (function (){
     cellController.displayErrorMessage = function(e){
 
     };
+
+    cellController.handleCircularReferenceError = function(e){
+        var cellId = e.cell.findCircularReference();
+        var text = CellView.getCurrentCellText();
+        var start = text.indexOf(cellId);
+        var end = start + cellId.length-1;
+        e.location = {};e.location.token={};
+        e.location.token.start = start;
+        e.location.token.end = end;
+        return e;
+    }
 
     function updateReferencedCells(cell){
         for(var cellId in cell.referencedBy){
