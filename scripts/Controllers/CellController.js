@@ -14,7 +14,12 @@ var CellController = (function (){
             CellView.selectNewCell(newCellId);
 
             var cell = getGlobalCell(CellView.getCurrentCellId());
-            FormulaBarController.updateFormula(cell.formula);
+            if(cell.hasErrored()){
+                FormulaBarController.updateFormula(CellView.getCurrentCellText());
+            }else{
+                FormulaBarController.updateFormula(cell.formula);
+            }
+
         }
     };
 
@@ -91,12 +96,13 @@ var CellController = (function (){
             if(e.type == ErrorEnum.CircularReference){
                e = cellController.handleCircularReferenceError(e);
             }
-
+            cell.setErrored(true);
             CellView.highlightError(e);
             error = true;
             ErrorBarController.displayErrorMessage(e);
         }
         if(!error){
+            cell.setErrored(false);
             ErrorBarController.clearDisplay();
             if(CellView.getCurrentCellFormula()[0] == '='){
                 CellView.setCurrentCellText(cell.value);
@@ -181,7 +187,8 @@ var CellController = (function (){
     };
 
     cellController.handleCircularReferenceError = function(e){
-        var cellId = e.cell.findCircularReference();
+        var cellArray = new Array();
+        var cellId = findCircularReference(e.cell, e.cell, cellArray)[0];
         var text = CellView.getCurrentCellText();
         var start = text.indexOf(cellId);
         var end = start + cellId.length-1;
@@ -189,7 +196,7 @@ var CellController = (function (){
         e.location.token.start = start;
         e.location.token.end = end;
         return e;
-    }
+    };
 
     function updateReferencedCells(cell){
         for(var cellId in cell.referencedBy){

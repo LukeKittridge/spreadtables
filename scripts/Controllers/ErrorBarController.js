@@ -10,6 +10,8 @@ var ErrorBarController = (function(){
             case ErrorEnum.DivideByZero:
                 message += "Divide By Zero";
                 break;
+            case ErrorEnum.CircularReference:
+                message += "Circular reference"
         }
         message += " error. To fix please update the text shown in red.";
         ErrorBarView.updateDisplay(message);

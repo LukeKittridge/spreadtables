@@ -11,9 +11,18 @@ function Cell(id){
     this.referencedBy = {};
     this.references = {};
     this.text = '';
+    this.errored = false;
 }
 
 Cell.cellsEvaluated = [];
+
+Cell.prototype.setErrored = function(errored){
+    this.errored = errored;
+};
+
+Cell.prototype.hasErrored = function(){
+    return this.errored;
+};
 
 function splitGlobalCells(globalCellName){
     var splitResult = globalCellName.split('.');
@@ -98,10 +107,17 @@ Cell.prototype.evaluate = function(){
 
 };
 
-Cell.prototype.findCircularReference = function(){
-  for(var cellId in this.references){
-      if(this.referencedBy[cellId]){
-          return cellId;
-      }
-  }
+
+function findCircularReference(cell, refCell, cellArray){
+    for(var cellId in refCell.references){
+        if(cell.referencedBy[cellId]){
+            cellArray.push(cellId);
+            return cellArray;
+        }
+        else{
+            var refCell = getGlobalCell(cellId);
+            cellArray.push(cellId);
+           return findCircularReference(cell, refCell, cellArray);
+        }
+    }
 };
