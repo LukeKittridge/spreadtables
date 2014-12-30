@@ -51,7 +51,7 @@ var CellController = (function (){
             if(CellView.getCurrentCellId() != targetId){
                 CellView.setCurrentCellText(CellView.getCurrentCellText() + targetId);
                 cellController.textChanged();
-                if(Application.getCurrentState() == Application.EditingCell){
+                if(Application.getCurrentState() == ApplicationStates.EditingCell){
                     CellView.focusCurrentCell();
                     CellView.moveCaretToEnd();
                 }else{
@@ -90,11 +90,16 @@ var CellController = (function (){
     cellController.updateCurrentCell = function(){
         var cell = getGlobalCell(CellView.getCurrentCellId());
         var error = false;
+        var switchToCell = false;
         try{
             cell.evaluateNewFormula(CellView.getCurrentCellFormula());
         }catch(e){
             if(e.type == ErrorEnum.CircularReference){
                e = cellController.handleCircularReferenceError(e);
+            }
+            if(e.cellId){
+                cell = getGlobalCell(e.cellId);
+                switchToCell = e.cellId;
             }
             cell.setErrored(true);
             CellView.highlightError(e);
@@ -114,7 +119,12 @@ var CellController = (function (){
         }
 
         Application.setCurrentState(ApplicationStates.CellSelected);
-        cellController.selectCellBelow();
+        if(switchToCell){
+            cellController.changeCurrentCell(switchToCell);
+        }else{
+            cellController.selectCellBelow();
+        }
+
     };
 
     cellController.selectCellToLeft = function(){
@@ -184,6 +194,10 @@ var CellController = (function (){
 
     cellController.displayErrorMessage = function(e){
 
+    };
+
+    cellController.getCellFormula = function(cellId){
+      return getGlobalCell(cellId).formula;
     };
 
     cellController.handleCircularReferenceError = function(e){

@@ -5,7 +5,13 @@
 var ErrorBarController = (function(){
    var errorBarController = {};
     errorBarController.displayErrorMessage = function(e){
-        var message = 'Cell ' + CellController.getCurrentCellId() + 'has a ';
+        var cellId;
+        if(e.cellId){
+            cellId = e.cellId;
+        }else{
+            cellId = CellController.getCurrentCellId();
+        }
+        var message = 'Cell ' + cellId + 'has a ';
         switch(e.type){
             case ErrorEnum.DivideByZero:
                 message += "Divide By Zero";

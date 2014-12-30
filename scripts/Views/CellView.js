@@ -41,7 +41,7 @@ var CellView = (function (){
     };
 
     cellView.getCurrentCellFormula = function(){
-        return document.getElementById(currentCellId).innerHTML;
+        return document.getElementById(currentCellId).textContent;
     };
 
     cellView.setCurrentCellText = function(text){
@@ -52,9 +52,15 @@ var CellView = (function (){
         document.getElementById(cellId).innerHTML = text;
     };
 
+    cellView.getCellText = function(cellId){
+        return document.getElementById(cellId).innerHTML;
+    };
+
     cellView.focusCurrentCell = function(){
       document.getElementById(currentCellId).focus();
     };
+
+
 
     cellView.createAxisCell = function(left, top, j, i, columnReset, letterCount){
         var axisCell = document.createElement('div');
@@ -98,7 +104,12 @@ var CellView = (function (){
     cellView.highlightError = function(e){
 
             var inHTML = '';
-            var text = CellView.getCurrentCellText();
+            var text;
+            if(e.cellId){
+                text = CellController.getCellFormula(e.cellId);
+            }else{
+                text = CellView.getCurrentCellText();
+            }
 
             start =text.length;
             end = 0;
@@ -120,8 +131,11 @@ var CellView = (function (){
                 if(i == end){
                     inHTML += '</span>';
                 }
-
-            CellView.setCurrentCellText(inHTML);
+            if(e.cellId){
+                cellView.setCellText(e.cellId,inHTML);
+            }else{
+                CellView.setCurrentCellText(inHTML);
+            }
         }
     };
 

@@ -66,14 +66,16 @@ Cell.prototype.evaluate = function(){
     }
 
 
-    for(var cellId in this.references){
-        var cell = this.references[cellId];
-        delete cell.referencedBy[this.id];
-    }
+
 
     var lexResult = lex(this.formula);
     var parseResult = parse(lexResult);
     this.value = evaluate(parseResult, this);
+    this.setErrored(false);
+    for(var cellId in this.references){
+        var cell = this.references[cellId];
+        delete cell.referencedBy[this.id];
+    }
 
     for(var i =0; i < lexResult.length; i++){
         var token = lexResult[i];
@@ -99,7 +101,8 @@ Cell.prototype.evaluate = function(){
             Cell.cellsEvaluated = [];
         }
         catch(e){
-            if(!IterationsAllowed){
+            if(e.type != ErrorEnum.CircularReference || !IterationsAllowed ){
+                e.cellId = cell.id;
                 throw e;
             }
         }
