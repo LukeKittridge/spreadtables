@@ -43,7 +43,12 @@ var Application = (function (){
             SideBarController.handleClick(e);
         }
         else if(element.className == 'cell'){
-            CellController.handleClick(e);
+            CellController.handleClick(e.target.id);
+        }
+        else if(element.className == 'cellErrorHighlight'){
+            if(element.parentNode.className == 'cell'){
+                CellController.handleClick(e.target.parentNode.id);
+            }
         }
 
     }

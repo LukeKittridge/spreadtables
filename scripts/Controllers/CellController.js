@@ -46,10 +46,10 @@ var CellController = (function (){
       }
     };
 
-    cellController.handleClick = function(event){
+    cellController.handleClick = function(targetId){
         if(Application.getCurrentState() == ApplicationStates.EditingCell || Application.getCurrentState() == ApplicationStates.FormulaBar){
-            if(CellView.getCurrentCellId() != event.target.id){
-                CellView.setCurrentCellText(CellView.getCurrentCellText() + event.target.id);
+            if(CellView.getCurrentCellId() != targetId){
+                CellView.setCurrentCellText(CellView.getCurrentCellText() + targetId);
                 cellController.textChanged();
                 if(Application.getCurrentState() == Application.EditingCell){
                     CellView.focusCurrentCell();
@@ -62,7 +62,7 @@ var CellController = (function (){
             }
         }
         else if (Application.getCurrentState() == ApplicationStates.CellSelected){
-            cellController.changeCurrentCell(event.target.id);
+            cellController.changeCurrentCell(targetId);
         }
     };
 
