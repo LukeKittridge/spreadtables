@@ -33,7 +33,7 @@ function lex(input){
 
             var minusCount =0;
             start = i;
-            number = '';
+            number ='';
             var unary = false;
             while(/[\+-]/.test(input[i]) && (!/\w/.test(input[i - 1]) || i ==0)  && i < input.length) {
                 if(/-/.test(input[i])){
@@ -52,8 +52,16 @@ function lex(input){
                     i++;
                 }while(/[\d\.]/.test(input[i]) && i < input.length);
 
+                var num = parseInt(number,10);
 
-                addToken(TokenEnum.Number, number, start, i-1);
+                if(Number.isNaN(num)){
+                    addToken(TokenEnum.Operator, input[i], start, i);
+                }
+                else{
+                    addToken(TokenEnum.Number, number, start, i-1);
+                }
+
+
             }
             else{
                 addToken(TokenEnum.Operator, input[i], start, i);

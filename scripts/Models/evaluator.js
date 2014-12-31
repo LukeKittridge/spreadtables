@@ -41,6 +41,14 @@ function evaluate(prefixExpression, currentCell){
         if(token.type == TokenEnum.Operator){
             var arg2 = stack.pop();
             var arg1 = stack.pop();
+            if(!arg2 || !arg1) {
+                var nextOp = prefixExpression.dequeue();
+                if (arg2 && nextOp) {
+                    throw {type: ErrorEnum.Syntax, location: nextOp};
+                } else {
+                    throw {type: ErrorEnum.Syntax, location: token};
+                }
+            }
             stack.push(calculate(token.value, arg1, arg2));
 
         }

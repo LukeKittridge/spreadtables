@@ -118,8 +118,11 @@ var CellView = (function (){
             start = e.location.token.start;
             end = e.location.token.end;
         }
-        else{
+        else if(e.location.tokens){
             cellView.extractStartEnd(e.location.tokens);
+        }else if(e.location.start){
+            start = e.location.start;
+            end = e.location.end;
         }
 
 
