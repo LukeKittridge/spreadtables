@@ -10,7 +10,14 @@ function toPostfix(tokens){
     var queue = new Queue();
     var stack = [];
     var topStack;
+    var previousToken = {};
+    var bracketToken;
+    var numBrackets = 0;
     tokens.forEach(function (token) {
+
+        if(previousToken.type == token.type){
+            throw {type: ErrorEnum.Syntax, location: previousToken};
+        }
 
         if (token.type == TokenEnum.Number || token.type == TokenEnum.GlobalCellName || token.type == TokenEnum.GlobalCell || token.type == TokenEnum.LocalCell || token.type == TokenEnum.LocalCellName) {
             queue.enqueue(token);
@@ -41,12 +48,17 @@ function toPostfix(tokens){
         }
 
         if(token.type == TokenEnum.Bracket){
+            bracketToken = token;
+            numBrackets++;
             if(token.value == '('){
                 stack.push(token);
             }
             else{
                 var rightBracket = false;
                 while(!rightBracket){
+                    if(stack.length == 0){
+                        throw {type: ErrorEnum.Syntax, location:token}
+                    }
                     var topStack = stack.pop();
                     if(topStack.value != '('){
                         queue.enqueue(topStack);
@@ -57,8 +69,18 @@ function toPostfix(tokens){
                 }
             }
         }
-
+    previousToken = token;
     });
+
+    if((numBrackets % 2) != 0){
+        throw {type: ErrorEnum.Syntax, location:bracketToken};
+    }
+
+    if(previousToken.type == TokenEnum.Operator){
+        throw {type: ErrorEnum.Syntax, location:previousToken};
+    }
+
+
     var j = stack.length;
     for(var i =0; i < j; i++){
         topStack = stack.pop();
