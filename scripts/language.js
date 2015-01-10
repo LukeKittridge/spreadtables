@@ -1,0 +1,59 @@
+/**
+ * Created by Luke on 10/01/2015.
+ */
+
+var Parser = require("jison").Parser;
+
+var grammar = {
+    "lex": {
+        "rules": [
+            ["\\s+", "/* skip whitespace */"],
+            ["[0-9]+(?:\\.[0-9]+)?\\b", "return 'Number';"],
+            ["\\*",                     "return '*';"],
+            ["\\/",                     "return '/';"],
+            ["-",                       "return '-';"],
+            ["\\+",                     "return '+';"],
+            ["\\^",                     "return '^';"],
+            ["\\(",                     "return '(';"],
+            ["\\)",                     "return ')';"],
+            ["^#\\w+$",                  "return 'TableName';"],
+            ["^[a-zA-Z](?:[a-zA-Z][a-zA-Z]\\w*)?$", "return 'LocalCellName';"],
+            ["^[a-zA-Z]{1,2}[1-9]\\d?$", "return 'LocalCell';"],
+            ["^\\w+.[a-zA-Z](?:[a-zA-Z][a-zA-Z]\\w*)?$", "return 'GlobalCellName';"],
+            ["^\\w+.[a-zA-Z]{1,2}[1-9]\\d?$", "return 'GlobalCell';"],
+            ["$",                       "return 'EOF';"]
+
+        ]
+    },
+
+    "operators": [
+        ["left", "+", "-"],
+        ["left", "*", "/"],
+        ["left", "^"],
+        ["left", "UnaryMinus"]
+    ],
+
+    "bnf": {
+        "expressions" :[[ "e EOF",   "return $1;"  ]],
+
+        "e" :[[ "e + e", "$$ = calculateWrapper('+',$1,$3);"],
+            ["e - e", "$$ = calculateWrapper('-',$1,$3);"],
+            ["e * e", "$$ = calculateWrapper('*',$1,$3);"],
+            ["e / e", "$$ = calculateWrapper('/',$1,$3);"],
+            ["e ^ e", "$$ = calculateWrapper('^',$1,$3);"],
+            ["- e", "$$ = -$2;", {"prec": "UnaryMinus"}],
+            ["( e )", "$$ = $2;"],
+            ["Number", "$$ = Number(yytext);"]]
+    }
+};
+
+var parser = new Parser(grammar);
+
+// generate source, ready to be written to disk
+var parserSource = parser.generate();
+
+// you can also use the parser directly from memory
+
+console.log(parser.parse("4+4"));
+// returns true
+

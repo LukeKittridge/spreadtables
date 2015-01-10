@@ -1,0 +1,195 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'install',
+1 verbose cli   'jison',
+1 verbose cli   '0.4.13' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.33
+4 verbose node symlink C:\Program Files\nodejs\\node.exe
+5 verbose cache add [ 'jison', null ]
+6 verbose cache add name=undefined spec="jison" args=["jison",null]
+7 verbose parsed url { protocol: null,
+7 verbose parsed url   slashes: null,
+7 verbose parsed url   auth: null,
+7 verbose parsed url   host: null,
+7 verbose parsed url   port: null,
+7 verbose parsed url   hostname: null,
+7 verbose parsed url   hash: null,
+7 verbose parsed url   search: null,
+7 verbose parsed url   query: null,
+7 verbose parsed url   pathname: 'jison',
+7 verbose parsed url   path: 'jison',
+7 verbose parsed url   href: 'jison' }
+8 verbose cache add [ '0.4.13', null ]
+9 verbose cache add name=undefined spec="0.4.13" args=["0.4.13",null]
+10 verbose parsed url { protocol: null,
+10 verbose parsed url   slashes: null,
+10 verbose parsed url   auth: null,
+10 verbose parsed url   host: null,
+10 verbose parsed url   port: null,
+10 verbose parsed url   hostname: null,
+10 verbose parsed url   hash: null,
+10 verbose parsed url   search: null,
+10 verbose parsed url   query: null,
+10 verbose parsed url   pathname: '0.4.13',
+10 verbose parsed url   path: '0.4.13',
+10 verbose parsed url   href: '0.4.13' }
+11 silly lockFile 51a53039-jison jison
+12 verbose lock jison C:\Users\Luke\AppData\Roaming\npm-cache\51a53039-jison.lock
+13 silly lockFile 8c832992-0-4-13 0.4.13
+14 verbose lock 0.4.13 C:\Users\Luke\AppData\Roaming\npm-cache\8c832992-0-4-13.lock
+15 silly lockFile 51a53039-jison jison
+16 silly lockFile 51a53039-jison jison
+17 silly lockFile 8c832992-0-4-13 0.4.13
+18 silly lockFile 8c832992-0-4-13 0.4.13
+19 verbose addNamed [ 'jison', '' ]
+20 verbose addNamed [ null, '*' ]
+21 silly lockFile 21a76936-jison jison@
+22 verbose lock jison@ C:\Users\Luke\AppData\Roaming\npm-cache\21a76936-jison.lock
+23 verbose addNamed [ '0.4.13', '' ]
+24 verbose addNamed [ null, '*' ]
+25 silly lockFile 55b3fdf5-0-4-13 0.4.13@
+26 verbose lock 0.4.13@ C:\Users\Luke\AppData\Roaming\npm-cache\55b3fdf5-0-4-13.lock
+27 silly addNameRange { name: 'jison', range: '*', hasData: false }
+28 silly addNameRange { name: '0.4.13', range: '*', hasData: false }
+29 verbose request where is /0.4.13
+30 verbose request registry https://registry.npmjs.org/
+31 verbose request id 8fea5c8ba4f0b987
+32 verbose url raw /0.4.13
+33 verbose url resolving [ 'https://registry.npmjs.org/', './0.4.13' ]
+34 verbose url resolved https://registry.npmjs.org/0.4.13
+35 verbose request where is https://registry.npmjs.org/0.4.13
+36 info trying registry request attempt 1 at 19:28:08
+37 http GET https://registry.npmjs.org/0.4.13
+38 verbose request where is /jison
+39 verbose request registry https://registry.npmjs.org/
+40 verbose url raw /jison
+41 verbose url resolving [ 'https://registry.npmjs.org/', './jison' ]
+42 verbose url resolved https://registry.npmjs.org/jison
+43 verbose request where is https://registry.npmjs.org/jison
+44 info trying registry request attempt 1 at 19:28:08
+45 verbose etag "AM6ALHPW34VXQZJ2AM99BIFQ5"
+46 http GET https://registry.npmjs.org/jison
+47 http 304 https://registry.npmjs.org/jison
+48 silly registry.get cb [ 304,
+48 silly registry.get   { date: 'Sat, 10 Jan 2015 19:28:08 GMT',
+48 silly registry.get     server: 'Apache',
+48 silly registry.get     via: '1.1 varnish',
+48 silly registry.get     'last-modified': 'Sat, 10 Jan 2015 19:28:08 GMT',
+48 silly registry.get     'cache-control': 'max-age=60',
+48 silly registry.get     etag: '"AM6ALHPW34VXQZJ2AM99BIFQ5"',
+48 silly registry.get     age: '34',
+48 silly registry.get     'x-served-by': 'cache-lcy1128-LCY',
+48 silly registry.get     'x-cache': 'HIT',
+48 silly registry.get     'x-cache-hits': '1',
+48 silly registry.get     'x-timer': 'S1420918088.825830,VS0,VE0',
+48 silly registry.get     vary: 'Accept',
+48 silly registry.get     'content-length': '0',
+48 silly registry.get     'keep-alive': 'timeout=10, max=50',
+48 silly registry.get     connection: 'Keep-Alive' } ]
+49 verbose etag https://registry.npmjs.org/jison from cache
+50 silly addNameRange number 2 { name: 'jison', range: '*', hasData: true }
+51 silly addNameRange versions [ 'jison',
+51 silly addNameRange   [ '0.1.20',
+51 silly addNameRange     '0.1.21',
+51 silly addNameRange     '0.1.24',
+51 silly addNameRange     '0.1.25',
+51 silly addNameRange     '0.1.26',
+51 silly addNameRange     '0.1.27',
+51 silly addNameRange     '0.2.0',
+51 silly addNameRange     '0.2.1',
+51 silly addNameRange     '0.2.2',
+51 silly addNameRange     '0.2.4',
+51 silly addNameRange     '0.2.5',
+51 silly addNameRange     '0.2.6',
+51 silly addNameRange     '0.2.7',
+51 silly addNameRange     '0.2.8',
+51 silly addNameRange     '0.2.9',
+51 silly addNameRange     '0.2.10',
+51 silly addNameRange     '0.2.11',
+51 silly addNameRange     '0.2.12',
+51 silly addNameRange     '0.2.13',
+51 silly addNameRange     '0.2.14',
+51 silly addNameRange     '0.3.0',
+51 silly addNameRange     '0.3.1',
+51 silly addNameRange     '0.3.2',
+51 silly addNameRange     '0.3.3',
+51 silly addNameRange     '0.3.4',
+51 silly addNameRange     '0.3.5',
+51 silly addNameRange     '0.3.6',
+51 silly addNameRange     '0.3.7',
+51 silly addNameRange     '0.3.8',
+51 silly addNameRange     '0.3.9',
+51 silly addNameRange     '0.3.10',
+51 silly addNameRange     '0.3.11',
+51 silly addNameRange     '0.3.12',
+51 silly addNameRange     '0.4.0',
+51 silly addNameRange     '0.4.1',
+51 silly addNameRange     '0.4.2',
+51 silly addNameRange     '0.4.3',
+51 silly addNameRange     '0.4.4',
+51 silly addNameRange     '0.4.5',
+51 silly addNameRange     '0.4.6',
+51 silly addNameRange     '0.4.7',
+51 silly addNameRange     '0.4.8',
+51 silly addNameRange     '0.4.9',
+51 silly addNameRange     '0.4.10',
+51 silly addNameRange     '0.4.11',
+51 silly addNameRange     '0.4.13',
+51 silly addNameRange     '0.4.14',
+51 silly addNameRange     '0.4.15' ] ]
+52 verbose addNamed [ 'jison', '0.4.15' ]
+53 verbose addNamed [ '0.4.15', '0.4.15' ]
+54 silly lockFile 1b9a0246-jison-0-4-15 jison@0.4.15
+55 verbose lock jison@0.4.15 C:\Users\Luke\AppData\Roaming\npm-cache\1b9a0246-jison-0-4-15.lock
+56 silly lockFile 1b9a0246-jison-0-4-15 jison@0.4.15
+57 silly lockFile 1b9a0246-jison-0-4-15 jison@0.4.15
+58 silly lockFile 21a76936-jison jison@
+59 silly lockFile 21a76936-jison jison@
+60 http 404 https://registry.npmjs.org/0.4.13
+61 verbose headers { date: 'Sat, 10 Jan 2015 19:28:08 GMT',
+61 verbose headers   server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+61 verbose headers   'content-type': 'application/json',
+61 verbose headers   'cache-control': 'max-age=0',
+61 verbose headers   'content-length': '52',
+61 verbose headers   'accept-ranges': 'bytes',
+61 verbose headers   via: '1.1 varnish',
+61 verbose headers   age: '0',
+61 verbose headers   'x-served-by': 'cache-lcy1124-LCY',
+61 verbose headers   'x-cache': 'MISS',
+61 verbose headers   'x-cache-hits': '0',
+61 verbose headers   'x-timer': 'S1420918088.835044,VS0,VE159',
+61 verbose headers   'keep-alive': 'timeout=10, max=50',
+61 verbose headers   connection: 'Keep-Alive' }
+62 silly registry.get cb [ 404,
+62 silly registry.get   { date: 'Sat, 10 Jan 2015 19:28:08 GMT',
+62 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+62 silly registry.get     'content-type': 'application/json',
+62 silly registry.get     'cache-control': 'max-age=0',
+62 silly registry.get     'content-length': '52',
+62 silly registry.get     'accept-ranges': 'bytes',
+62 silly registry.get     via: '1.1 varnish',
+62 silly registry.get     age: '0',
+62 silly registry.get     'x-served-by': 'cache-lcy1124-LCY',
+62 silly registry.get     'x-cache': 'MISS',
+62 silly registry.get     'x-cache-hits': '0',
+62 silly registry.get     'x-timer': 'S1420918088.835044,VS0,VE159',
+62 silly registry.get     'keep-alive': 'timeout=10, max=50',
+62 silly registry.get     connection: 'Keep-Alive' } ]
+63 silly lockFile 55b3fdf5-0-4-13 0.4.13@
+64 silly lockFile 55b3fdf5-0-4-13 0.4.13@
+65 error 404 404 Not Found: 0.4.13
+65 error 404
+65 error 404 '0.4.13' is not in the npm registry.
+65 error 404 You should bug the author to publish it
+65 error 404
+65 error 404 Note that you can also install from a
+65 error 404 tarball, folder, or http url, or git url.
+66 error System Windows_NT 6.2.9200
+67 error command "C:\\Program Files\\nodejs\\\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install" "jison" "0.4.13"
+68 error cwd C:\Users\Luke\Documents\WorkSpace\SpreadTables
+69 error node -v v0.10.33
+70 error npm -v 1.4.28
+71 error code E404
+72 verbose exit [ 1, true ]

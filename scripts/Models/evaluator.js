@@ -56,7 +56,13 @@ function evaluate(prefixExpression, currentCell){
     return +stack.pop().value.toFixed(4); //Round to 4 decimal places and drop extra 0s
 }
 
-
+function calculateWrapper(operator, arg1, arg2){
+    var a1 = {};
+    a1.value = arg1;
+    var a2 = {};
+    a2.value = arg2;
+    return calculate(operator,a1,a2).value;
+}
 
 function calculate(operator, arg1, arg2){
     var tokens = [arg1, arg2];
