@@ -577,32 +577,34 @@ var parser = (function(){
                 switch($avoiding_name_collisions) {
                     case 0:/* skip whitespace */
                         break;
-                    case 1:return 13;
+                    case 1:/* ignore equals sign*/
                         break;
-                    case 2:return 8;
+                    case 2:return 13;
                         break;
-                    case 3:return 9;
+                    case 3:return 8;
                         break;
-                    case 4:return 7;
+                    case 4:return 9;
                         break;
-                    case 5:return 6;
+                    case 5:return 7;
                         break;
-                    case 6:return 10;
+                    case 6:return 6;
                         break;
-                    case 7:return 11;
+                    case 7:return 10;
                         break;
-                    case 8:return 12;
+                    case 8:return 11;
                         break;
-                    case 9:return 14;
+                    case 9:return 12;
                         break;
-                    case 10:return 15;
+                    case 10:return 14;
                         break;
-                    case 11:return 5;
+                    case 11:return 15;
+                        break;
+                    case 12:return 5;
                         break;
                 }
             },
-            rules: [/^(?:\s+)/,/^(?:[0-9]+(?:\.[0-9]+)?\b)/,/^(?:\*)/,/^(?:\/)/,/^(?:-)/,/^(?:\+)/,/^(?:\^)/,/^(?:\()/,/^(?:\))/,/^(?:[a-zA-Z]+\d*\.[a-zA-Z]+\d*)/,/^(?:[a-zA-Z]+\d*)/,/^(?:$)/],
-            conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11],"inclusive":true}}
+            rules: [/^(?:\s+)/,/^(?:=)/,/^(?:[0-9]+(?:\.[0-9]+)?\b)/,/^(?:\*)/,/^(?:\/)/,/^(?:-)/,/^(?:\+)/,/^(?:\^)/,/^(?:\()/,/^(?:\))/,/^(?:[a-zA-Z]+\d*\.[a-zA-Z]+\d*)/,/^(?:[a-zA-Z]+\d*)/,/^(?:$)/],
+            conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12],"inclusive":true}}
         };
         return lexer;
     })();

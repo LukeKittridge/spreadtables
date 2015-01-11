@@ -96,15 +96,23 @@ var CellController = (function (){
         }catch(e){
             if(e.type == ErrorEnum.CircularReference){
                e = cellController.handleCircularReferenceError(e);
+            }else if(e.type == ErrorEnum.DivideByZero && UseJison){
+                e = jisonDivideByZero();
             }
             if(e.cellId){
                 cell = getGlobalCell(e.cellId);
                 switchToCell = e.cellId;
             }
-            cell.setErrored(true);
-            CellView.highlightError(e);
+
             error = true;
-            ErrorBarController.displayErrorMessage(e);
+            cell.setErrored(true);
+            if(!e.type){ //Jison Error
+                    ErrorBarController.displayJisonErrorMessage(e);
+            }else{
+                CellView.highlightError(e);
+                ErrorBarController.displayErrorMessage(e);
+            }
+
         }
         if(!error){
             cell.setErrored(false);
@@ -212,6 +220,10 @@ var CellController = (function (){
         return e;
     };
 
+    cellController.getCurrentEvaluatedCellId = function(){
+        return currentEvaluatedCell.id;
+    };
+
     function updateReferencedCells(cell){
         for(var cellId in cell.referencedBy){
             var refCell = cell.referencedBy[cellId];
@@ -225,6 +237,18 @@ var CellController = (function (){
         var cell = parts[1];
         var regGroups = /([a-zA-Z]+)(\d+)/.exec(cell);
         return {table:parts[0],  letters : regGroups[1], numbers : regGroups[2]};
+    }
+
+    function jisonDivideByZero(){
+        UseJison = false;
+        try{
+            var cell = getGlobalCell(CellView.getCurrentCellId());
+            cell.evaluateNewFormula(CellView.getCurrentCellFormula());
+            cellController.updateCurrentCell();
+        }catch (e){
+            UseJison = true;
+            return e;
+        }
     }
 
     return cellController;

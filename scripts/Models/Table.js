@@ -92,5 +92,8 @@ function getCellValue(cellId){
         var table = Table.tables[cellNames.TableName];
         cell = table.getCell(cellId);
     }
+    if(cell.value == ""){
+        cell.value = 0;
+    }
     return cell.value;
 };

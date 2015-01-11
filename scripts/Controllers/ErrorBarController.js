@@ -27,6 +27,14 @@ var ErrorBarController = (function(){
         ErrorBarView.updateDisplay(message);
     };
 
+    errorBarController.displayJisonErrorMessage = function(e){
+        var message = 'Cell' + CellController.getCurrentEvaluatedCellId() + 'has an error:';
+        message += e.message.split(':')[1];
+        var reg = /\n/g;
+        message = message.replace(reg,'<br>');
+        ErrorBarView.updateDisplay(message);
+    };
+
     errorBarController.clearDisplay = function(){
       ErrorBarView.clearDisplay();
     };

@@ -203,9 +203,8 @@ body{
 
 #error-bar{
     width:70%;
-    height: 30px;
     position: absolute;
-    top: 95%;
+    top: 90%;
     border: 1px solid black;
     left: 15%;
     right: 30%;

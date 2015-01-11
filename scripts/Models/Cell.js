@@ -73,8 +73,12 @@ Cell.prototype.evaluate = function(){
 
 
     var lexResult = lex(this.formula);
-    var parseResult = parse(lexResult);
-    this.value = evaluate(parseResult, this);
+    if(!UseJison){
+        var parseResult = parse(lexResult);
+        this.value = evaluate(parseResult, this);
+    }else{
+        this.value = parser.parse(this.formula);
+    }
     this.setErrored(false);
     for(var cellId in this.references){
         var cell = this.references[cellId];

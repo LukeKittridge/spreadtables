@@ -7,7 +7,8 @@ var Parser = require("jison").Parser;
 var grammar = {
     "lex": {
         "rules": [
-            ["\\s+", "/* skip whitespace */"],
+            ["\\s+",        "/* skip whitespace */"],
+            ["=",           "/* ignore equals sign*/"],
             ["[0-9]+(?:\\.[0-9]+)?\\b", "return 'Number';"],
             ["\\*",                     "return '*';"],
             ["\\/",                     "return '/';"],
@@ -55,6 +56,6 @@ var parserSource = parser.generate();
 
 // you can also use the parser directly from memory
 
-console.log(parser.parse("test.CV1+4"));
+console.log(parser.parse("B1+B2"));
 // returns true
 
