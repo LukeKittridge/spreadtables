@@ -2,6 +2,8 @@
  * Created by Luke Kittridge on 23/08/2014.
  */
 
+var currentEvaluatedCell;
+
 function Cell(id){
     this.className = "cell";
     this.id = id;
@@ -53,6 +55,8 @@ Cell.prototype.evaluateNewFormula = function(formula){
 
 
 Cell.prototype.evaluate = function(){
+
+    currentEvaluatedCell = this;
 
     if(Cell.cellsEvaluated[this.id] >= IterationCount){
         throw{type:ErrorEnum.CircularReference,cell:this};

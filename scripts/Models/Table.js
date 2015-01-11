@@ -72,7 +72,7 @@ Table.prototype.getCell = function(cellIdentifier){
 
 Table.prototype.addVariable = function(name,cell){
     this.variables[name] = cell;
-}
+};
 
 Table.tables = {};
 Table.tablesCreated =0;
@@ -82,3 +82,15 @@ function getGlobalCell(globalCellIdentifier){
     var cell = Table.tables[cellNames.TableName].getCell(cellNames.Cell);
     return cell;
 }
+
+function getCellValue(cellId){
+    var cell;
+    if(cellId.indexOf('.') != -1){//Global Cell
+        cell = getGlobalCell(cellId);
+    } else{
+        var cellNames = splitGlobalCells(currentEvaluatedCell.id);
+        var table = Table.tables[cellNames.TableName];
+        cell = table.getCell(cellId);
+    }
+    return cell.value;
+};

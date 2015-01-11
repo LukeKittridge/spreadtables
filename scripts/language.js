@@ -16,11 +16,8 @@ var grammar = {
             ["\\^",                     "return '^';"],
             ["\\(",                     "return '(';"],
             ["\\)",                     "return ')';"],
-            ["^#\\w+$",                  "return 'TableName';"],
-            ["^[a-zA-Z](?:[a-zA-Z][a-zA-Z]\\w*)?$", "return 'LocalCellName';"],
-            ["^[a-zA-Z]{1,2}[1-9]\\d?$", "return 'LocalCell';"],
-            ["^\\w+.[a-zA-Z](?:[a-zA-Z][a-zA-Z]\\w*)?$", "return 'GlobalCellName';"],
-            ["^\\w+.[a-zA-Z]{1,2}[1-9]\\d?$", "return 'GlobalCell';"],
+            ["[a-zA-Z]+\\d*\\.[a-zA-Z]+\\d*","return 'GlobalCell';"],
+            ["[a-zA-Z]+\\d*","return 'LocalCell';"],
             ["$",                       "return 'EOF';"]
 
         ]
@@ -30,7 +27,8 @@ var grammar = {
         ["left", "+", "-"],
         ["left", "*", "/"],
         ["left", "^"],
-        ["left", "UnaryMinus"]
+        ["left", "UnaryMinus"],
+        ["left", "UnaryPlus"]
     ],
 
     "bnf": {
@@ -42,8 +40,11 @@ var grammar = {
             ["e / e", "$$ = calculateWrapper('/',$1,$3);"],
             ["e ^ e", "$$ = calculateWrapper('^',$1,$3);"],
             ["- e", "$$ = -$2;", {"prec": "UnaryMinus"}],
+            ["+ e", "$$ = $2;", {"prec": "UnaryPlus"}],
             ["( e )", "$$ = $2;"],
-            ["Number", "$$ = Number(yytext);"]]
+            ["Number", "$$ = Number(yytext);"],
+            ["GlobalCell", "$$ = getCellValue(yytext);"],
+            ["LocalCell", "$$ = getCellValue(yytext);"]]
     }
 };
 
@@ -54,6 +55,6 @@ var parserSource = parser.generate();
 
 // you can also use the parser directly from memory
 
-console.log(parser.parse("4+4"));
+console.log(parser.parse("test.CV1+4"));
 // returns true
 
