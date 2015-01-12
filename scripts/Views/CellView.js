@@ -142,6 +142,32 @@ var CellView = (function (){
         }
     };
 
+    cellView.highlighJisonError = function(e){
+        var parts = e.message.split('\n');
+        var errorPos = parts[2].length-1;
+        var newFormula ='';
+        for(var i=0; i < parts[1].length; i++){
+            if(i == errorPos){
+                newFormula += '<span class="cellErrorHighlight">' + parts[1][errorPos] + '</span>';
+            }else{
+                newFormula += parts[1][i];
+            }
+        }
+        var newMessage='';
+        for(var i=0; i< parts.length; i++){
+            if(i == 1){
+                newMessage += newFormula + '\n';
+            }
+            else{
+                newMessage += parts[i] + '\n';
+            }
+        }
+
+        CellView.setCurrentCellText(newFormula);
+        e.message = newMessage;
+        return e;
+    };
+
     cellView.extractStartEnd = function (tokens){
 
         for(var i =0; i < tokens.length; i++){

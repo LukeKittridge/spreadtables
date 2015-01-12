@@ -107,7 +107,8 @@ var CellController = (function (){
             error = true;
             cell.setErrored(true);
             if(!e.type){ //Jison Error
-                    ErrorBarController.displayJisonErrorMessage(e);
+                var newErrorrMessage = CellView.highlighJisonError(e);
+                ErrorBarController.displayJisonErrorMessage(newErrorrMessage);
             }else{
                 CellView.highlightError(e);
                 ErrorBarController.displayErrorMessage(e);
