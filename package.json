@@ -1,0 +1,27 @@
+{
+  "name": "SpreadTables",
+  "version": "1.0.0",
+  "description": "",
+  "main": "karma.conf.js",
+  "dependencies": {
+    "express": "^4.10.2",
+    "jison": "^0.4.13",
+    "karma": "^0.12.21",
+    "karma-chrome-launcher": "^0.1.4",
+    "karma-coverage": "^0.2.6",
+    "karma-jasmine": "^0.1.5",
+    "karma-requirejs": "^0.2.2",
+    "requirejs": "^2.1.14",
+    "socket.io": "^1.2.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://ninjacheeseburger@bitbucket.org/ninjacheeseburger/spreadtables.git"
+  },
+  "author": "Luke Kittridge",
+  "license": "ISC"
+}

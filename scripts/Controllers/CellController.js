@@ -31,6 +31,10 @@ var CellController = (function (){
         return CellView.getCurrentCellId();
     };
 
+    cellController.setCellText = function(cellId, text){
+      CellView.setCellText(cellId,text);
+    };
+
     cellController.handleDoubleClick = function (event){
         var eventId;
         if(event.target.className == 'cellErrorHighlight'){

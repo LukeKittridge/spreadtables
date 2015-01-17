@@ -12,6 +12,8 @@ function Table(name, rows, columns){
     for(var i = 0; i < rows; i++){
         this.cells[i] = new Array(columns);
     }
+    this.rows = rows;
+    this.columns = columns;
     var left = 0;
     var top = 0;
     var cellId;
@@ -30,7 +32,7 @@ for(var i =0; i < rows; i++){
         cellLetters += String.fromCharCode(letterCount+65);
 
         cellId = name + '.' + cellLetters + (i+1);
-        this.cells[i][j] = new Cell(cellId);
+        this.cells[i][j] = new Cell(cellId,j,i);
         letterCount++;
 
         if(letterCount == 26){

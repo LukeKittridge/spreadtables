@@ -12,5 +12,22 @@ var TableController = (function () {
         CellController.changeCurrentCell(name + '.A1');
     };
 
+    tableController.updateCells = function (table, cells, newTable) {
+        if(newTable){
+            for(var i =0; i < table.rows; i++){
+                for(var j =0; j < table.columns; j++){
+                    table.cells[i][j] = cells[i][j];
+                    CellController.setCellText(cells[i][j].text, cells[i][j].id);
+                }
+            }
+        }
+        else{
+            for(var cell in cells){
+                table.cells[cell.row][cell.column] = cell;
+                CellController.setCellText(cell.text, cell.id);
+            }
+        }
+    };
+
     return tableController;
-}())
+}());

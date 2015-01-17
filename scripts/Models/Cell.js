@@ -4,7 +4,7 @@
 
 var currentEvaluatedCell;
 
-function Cell(id){
+function Cell(id, row, column){
     this.className = "cell";
     this.id = id;
     this.contentEditable = 'true';
@@ -14,6 +14,8 @@ function Cell(id){
     this.references = {};
     this.text = '';
     this.errored = false;
+    this.row = row;
+    this.column = column;
 }
 
 Cell.cellsEvaluated = [];
