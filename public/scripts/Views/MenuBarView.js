@@ -6,6 +6,7 @@ var MenuBarView = (function(){
     var menuBarView = {};
 
     menuBarView.showCreateTableDialogue = function (){
+        menuBarView.showOverlay(true);
         var addDialogue = document.getElementById('add-table-dialogue');
         addDialogue.style.visibility = 'visible';
 
@@ -23,10 +24,21 @@ var MenuBarView = (function(){
     menuBarView.hideCreateTableDialogue = function () {
         var addDialogue = document.getElementById('add-table-dialogue');
         addDialogue.style.visibility = 'hidden';
+        menuBarView.showOverlay(false);
+    };
+
+    menuBarView.hideOpenSheetDialogue = function(){
+        var openDialogue = document.getElementById('open-sheet-dialogue');
+        openDialogue.style.visibility = 'hidden';
+        menuBarView.showOverlay(false);
     };
 
     menuBarView.getAddTableName = function(){
         return document.getElementById('at-table-name').value;
+    };
+
+    menuBarView.getCreateSheetName = function(){
+        return document.getElementById('cs-sheet-name').value;
     };
 
     menuBarView.getAddTableRows = function(){
@@ -35,6 +47,14 @@ var MenuBarView = (function(){
 
     menuBarView.getAddTableColumns = function(){
       return document.getElementById('at-table-columns').value;
+    };
+
+    menuBarView.showOverlay = function(showOverlay){
+        var overlay = document.getElementById('overlay');
+        if(showOverlay)
+            overlay.style.visibility = 'visible';
+        else
+            overlay.style.visibility = 'hidden';
     };
 
     return menuBarView;

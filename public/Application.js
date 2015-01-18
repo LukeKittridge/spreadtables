@@ -15,7 +15,7 @@ var ApplicationStates = Object.freeze({
 var Application = (function (){
 
     var app = {};
-    var currentState = ApplicationStates.CellSelected;
+    var currentState = ApplicationStates.Menu;
     var currentCell;
 
     document.addEventListener('click', clickHandler,false);

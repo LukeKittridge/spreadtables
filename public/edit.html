@@ -22,6 +22,7 @@
     <script src="scripts/Views/FormulaBarView.js"></script>
     <script src="scripts/Views/SideBarView.js"></script>
     <script src="scripts/Views/ErrorBarView.js"></script>
+    <script src="scripts/Controllers/SyncController.js"></script>
     <script src="scripts/Controllers/MenuBarController.js"></script>
     <script src="scripts/Controllers/TableController.js"></script>
     <script src="scripts/Controllers/SideBarController.js"></script>
@@ -29,6 +30,7 @@
     <script src="scripts/Controllers/FormulaBarController.js"></script>
     <script src="scripts/Controllers/ErrorBarController.js"></script>
     <script src="scripts/3rdParty/Queue.src.js"></script>
+    <script src="scripts/3rdParty/jquery-2.1.3.js"></script>
     <title></title>
 </head>
 <body>
@@ -73,6 +75,33 @@
             Cancel
         </div>
     </div>
+</div>
+
+<div class="dialogue" id="open-sheet-dialogue">
+    <div class="dialogue-header">
+        <div class="dialogue-title-text">Choose SpreadSheet</div>
+    </div>
+    <div class="dialogue-content">
+        <div class="dialogue-sub-header">Open Existing:</div>
+        <div class="dialogue-list"></div>
+        <div class="dialogue-sub-header">Create New</div>
+        <ul>
+            <li>
+                <label>Name: <input type="text" id="cs-sheet-name"></label>
+            </li>
+        </ul>
+    </div>
+    <div class="dialogue-footer">
+        <div class="dialogue-button" onclick="MenuBarController.createSheetButtonPressed()">
+            Create Sheet
+        </div>
+        <div class="dialogue-button negative-button" onclick="MenuBarController.hideOpenSheetDialogue()">
+            Cancel
+        </div>
+    </div>
+</div>
+
+<div id="overlay">
 </div>
 
 </body>

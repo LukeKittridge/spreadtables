@@ -16,6 +16,11 @@ var MenuBarController = (function(){
         MenuBarView.hideCreateTableDialogue();
     };
 
+    menuBarController.hideOpenSheetDialogue = function(){
+      Application.setCurrentState(ApplicationStates.CellSelected);
+        MenuBarView.hideOpenSheetDialogue();
+    };
+
     menuBarController.addTableButtonPressed = function (){
         var name =  MenuBarView.getAddTableName();
         var rows = MenuBarView.getAddTableRows();
@@ -25,6 +30,10 @@ var MenuBarController = (function(){
         menuBarController.hideCreateTableDialogue();
     };
 
+    menuBarController.createSheetButtonPressed = function(){
+      var name = MenuBarView.getCreateSheetName();
+       SyncController.createNewSpreadSheet(name);
+    };
 
 
     return menuBarController;

@@ -11,8 +11,13 @@ var path = require('path');
 app.use(express.static(path.join(__dirname,'../../public')));
 
 app.get('/', function(reg,res){
-    //console.log(path.join(__dirname, '../edit.html'));
    res.sendFile(path.join(__dirname, '../../public/edit.html'));
+});
+
+app.post('/spreadsheet', function (req,res) {
+   var name = req.query.name;
+   console.log('create table:' + name);
+   res.end();
 });
 
 http.listen(1337, function(){
