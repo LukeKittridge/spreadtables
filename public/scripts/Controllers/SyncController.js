@@ -24,5 +24,13 @@ var SyncController = (function (){
         });
     };
 
+    syncController.getSpreadSheets = function(callback){
+        $.ajax({
+            type: "GET",
+            url: '/spreadsheets',
+            success: callback
+        });
+    };
+
     return syncController;
 }());

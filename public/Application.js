@@ -32,6 +32,12 @@ var Application = (function (){
         return currentState;
     };
 
+    app.start = function(){
+      SyncController.getSpreadSheets(function(spreadsheets){
+        console.log(spreadsheets);
+      });
+    };
+
 
     function clickHandler(e){
         var element = e.target;

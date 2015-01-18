@@ -11,6 +11,8 @@
     "karma-coverage": "^0.2.6",
     "karma-jasmine": "^0.1.5",
     "karma-requirejs": "^0.2.2",
+    "mongodb": "^1.4.28",
+    "monk": "^0.9.1",
     "requirejs": "^2.1.14",
     "socket.io": "^1.2.1"
   },
