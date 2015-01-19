@@ -35,7 +35,7 @@ var MenuBarController = (function(){
       var name = MenuBarView.getCreateSheetName();
        SyncController.createNewSpreadSheet(name,function(sheetId){
            Application.setSpreadSheetId(sheetId);
-
+            MenuBarController.hideOpenSheetDialogue();
        });
     };
 
@@ -45,8 +45,8 @@ var MenuBarController = (function(){
 
     menuBarController.loadSheet = function(sheetId){
       SyncController.getSpreadSheet(sheetId, function(sheet){
-          for(var i =0; i < sheet.tables.length; i++){
-              var table = sheet.tables[i];
+          for(var tableName in sheet.tables){
+              var table = sheet.tables[tableName];
                 TableController.createTable(table.name, table.rows, table.columns);
               TableController.updateCells(Table.tables[table.name],table.cells,true);
           }

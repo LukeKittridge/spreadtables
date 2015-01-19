@@ -69,10 +69,12 @@ function onMouseMove(e)
     if(e == null)
          e = window.event;
 
-    _dragElement.parentNode.style.left = (_offsetX + e.clientX - _startX) + 'px';
-    _dragElement.parentNode.style.top = (_offsetY + e.clientY - _startY) + 'px';
+    var left = _dragElement.parentNode.style.left = (_offsetX + e.clientX - _startX) + 'px';
+    var top = _dragElement.parentNode.style.top = (_offsetY + e.clientY - _startY) + 'px';
 
-
+    var tableName = _dragElement.parentNode.id;
+    TableController.updateTablePosition(tableName,top,left);
+    SyncController.updateTablePosition(tableName,top,left);
 }
 
 function onMouseUp(e)

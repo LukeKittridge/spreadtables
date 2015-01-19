@@ -14,8 +14,8 @@ function Table(name, rows, columns){
     }
     this.rows = rows;
     this.columns = columns;
-    var left = 0;
-    var top = 0;
+    this.left = 0;
+    this.top = 0;
     var cellId;
     var columnReset = 0;
     var letterCount =0;
@@ -70,6 +70,11 @@ Table.prototype.getCell = function(cellIdentifier){
     }
 
     return cell;
+};
+
+Table.prototype.updatePosition = function(top,left){
+    this.top = top;
+    this.left = left;
 };
 
 Table.prototype.addVariable = function(name,cell){

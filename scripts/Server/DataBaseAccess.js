@@ -5,7 +5,7 @@
     module.exports = {
         createSpreadSheet: function (name,db,callback){
             var spreadsheets = db.get('spreadsheets');
-            var spreadSheet = {name : name, tables : [], date : new Date()};
+            var spreadSheet = {name : name, tables : {}, date : new Date()};
             spreadsheets.insert(spreadSheet, function(err,result){
                 if(err) return;
                 var id = spreadSheet._id;
@@ -32,10 +32,22 @@
         addTable: function (id,table, db, callback) {
             var spreadSheetCollection = db.get('spreadsheets');
             spreadSheetCollection.findOne({_id: id}, function(e,spreadSheet){
-                spreadSheet.tables.push(table);
+                spreadSheet.tables[table.name] = table;
                 spreadSheetCollection.update({_id:spreadSheet._id}, {$set:{tables:spreadSheet.tables}},{upsert:false},function(err,res){
                     callback();
                 });
             });
+        },
+
+        updateTablePosition: function(id,tableName, top, left, db, callback){
+            var spreadSheetCollection = db.get('spreadsheets');
+            spreadSheetCollection.findOne({_id:id}, function(e,spreadSheet){
+               spreadSheet.tables[tableName].top =  top;
+                spreadSheet.tables[tableName].left = left;
+                spreadSheetCollection.update({_id:spreadSheet._id},{$set:{tables:spreadSheet.tables}},{upsert:false},function(err,res){
+                    callback();
+                });
+            });
         }
+
     };

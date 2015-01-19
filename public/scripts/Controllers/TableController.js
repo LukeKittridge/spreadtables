@@ -29,5 +29,15 @@ var TableController = (function () {
         }
     };
 
+    tableController.updateTablePosition = function (tableName,top,left) {
+        var table = Table.tables[tableName];
+        table.updatePosition(top,left);
+    };
+
+    tableController.moveTable = function(tableName, top, left){
+        TableView.moveTable(tableName,top,left);
+        tableController.updateTablePosition(tableName,top,left);
+    };
+
     return tableController;
 }());

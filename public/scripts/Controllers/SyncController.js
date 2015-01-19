@@ -6,6 +6,7 @@ var SyncController = (function (){
    var syncController = {};
 
     var socket = io();
+    var lastPacketDate = new Date();
 
     syncController.updateSpreadSheet = function(sheet){
       for(var table in sheet){
@@ -54,6 +55,19 @@ var SyncController = (function (){
     socket.on('add-table', function (table) {
        TableController.createTable(table.name,table.rows,table.columns);
     });
+
+    socket.on('move-table', function(data){
+        var sentDate = new Date(data.date);
+        if(sentDate > lastPacketDate){
+            TableController.moveTable(data.tableName, data.top, data.left);
+            lastPacketDate = sentDate;
+        }
+
+    });
+
+    syncController.updateTablePosition = function(tableName, top, left){
+      socket.emit('move-table', {id:Application.getSpreadSheetId(), tableName : tableName, top : top, left : left, date: new Date() });
+    };
 
     return syncController;
 }());

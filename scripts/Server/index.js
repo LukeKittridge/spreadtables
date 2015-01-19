@@ -27,7 +27,6 @@ app.post('/spreadsheet', function (req,res) {
    databaseAccess.createSpreadSheet(name,db,function(sheetId){
       res.send(sheetId);
    });
-   res.end();
 });
 
 app.get('/spreadsheet', function(req,res){
@@ -58,6 +57,12 @@ io.on('connection', function(socket){
          socket.broadcast.to(id).emit('add-table', table);
       });
 
+   });
+
+   socket.on('move-table', function(req){
+      databaseAccess.updateTablePosition(new ObjectID(req.id),req.tableName,req.top,req.left,db,function(){
+         socket.broadcast.to(req.id).emit('move-table', req);
+      })
    });
 
    socket.on('disconnect',function(){

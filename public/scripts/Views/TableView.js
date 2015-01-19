@@ -42,6 +42,12 @@ var TableView = (function (){
         document.body.appendChild(docTable);
     };
 
+    tableView.moveTable = function (tableName, top, left){
+      var table = document.getElementById(tableName);
+        table.style.top = top;
+        table.style.left = left;
+    };
+
     function drawTableTitleBar(table,docTable){
         var tableTitleBar = document.createElement('div');
         tableTitleBar.className = 'table-title-bar drag';
