@@ -66,8 +66,8 @@ var Application = (function (){
                 CellController.handleClick(e.target.parentNode.id);
             }
         }
-        else if(element.className == 'ls-list-element'){
-            MenuBarController.loadSheet(element.id);
+        else if(element.className == 'ls-list-element' || element.parentNode.className == 'ls-list-element'){
+            MenuBarController.loadSheet(element.id != "" ? element.id : element.parentNode.id);
         }
 
     }
