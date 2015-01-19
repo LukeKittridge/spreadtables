@@ -28,11 +28,15 @@ var MenuBarController = (function(){
         TableController.createTable(name,rows,columns);
         Application.setCurrentState(ApplicationStates.CellSelected);
         menuBarController.hideCreateTableDialogue();
+        SyncController.addTable(Table.tables[name]);
     };
 
     menuBarController.createSheetButtonPressed = function(){
       var name = MenuBarView.getCreateSheetName();
-       SyncController.createNewSpreadSheet(name);
+       SyncController.createNewSpreadSheet(name,function(sheetId){
+           Application.setSpreadSheetId(sheetId);
+
+       });
     };
 
     menuBarController.showSheetsList = function(sheets){
@@ -40,7 +44,15 @@ var MenuBarController = (function(){
     };
 
     menuBarController.loadSheet = function(sheetId){
-      console.log('Sheet selected:' + sheetId);
+      SyncController.getSpreadSheet(sheetId, function(sheet){
+          for(var i =0; i < sheet.tables.length; i++){
+              var table = sheet.tables[i];
+                TableController.createTable(table.name, table.rows, table.columns);
+              TableController.updateCells(Table.tables[table.name],table.cells,true);
+          }
+          Application.setSpreadSheetId(sheetId);
+          MenuBarController.hideOpenSheetDialogue();
+      });
     };
 
 

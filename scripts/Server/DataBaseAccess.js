@@ -20,5 +20,22 @@
                 callback(docs);
             });
 
+        },
+
+        getSpreadSheet: function (id, db, callback) {
+          var spreadSheetCollection = db.get('spreadsheets');
+            spreadSheetCollection.findOne({_id: id}, function(e,doc){
+                callback(doc);
+            })
+        },
+
+        addTable: function (id,table, db, callback) {
+            var spreadSheetCollection = db.get('spreadsheets');
+            spreadSheetCollection.findOne({_id: id}, function(e,spreadSheet){
+                spreadSheet.tables.push(table);
+                spreadSheetCollection.update({_id:spreadSheet._id}, {$set:{tables:spreadSheet.tables}},{upsert:false},function(err,res){
+                    callback();
+                });
+            });
         }
     };

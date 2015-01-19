@@ -17,7 +17,7 @@ var TableController = (function () {
             for(var i =0; i < table.rows; i++){
                 for(var j =0; j < table.columns; j++){
                     table.cells[i][j] = cells[i][j];
-                    CellController.setCellText(cells[i][j].text, cells[i][j].id);
+                    CellController.setCellText(cells[i][j].id,cells[i][j].text);
                 }
             }
         }

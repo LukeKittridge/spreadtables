@@ -17,6 +17,7 @@ var Application = (function (){
     var app = {};
     var currentState = ApplicationStates.Menu;
     var currentCell;
+    var spreadsheetID;
 
     document.addEventListener('click', clickHandler,false);
     document.addEventListener('keydown', keyHandler, true);
@@ -28,6 +29,15 @@ var Application = (function (){
         console.log(newState);
    } ;
 
+    app.setSpreadSheetId = function(sheetId){
+        SyncController.joinChannel(sheetId);
+        spreadsheetID = sheetId;
+    };
+
+    app.getSpreadSheetId = function(){
+        return spreadsheetID;
+    };
+
     app.getCurrentState = function(){
         return currentState;
     };
@@ -35,7 +45,6 @@ var Application = (function (){
     app.start = function(){
       SyncController.getSpreadSheets(function(spreadsheets){
         MenuBarController.showSheetsList(spreadsheets);
-        console.log(spreadsheets);
       });
     };
 

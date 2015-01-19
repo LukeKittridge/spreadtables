@@ -5,6 +5,8 @@
 var SyncController = (function (){
    var syncController = {};
 
+    var socket = io();
+
     syncController.updateSpreadSheet = function(sheet){
       for(var table in sheet){
           if(!Table.tables[table.name]){
@@ -17,10 +19,11 @@ var SyncController = (function (){
       }
     };
 
-    syncController.createNewSpreadSheet = function(name){
+    syncController.createNewSpreadSheet = function(name, callback){
         $.ajax({
             type: "POST",
-            url: '/spreadsheet?name=' + name
+            url: '/spreadsheet?name=' + name,
+            success: callback
         });
     };
 
@@ -31,6 +34,26 @@ var SyncController = (function (){
             success: callback
         });
     };
+
+    syncController.getSpreadSheet = function(id, callback){
+        $.ajax({
+            type: "GET",
+            url: '/spreadsheet?id=' + id,
+            success: callback
+        });
+    };
+
+    syncController.addTable = function(table){
+      socket.emit('add-table', {id:Application.getSpreadSheetId(), table:table });
+    };
+
+    syncController.joinChannel = function(spreadsheetId){
+        socket.emit('join', spreadsheetId);
+    };
+
+    socket.on('add-table', function (table) {
+       TableController.createTable(table.name,table.rows,table.columns);
+    });
 
     return syncController;
 }());
