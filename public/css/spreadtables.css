@@ -222,3 +222,31 @@ body{
     z-index: 1000;
     visibility: visible;
 }
+
+.ls-list-element{
+    border-bottom: 1px solid #808080;
+    overflow: hidden;
+    padding: 2px;
+    cursor: pointer;
+}
+
+.ls-list-element:hover{
+    background-color: #00d6b2;
+}
+
+.ls-list-element:last-child{
+    border: none;
+}
+
+#ls-sheet-list {
+  border: 1px solid #808080;
+    overflow: hidden;
+}
+
+.ls-el-date{
+    float: right;
+}
+
+.ls-el-name{
+    float: left;
+}

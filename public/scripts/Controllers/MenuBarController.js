@@ -35,6 +35,14 @@ var MenuBarController = (function(){
        SyncController.createNewSpreadSheet(name);
     };
 
+    menuBarController.showSheetsList = function(sheets){
+        MenuBarView.showSheetsList(sheets);
+    };
+
+    menuBarController.loadSheet = function(sheetId){
+      console.log('Sheet selected:' + sheetId);
+    };
+
 
     return menuBarController;
 }());

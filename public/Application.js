@@ -34,6 +34,7 @@ var Application = (function (){
 
     app.start = function(){
       SyncController.getSpreadSheets(function(spreadsheets){
+        MenuBarController.showSheetsList(spreadsheets);
         console.log(spreadsheets);
       });
     };
@@ -55,6 +56,9 @@ var Application = (function (){
             if(element.parentNode.className == 'cell'){
                 CellController.handleClick(e.target.parentNode.id);
             }
+        }
+        else if(element.className == 'ls-list-element'){
+            MenuBarController.loadSheet(element.id);
         }
 
     }

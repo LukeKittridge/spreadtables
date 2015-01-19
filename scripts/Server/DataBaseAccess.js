@@ -5,7 +5,7 @@
     module.exports = {
         createSpreadSheet: function (name,db,callback){
             var spreadsheets = db.get('spreadsheets');
-            var spreadSheet = {name : name, tables : []};
+            var spreadSheet = {name : name, tables : [], date : new Date()};
             spreadsheets.insert(spreadSheet, function(err,result){
                 if(err) return;
                 var id = spreadSheet._id;

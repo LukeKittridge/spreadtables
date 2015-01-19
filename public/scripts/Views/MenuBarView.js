@@ -57,5 +57,16 @@ var MenuBarView = (function(){
             overlay.style.visibility = 'hidden';
     };
 
+    menuBarView.showSheetsList = function(spreadsheets){
+      var list = document.getElementById('ls-sheet-list');
+        for(var i =0; i < spreadsheets.length; i++){
+            var listElement = document.createElement('div');
+            listElement.className = 'ls-list-element';
+            listElement.id = spreadsheets[i]._id;
+            listElement.innerHTML = "<div class='ls-el-name'>" + spreadsheets[i].name + "</div><div class='ls-el-date'>" + new Date(spreadsheets[i].date).toLocaleDateString('en-GB') + '</div>';
+            list.appendChild(listElement);
+        }
+    };
+
     return menuBarView;
 }());
