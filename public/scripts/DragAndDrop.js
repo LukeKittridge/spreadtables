@@ -18,6 +18,7 @@ function InitDragDrop()
 {
     document.onmousedown = onMouseDown;
     document.onmouseup = onMouseUp;
+    document.ontouchmove = onTouchMove;
 }
 
 function onMouseDown(e){
@@ -89,6 +90,49 @@ function onMouseUp(e)
 
         _dragElement = null;
     }
+}
+
+function onTouchStart(e){
+    var target = e.target != null ? e.target : e.srcElement;
+
+    if(target.parentNode != null && target.parentNode.classList != null && target.parentNode.classList.contains('drag')){
+        target = target.parentNode;
+
+    }
+    else{
+        return false;
+    }
+
+    var touch = event.targetTouches[0];
+    _startX = touch.clientX;
+    _startY = touch.clientY;
+
+
+    _offsetX = ExtractNumber(target.parentNode.style.left);
+    _offsetY = ExtractNumber(target.parentNode.style.top);
+
+}
+
+function onTouchMove(e){
+    var target = e.target != null ? e.target : e.srcElement;
+
+    if(target.parentNode != null && target.parentNode.classList != null && target.parentNode.classList.contains('drag')){
+        target = target.parentNode;
+
+    }
+    else{
+        return false;
+    }
+
+    var touch = event.targetTouches[0];
+    var left = target.parentNode.style.left = (_offsetX + touch.clientX - _startX) + 'px';
+    var top = target.parentNode.style.top = (_offsetY + touch.clientY - _startY) + 'px';
+    event.preventDefault();
+
+    var tableName = target.parentNode.id;
+    TableController.updateTablePosition(tableName,top,left);
+    SyncController.updateTablePosition(tableName,top,left);
+
 }
 
 function ExtractNumber(value){

@@ -49,6 +49,7 @@ var MenuBarController = (function(){
               var table = sheet.tables[tableName];
                 TableController.createTable(table.name, table.rows, table.columns);
               TableController.updateCells(Table.tables[table.name],table.cells,true);
+              TableController.moveTable(table.name,table.top,table.left);
           }
           Application.setSpreadSheetId(sheetId);
           MenuBarController.hideOpenSheetDialogue();
