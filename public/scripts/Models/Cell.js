@@ -13,19 +13,19 @@ function Cell(id, row, column){
     this.referencedBy = {};
     this.references = {};
     this.text = '';
-    this.errored = false;
+    this.hasError = false;
     this.row = row;
     this.column = column;
 }
 
 Cell.cellsEvaluated = [];
 
-Cell.prototype.setErrored = function(errored){
-    this.errored = errored;
+Cell.prototype.setHasError = function(hasError){
+    this.hasError = hasError;
 };
 
-Cell.prototype.hasErrored = function(){
-    return this.errored;
+Cell.prototype.getHasError = function(){
+    return this.hasError;
 };
 
 function splitGlobalCells(globalCellName){
@@ -81,7 +81,7 @@ Cell.prototype.evaluate = function(){
     }else{
         this.value = parser.parse(this.formula);
     }
-    this.setErrored(false);
+    this.setHasError(false);
     for(var cellId in this.references){
         var cell = this.references[cellId];
         delete cell.referencedBy[this.id];

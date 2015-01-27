@@ -14,7 +14,7 @@ var CellController = (function (){
             CellView.selectNewCell(newCellId);
 
             var cell = getGlobalCell(CellView.getCurrentCellId());
-            if(cell.hasErrored()){
+            if(cell.getHasError()){
                 FormulaBarController.updateFormula(CellView.getCurrentCellText());
             }else{
                 FormulaBarController.updateFormula(cell.formula);
@@ -109,10 +109,10 @@ var CellController = (function (){
             }
 
             error = true;
-            cell.setErrored(true);
+            cell.setHasError(true);
             if(!e.type){ //Jison Error
-                var newErrorrMessage = CellView.highlighJisonError(e);
-                ErrorBarController.displayJisonErrorMessage(newErrorrMessage);
+                var newErrorMessage = CellView.highlighJisonError(e);
+                ErrorBarController.displayJisonErrorMessage(newErrorMessage);
             }else{
                 CellView.highlightError(e);
                 ErrorBarController.displayErrorMessage(e);
@@ -120,7 +120,7 @@ var CellController = (function (){
 
         }
         if(!error){
-            cell.setErrored(false);
+            cell.setHasError(false);
             ErrorBarController.clearDisplay();
             if(CellView.getCurrentCellFormula()[0] == '='){
                 CellView.setCurrentCellText(cell.value);
