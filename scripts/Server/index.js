@@ -65,6 +65,12 @@ io.on('connection', function(socket){
       })
    });
 
+    socket.on('save', function (req){
+        databaseAccess.save(new ObjectID(req.id),req.tables,db,function(){
+            socket.broadcast.to(req.id).emit('update', req);
+        });
+    });
+
    socket.on('disconnect',function(){
       console.log('user disconnected');
    })

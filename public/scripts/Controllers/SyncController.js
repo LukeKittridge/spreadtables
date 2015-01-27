@@ -69,5 +69,16 @@ var SyncController = (function (){
       socket.emit('move-table', {id:Application.getSpreadSheetId(), tableName : tableName, top : top, left : left, date: new Date() });
     };
 
+    syncController.save = function(tables){
+      socket.emit('save', {id:Application.getSpreadSheetId(), tables: tables});
+    };
+
+    socket.on('update', function(data){
+        for(var tableName in data.tables){
+            var table = data.tables[tableName];
+            TableController.updateCells(Table.tables[tableName],table.cells,false);
+        }
+    });
+
     return syncController;
 }());

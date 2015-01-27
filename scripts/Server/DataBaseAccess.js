@@ -48,6 +48,21 @@
                     callback();
                 });
             });
+        },
+
+        save: function(id,tables,db,callback){
+            var spreadSheetCollection = db.get('spreadsheets');
+            spreadSheetCollection.findOne({_id:id}, function(e, spreadSheet){
+                for(var tableName in tables){
+                    for(var cellName in tables[tableName].cells){
+                        var cell = tables[tableName].cells[cellName];
+                        spreadSheet.tables[tableName].cells[cell.row][cell.column] = cell;
+                    }
+                }
+                spreadSheetCollection.update({_id:spreadSheet._id},{$set:{tables:spreadSheet.tables}},{upsert:false},function(err,res){
+                    callback();
+                })
+            })
         }
 
     };

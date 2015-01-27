@@ -16,15 +16,18 @@ var TableController = (function () {
         if(newTable){
             for(var i =0; i < table.rows; i++){
                 for(var j =0; j < table.columns; j++){
+                    cells[i][j].__proto__ = Cell.prototype;
                     table.cells[i][j] = cells[i][j];
-                    CellController.setCellText(cells[i][j].id,cells[i][j].text);
+                    CellController.setCellText(cells[i][j].id,cells[i][j].value);
                 }
             }
         }
         else{
-            for(var cell in cells){
+            for(var cellName in cells){
+                var cell = cells[cellName];
+                cell.__proto__ = Cell.prototype;
                 table.cells[cell.row][cell.column] = cell;
-                CellController.setCellText(cell.text, cell.id);
+                CellController.setCellText(cell.id, cell.value);
             }
         }
     };

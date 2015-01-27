@@ -32,7 +32,7 @@ for(var i =0; i < rows; i++){
         cellLetters += String.fromCharCode(letterCount+65);
 
         cellId = name + '.' + cellLetters + (i+1);
-        this.cells[i][j] = new Cell(cellId,j,i);
+        this.cells[i][j] = new Cell(cellId,i,j,name);
         letterCount++;
 
         if(letterCount == 26){

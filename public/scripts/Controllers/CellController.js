@@ -6,6 +6,8 @@ var CellController = (function (){
 
     var cellController = {};
 
+    var tablesToSync = {}; //Holds tables containing cells to be synced
+
     cellController.changeCurrentCell = function (newCellId){
         if(newCellId != CellView.getCurrentCellId()) {
             if (CellView.getCurrentCellId() != null) {
@@ -92,6 +94,7 @@ var CellController = (function (){
     };
 
     cellController.updateCurrentCell = function(){
+        tablesToSync = {};
         var cell = getGlobalCell(CellView.getCurrentCellId());
         var error = false;
         var switchToCell = false;
@@ -138,6 +141,7 @@ var CellController = (function (){
             cellController.selectCellBelow();
         }
 
+        SyncController.save(tablesToSync);
     };
 
     cellController.selectCellToLeft = function(){
@@ -230,11 +234,19 @@ var CellController = (function (){
     };
 
     function updateReferencedCells(cell){
+        addCellToSyncList(cell);
         for(var cellId in cell.referencedBy){
             var refCell = cell.referencedBy[cellId];
             CellView.setCellText(refCell.id, refCell.value);
             updateReferencedCells(refCell);
         }
+    }
+
+    function addCellToSyncList(cell){
+        if(!tablesToSync[cell.tableName]){
+            tablesToSync[cell.tableName] = {name : cell.tableName, cells : {}}
+        }
+        tablesToSync[cell.tableName].cells[cell.id] = cell;
     }
 
     function splitCellId(cellId){
