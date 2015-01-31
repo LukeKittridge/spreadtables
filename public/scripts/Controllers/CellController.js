@@ -249,12 +249,7 @@ var CellController = (function (){
         tablesToSync[cell.tableName].cells[cell.id] = cell;
     }
 
-    function splitCellId(cellId){
-        var parts = cellId.split('.');
-        var cell = parts[1];
-        var regGroups = /([a-zA-Z]+)(\d+)/.exec(cell);
-        return {table:parts[0],  letters : regGroups[1], numbers : regGroups[2]};
-    }
+
 
     function jisonDivideByZero(){
         UseJison = false;

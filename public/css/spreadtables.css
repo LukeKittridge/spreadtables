@@ -83,7 +83,7 @@ body{
 
 .dialogue {
 
-    position: absolute;
+    position: fixed;
     left: 30%;
     right:30%;
     top: 25%;
@@ -216,7 +216,7 @@ body{
     width: 100%;
     height: 100%;
     background-color: rgba(37, 37, 37, 0.71);
-    position: absolute;
+    position: fixed;
     left: 0px;
     top: 0px;
     z-index: 1000;

@@ -122,6 +122,14 @@ Cell.prototype.evaluate = function(){
 };
 
 
+function splitCellId(cellId){
+    var parts = cellId.split('.');
+    var cell = parts[1];
+    var regGroups = /([a-zA-Z]+)(\d+)/.exec(cell);
+    return {table:parts[0],  letters : regGroups[1], numbers : regGroups[2]};
+}
+
+
 function findCircularReference(cell, refCell, cellArray){
     for(var cellId in refCell.references){
         if(cell.referencedBy[cellId]){

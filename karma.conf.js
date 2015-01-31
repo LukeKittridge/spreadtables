@@ -27,6 +27,7 @@ module.exports = function(config) {
 
     // list of files to exclude
     exclude: [
+        'public/scripts/Controllers/SyncController.js',
     ],
 
 
