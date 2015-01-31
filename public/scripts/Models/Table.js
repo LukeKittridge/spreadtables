@@ -104,3 +104,40 @@ function getCellValue(cellId){
     }
     return cell.value;
 };
+
+function fillCells(selectedCell,startId, endId){
+    var area = cellIdDifference(startId,endId);
+    var yNeg = area.y < 0;
+    var xNeg = area.x < 0;
+    var yCount = area.y * area.y;
+    var xCount = area.x * area.x;
+    for(var i = 0; i <= yCount; i++){
+        for(var j =0; j <= xCount; j++){
+            var newY = yNeg ? area.y -i : area.y + i;
+            var newX = xNeg ? area.x -j : area.x + j;
+            var newCellId = cellIdPlusVector(startId,new Vector(newX,newY));
+            var newFormula;
+            var tokens = lex(selectedCell.formula);
+            tokens.forEach(function(token){
+                  if(token.type == TokenEnum.GlobalCell || token.type == TokenEnum.LocalCell){
+                      var id;
+                      if(token.type == TokenEnum.LocalCell){
+                          id = selectedCell.table.id + token.value;
+                      }
+                      else{
+                          id = token.value;
+                      }
+                      var vec = selectedCell.references[id].vector;
+                      var calcCellId = cellIdPlusVector(newCellId,vec);
+                      newFormula += calcCellId;
+                  }
+                else{
+                      newFormula+= token.value;
+                  }
+            })
+            //TODO having got the new formula, how do I evaluate it?
+
+
+        }
+    }
+}

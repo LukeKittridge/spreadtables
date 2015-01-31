@@ -29,6 +29,12 @@ Cell.prototype.getHasError = function(){
     return this.hasError;
 };
 
+Cell.prototype.addReference = function(cell){
+    var vector = cellIdDifference(this.id,cell.id);
+
+    this.references[cell.id] = {cell:cell, vector:vector};
+};
+
 function splitGlobalCells(globalCellName){
     var splitResult = globalCellName.split('.');
     var tableName;
@@ -84,7 +90,7 @@ Cell.prototype.evaluate = function(){
     }
     this.setHasError(false);
     for(var cellId in this.references){
-        var cell = this.references[cellId];
+        var cell = this.references[cellId].cell;
         delete cell.referencedBy[this.id];
     }
 
@@ -101,7 +107,7 @@ Cell.prototype.evaluate = function(){
             }
 
             cell.referencedBy[this.id] = this;
-            this.references[cell.id] = cell;
+            this.addReference(cell);
         }
     }
 

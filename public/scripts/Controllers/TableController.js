@@ -42,5 +42,7 @@ var TableController = (function () {
         tableController.updateTablePosition(tableName,top,left);
     };
 
+
+
     return tableController;
 }());
