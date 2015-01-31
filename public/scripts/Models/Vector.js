@@ -12,10 +12,10 @@ function cellIdDifference(cellIdA,cellIdB){
     var a = splitCellId(cellIdA);
     var b = splitCellId(cellIdB);
 
-    var y = b.number - a.number;
+    var y = b.numbers - a.numbers;
+    var x = convertLetterToNum(b.letters) - convertLetterToNum(a.letters);
 
-
-
+    return new Vector(x,y);
 }
 
 function convertLetterToNum(letters){
@@ -34,7 +34,12 @@ function convertNumberToLetter(number){
     var result ='';
     if(number > 26){
         var fl = Math.floor(number/26);
+        var r = number - (fl*26);
         var sl = number - (fl*26);
+        if(sl == 0){
+            fl-=1;
+            sl = 26;
+        }
         result = String.fromCharCode(fl +64) + String.fromCharCode(sl+64);
     }
     else{
@@ -42,4 +47,11 @@ function convertNumberToLetter(number){
     }
 
     return result;
+}
+
+function cellIdPlusVector(cellId, vector){
+    var cell = splitCellId(cellId);
+    var letters = convertNumberToLetter(convertLetterToNum(cell.letters) + vector.x);
+    var numbers = +cell.numbers + vector.y;
+    return cell.table + '.' + letters + numbers;
 }
