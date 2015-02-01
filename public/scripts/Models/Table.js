@@ -109,20 +109,20 @@ function fillCells(selectedCell,startId, endId){
     var area = cellIdDifference(startId,endId);
     var yNeg = area.y < 0;
     var xNeg = area.x < 0;
-    var yCount = area.y * area.y;
-    var xCount = area.x * area.x;
-    for(var i = 0; i <= yCount; i++){
-        for(var j =0; j <= xCount; j++){
-            var newY = yNeg ? area.y -i : area.y + i;
-            var newX = xNeg ? area.x -j : area.x + j;
+    var yCount = Math.abs(area.y);
+    var xCount = Math.abs(area.x);
+    for(var i = 0; i <= yCount; i++){ //row
+        for(var j =0; j <= xCount; j++){ //column
+            var newY = yNeg ? i*-1 : i;
+            var newX = xNeg ? j*-1 : j;
             var newCellId = cellIdPlusVector(startId,new Vector(newX,newY));
-            var newFormula;
+            var newFormula ='';
             var tokens = lex(selectedCell.formula);
             tokens.forEach(function(token){
                   if(token.type == TokenEnum.GlobalCell || token.type == TokenEnum.LocalCell){
                       var id;
                       if(token.type == TokenEnum.LocalCell){
-                          id = selectedCell.table.id + token.value;
+                          id = selectedCell.tableName + '.' + token.value;
                       }
                       else{
                           id = token.value;
@@ -134,9 +134,10 @@ function fillCells(selectedCell,startId, endId){
                 else{
                       newFormula+= token.value;
                   }
-            })
-            //TODO having got the new formula, how do I evaluate it?
+            });
 
+            var cell = getGlobalCell(newCellId);
+            cell.evaluateNewFormula(newFormula)
 
         }
     }

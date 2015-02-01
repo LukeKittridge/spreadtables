@@ -34,7 +34,6 @@ function convertNumberToLetter(number){
     var result ='';
     if(number > 26){
         var fl = Math.floor(number/26);
-        var r = number - (fl*26);
         var sl = number - (fl*26);
         if(sl == 0){
             fl-=1;
