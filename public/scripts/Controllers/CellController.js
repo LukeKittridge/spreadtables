@@ -20,6 +20,19 @@ var CellController = (function (){
       CellView.onMouseOver(e);
     };
 
+    cellController.handleCopy = function(){
+      Application.setCurrentState(ApplicationStates.CopyingCell);
+        CellView.setCurrentCellToCopy();
+    };
+
+    cellController.handlePaste = function () {
+      Application.setCurrentState(ApplicationStates.CellSelected);
+        TableController.fillCells(getGlobalCell(CellView.getCurrentCellId()),CellView.getStartCellId(),CellView.getEndCellId());
+        CellView.updateSelectedCells();
+        CellView.removeHighLight();
+        CellView.selectNewCell(CellView.getCurrentCellId());
+    };
+
     cellController.changeCurrentCell = function (newCellId){
         if(newCellId != CellView.getCurrentCellId()) {
             if (CellView.getCurrentCellId() != null) {
@@ -227,6 +240,10 @@ var CellController = (function (){
 
     cellController.getCellFormula = function(cellId){
       return getGlobalCell(cellId).formula;
+    };
+
+    cellController.getCellValue = function(cellId){
+      return getGlobalCell(cellId).value;
     };
 
     cellController.handleCircularReferenceError = function(e){

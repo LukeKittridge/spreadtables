@@ -43,6 +43,9 @@ var TableController = (function () {
     };
 
 
+    tableController.fillCells = function(selectedCell, startCellId, endCellId){
+        fillCells(selectedCell,startCellId,endCellId);
+    };
 
     return tableController;
 }());

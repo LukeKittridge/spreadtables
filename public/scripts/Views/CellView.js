@@ -22,8 +22,19 @@ var CellView = (function (){
         return startCellId;
     };
 
+    cellView.getEndCellId = function(){
+      return endCellId;
+    };
+
     cellView.getCaretPosition = function(){
         return window.getSelection().baseOffset;
+    };
+
+    cellView.updateSelectedCells = function(){
+      for(var i =0; i < cellsHighLighted.length; i++){
+            var docCell = document.getElementById(cellsHighLighted[i]);
+          docCell.innerHTML = CellController.getCellValue(cellsHighLighted[i]);
+      }
     };
 
     cellView.moveCaretToEnd = function(){
@@ -231,6 +242,9 @@ var CellView = (function (){
 
     };
 
+    cellView.setCurrentCellToCopy = function(){
+        document.getElementById(currentCellId).style.border = '1px dashed red';
+    };
 
     function tablesMatch(cellIdA,cellIdB){
         var tableA = cellIdA.split('.')[0];

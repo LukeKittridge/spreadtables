@@ -9,14 +9,14 @@ var ApplicationStates = Object.freeze({
     CellSelected : 'CellSelected',
     EditingCell: 'EditingCell',
     Menu: 'Menu',
-    FormulaBar: 'FormulaBarView'
+    FormulaBar: 'FormulaBarView',
+    CopyingCell: 'CopyingCell'
 });
 
 var Application = (function (){
 
     var app = {};
     var currentState = ApplicationStates.Menu;
-    var currentCell;
     var spreadsheetID;
 
     document.addEventListener('click', clickHandler,false);
@@ -100,8 +100,18 @@ var Application = (function (){
         }
 
         if(event.type == 'keydown'){
-            if(currentState == ApplicationStates.CellSelected){
-                
+            if(currentState == ApplicationStates.CellSelected && event.ctrlKey){
+                if(event.keyCode == 67){
+                    CellController.handleCopy();
+                    return false;
+                }
+            }
+
+            if(currentState == ApplicationStates.CopyingCell && event.ctrlKey){
+                if(event.keyCode == 86){
+                    CellController.handlePaste();
+                    return false;
+                }
             }
 
             if(currentState != ApplicationStates.FormulaBar && currentState != ApplicationStates.EditingCell){
