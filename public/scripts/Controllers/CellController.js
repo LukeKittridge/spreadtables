@@ -8,6 +8,18 @@ var CellController = (function (){
 
     var tablesToSync = {}; //Holds tables containing cells to be synced
 
+    cellController.mouseUpHandler  = function(e){
+        CellView.onMouseUp(e);
+    };
+
+    cellController.mouseDownHandler = function(e){
+        CellView.onMouseDown(e);
+    };
+
+    cellController.mouseOverHandler = function(e){
+      CellView.onMouseOver(e);
+    };
+
     cellController.changeCurrentCell = function (newCellId){
         if(newCellId != CellView.getCurrentCellId()) {
             if (CellView.getCurrentCellId() != null) {
@@ -231,6 +243,24 @@ var CellController = (function (){
 
     cellController.getCurrentEvaluatedCellId = function(){
         return currentEvaluatedCell.id;
+    };
+
+    cellController.cellsToHighlight = function (startId,endId) {
+        var area = cellIdDifference(startId,endId);
+        var yCount = Math.abs(area.y);
+        var xCount = Math.abs(area.x);
+        var yNeg = area.y < 0;
+        var xNeg = area.x < 0;
+        var cellsToHighLight = [];
+        for(var i = 0; i <= yCount; i++) { //row
+            for (var j = 0; j <= xCount; j++) { //column
+                var newY = yNeg ? i*-1 : i;
+                var newX = xNeg ? j*-1 : j;
+                var newCellId = cellIdPlusVector(startId,new Vector(newX,newY));
+                cellsToHighLight.push(newCellId);
+            }
+        }
+        return cellsToHighLight;
     };
 
     function updateReferencedCells(cell){

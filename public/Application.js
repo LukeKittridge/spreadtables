@@ -23,6 +23,9 @@ var Application = (function (){
     document.addEventListener('keydown', keyHandler, true);
     document.addEventListener('keyup', keyHandler, false);
     document.addEventListener('dblclick', doubleClickHandler, false);
+    document.addEventListener('mouseup', mouseUpHandler,false);
+    document.addEventListener('mousedown', mouseDownHandler,false);
+    document.addEventListener('mouseover', mouseOverHandler,false);
 
     app.setCurrentState = function(newState){
         currentState = newState;
@@ -48,6 +51,19 @@ var Application = (function (){
       });
     };
 
+    function mouseUpHandler(e){
+        CellController.mouseUpHandler(e);
+    }
+
+    function mouseDownHandler(e){
+        if(e.target.className == 'cell')
+            CellController.mouseDownHandler(e);
+    }
+
+    function mouseOverHandler(e){
+        if(e.target.className == 'cell')
+            CellController.mouseOverHandler(e);
+    }
 
     function clickHandler(e){
         var element = e.target;
@@ -84,6 +100,10 @@ var Application = (function (){
         }
 
         if(event.type == 'keydown'){
+            if(currentState == ApplicationStates.CellSelected){
+                
+            }
+
             if(currentState != ApplicationStates.FormulaBar && currentState != ApplicationStates.EditingCell){
                 if(event.keyCode >= 37 && event.keyCode <= 40){ //arrow keys
                     event.preventDefault();

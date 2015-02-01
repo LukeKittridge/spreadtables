@@ -7,9 +7,19 @@ var CellView = (function (){
     var start;
     var end;
     var currentCellId;
+    var startCellId;
+    var endCellId;
+    var mouseDown = false;
+    var cssCellHighLight = 'rgba(160, 195, 255,0.4)';
+    var cssCellBackGroundColor = 'white';
+    var cellsHighLighted = [];
 
     cellView.getCurrentCellId = function(){
         return currentCellId;
+    };
+
+    cellView.getStartCellId = function () {
+        return startCellId;
     };
 
     cellView.getCaretPosition = function(){
@@ -33,11 +43,16 @@ var CellView = (function (){
         var docCell = document.getElementById(currentCellId);
         docCell.contentEditable = false;
         docCell.style.border = normalBorder;
+        docCell.style.zIndex = 0;
     };
 
     cellView.selectNewCell = function(newCellId){
+        cellView.removeHighLight();
         currentCellId = newCellId;
-        document.getElementById(currentCellId).style.border = selectedBorder;
+        var docCell =  document.getElementById(currentCellId)
+        docCell.style.border = selectedBorder;
+        docCell.style.zIndex = 10;
+
     };
 
     cellView.getCurrentCellFormula = function(){
@@ -60,7 +75,37 @@ var CellView = (function (){
       document.getElementById(currentCellId).focus();
     };
 
+    cellView.onMouseDown = function(e){
+        if(e.target.className == 'cell'){
+            startCellId = e.target.id;
+            mouseDown = true;
+        }
+    };
 
+    cellView.onMouseUp = function(e){
+        if(e.target.className == 'cell' && mouseDown)
+            endCellId = e.target.id;
+        mouseDown = false;
+    };
+
+    cellView.onMouseOver = function(e){
+      if(mouseDown && tablesMatch(startCellId,e.target.id)){
+          cellView.removeHighLight();
+          var cellsToHighLight = CellController.cellsToHighlight(startCellId,e.target.id);
+          for(var i =0; i < cellsToHighLight.length; i++){
+              var cell = document.getElementById(cellsToHighLight[i]);
+              cell.style.backgroundColor = cssCellHighLight;
+          }
+          cellsHighLighted = cellsToHighLight;
+      }
+    };
+
+    cellView.removeHighLight = function () {
+        for(var i =0; i < cellsHighLighted.length; i++){
+            var cell = document.getElementById(cellsHighLighted[i]);
+            cell.style.background = cssCellBackGroundColor;
+        }
+    };
 
     cellView.createAxisCell = function(left, top, j, i, columnReset, letterCount){
         var axisCell = document.createElement('div');
@@ -186,6 +231,12 @@ var CellView = (function (){
 
     };
 
+
+    function tablesMatch(cellIdA,cellIdB){
+        var tableA = cellIdA.split('.')[0];
+        var tableB = cellIdB.split('.')[0];
+        return tableA == tableB;
+    }
 
     return cellView;
 }());
