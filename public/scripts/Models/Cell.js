@@ -32,7 +32,7 @@ Cell.prototype.getHasError = function(){
 Cell.prototype.addReference = function(cell){
     var vector = cellIdDifference(this.id,cell.id);
 
-    this.references[cell.id] = {cell:cell, vector:vector};
+    this.references[cell.id] = {cell:cell.id, vector:vector};
 };
 
 function splitGlobalCells(globalCellName){
@@ -90,7 +90,7 @@ Cell.prototype.evaluate = function(){
     }
     this.setHasError(false);
     for(var cellId in this.references){
-        var cell = this.references[cellId].cell;
+        var cell = getGlobalCell(cellId);
         delete cell.referencedBy[this.id];
     }
 
@@ -106,13 +106,13 @@ Cell.prototype.evaluate = function(){
                 cell = getGlobalCell(token.value);
             }
 
-            cell.referencedBy[this.id] = this;
+            cell.referencedBy[this.id] = this.id;
             this.addReference(cell);
         }
     }
 
     for(cellId in this.referencedBy){
-        cell = this.referencedBy[cellId];
+        cell = getGlobalCell(cellId);
         try{
             cell.evaluate();
             Cell.cellsEvaluated = [];

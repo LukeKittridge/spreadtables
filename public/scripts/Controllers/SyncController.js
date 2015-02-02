@@ -69,6 +69,7 @@ var SyncController = (function (){
       socket.emit('move-table', {id:Application.getSpreadSheetId(), tableName : tableName, top : top, left : left, date: new Date() });
     };
 
+    //TODO encode and decode dots in cell reference ids.
     syncController.save = function(tables){
       socket.emit('save', {id:Application.getSpreadSheetId(), tables: tables});
     };

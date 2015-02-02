@@ -283,7 +283,7 @@ var CellController = (function (){
     function updateReferencedCells(cell){
         addCellToSyncList(cell);
         for(var cellId in cell.referencedBy){
-            var refCell = cell.referencedBy[cellId];
+            var refCell = getGlobalCell(cellId);
             CellView.setCellText(refCell.id, refCell.value);
             updateReferencedCells(refCell);
         }
