@@ -5,7 +5,7 @@
     module.exports = {
         createSpreadSheet: function (name,db,callback){
             var spreadsheets = db.get('spreadsheets');
-            var spreadSheet = {name : name, tables : {}, date : new Date()};
+            var spreadSheet = {name : name, tables : JSON.stringify({}), date : new Date()};
             spreadsheets.insert(spreadSheet, function(err,result){
                 if(err) return;
                 var id = spreadSheet._id;
@@ -32,8 +32,9 @@
         addTable: function (id,table, db, callback) {
             var spreadSheetCollection = db.get('spreadsheets');
             spreadSheetCollection.findOne({_id: id}, function(e,spreadSheet){
+                spreadSheet.tables = JSON.parse(spreadSheet.tables);
                 spreadSheet.tables[table.name] = table;
-                spreadSheetCollection.update({_id:spreadSheet._id}, {$set:{tables:spreadSheet.tables}},{upsert:false},function(err,res){
+                spreadSheetCollection.update({_id:spreadSheet._id}, {$set:{tables:JSON.stringify(spreadSheet.tables)}},{upsert:false},function(err,res){
                     callback();
                 });
             });
@@ -42,9 +43,10 @@
         updateTablePosition: function(id,tableName, top, left, db, callback){
             var spreadSheetCollection = db.get('spreadsheets');
             spreadSheetCollection.findOne({_id:id}, function(e,spreadSheet){
+                spreadSheet.tables = JSON.parse(spreadSheet.tables);
                spreadSheet.tables[tableName].top =  top;
                 spreadSheet.tables[tableName].left = left;
-                spreadSheetCollection.update({_id:spreadSheet._id},{$set:{tables:spreadSheet.tables}},{upsert:false},function(err,res){
+                spreadSheetCollection.update({_id:spreadSheet._id},{$set:{tables:JSON.stringify(spreadSheet.tables)}},{upsert:false},function(err,res){
                     callback();
                 });
             });
@@ -53,13 +55,14 @@
         save: function(id,tables,db,callback){
             var spreadSheetCollection = db.get('spreadsheets');
             spreadSheetCollection.findOne({_id:id}, function(e, spreadSheet){
+                spreadSheet.tables = JSON.parse(spreadSheet.tables);
                 for(var tableName in tables){
                     for(var cellName in tables[tableName].cells){
                         var cell = tables[tableName].cells[cellName];
                         spreadSheet.tables[tableName].cells[cell.row][cell.column] = cell;
                     }
                 }
-                spreadSheetCollection.update({_id:spreadSheet._id},{$set:{tables:spreadSheet.tables}},{upsert:false},function(err,res){
+                spreadSheetCollection.update({_id:spreadSheet._id},{$set:{tables:JSON.stringify(spreadSheet.tables)}},{upsert:false},function(err,res){
                     callback();
                 })
             })

@@ -45,8 +45,9 @@ var MenuBarController = (function(){
 
     menuBarController.loadSheet = function(sheetId){
       SyncController.getSpreadSheet(sheetId, function(sheet){
-          for(var tableName in sheet.tables){
-              var table = sheet.tables[tableName];
+          var tables = JSON.parse(sheet.tables);
+          for(var tableName in tables){
+              var table = tables[tableName];
                 TableController.createTable(table.name, table.rows, table.columns);
               TableController.updateCells(Table.tables[table.name],table.cells,true);
               TableController.moveTable(table.name,table.top,table.left);
