@@ -57,10 +57,16 @@ var CellView = (function (){
         docCell.style.zIndex = 0;
     };
 
+    cellView.escape = function (originalValue){
+      var docCell = document.getElementById(currentCellId);
+        docCell.contentEditable = false;
+        docCell.innerHTML = originalValue;
+    };
+
     cellView.selectNewCell = function(newCellId){
         cellView.removeHighLight();
         currentCellId = newCellId;
-        var docCell =  document.getElementById(currentCellId)
+        var docCell =  document.getElementById(currentCellId);
         docCell.style.border = selectedBorder;
         docCell.style.zIndex = 10;
 

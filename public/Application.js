@@ -143,6 +143,11 @@ var Application = (function (){
                 event.preventDefault();
                 CellController.updateCurrentCell();
             }
+            if(currentState == ApplicationStates.EditingCell){
+                if(event.keyCode == 27){ //Esc
+                    CellController.escape();
+                }
+            }
         }
 
         if(event.type == 'keyup'){

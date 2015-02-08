@@ -282,6 +282,15 @@ var CellController = (function (){
         return cellsToHighLight;
     };
 
+    cellController.escape = function(){
+        var cell = getGlobalCell(CellView.getCurrentCellId());
+        if(cell.formula)
+            CellView.escape(cell.value);
+        else
+            CellView.escape(cell.text);
+        Application.setCurrentState(ApplicationStates.CellSelected);
+    };
+
     function updateReferencedByCells(cell){
         addCellToSyncList(cell);
         for(var cellId in cell.referencedBy){
