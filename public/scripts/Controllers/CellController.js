@@ -156,7 +156,8 @@ var CellController = (function (){
             else{
                 CellView.setCurrentCellText(cell.text);
             }
-            updateReferencedCells(cell);
+            updateReferencedByCells(cell);
+            saveReferencedCells(cell);
         }
 
         Application.setCurrentState(ApplicationStates.CellSelected);
@@ -280,12 +281,19 @@ var CellController = (function (){
         return cellsToHighLight;
     };
 
-    function updateReferencedCells(cell){
+    function updateReferencedByCells(cell){
         addCellToSyncList(cell);
         for(var cellId in cell.referencedBy){
             var refCell = getGlobalCell(cellId);
             CellView.setCellText(refCell.id, refCell.value);
-            updateReferencedCells(refCell);
+            updateReferencedByCells(refCell);
+        }
+    }
+
+    function saveReferencedCells(cell){
+        for(var cellId in cell.references){
+            var refCell = getGlobalCell(cellId);
+            addCellToSyncList(refCell);
         }
     }
 
