@@ -18,7 +18,10 @@ var TableController = (function () {
                 for(var j =0; j < table.columns; j++){
                     cells[i][j].__proto__ = Cell.prototype;
                     table.cells[i][j] = cells[i][j];
-                    CellController.setCellText(cells[i][j].id,cells[i][j].value);
+                    if(cells[i][j].formula[0] == '=')
+                        CellController.setCellText(cells[i][j].id,cells[i][j].value);
+                    else
+                        CellController.setCellText(cells[i][j].id,cells[i][j].text);
                 }
             }
         }
@@ -27,7 +30,10 @@ var TableController = (function () {
                 var cell = cells[cellName];
                 cell.__proto__ = Cell.prototype;
                 table.cells[cell.row][cell.column] = cell;
-                CellController.setCellText(cell.id, cell.value);
+                if(cell.formula[0] == '=')
+                    CellController.setCellText(cell.id, cell.value);
+                else
+                    CellController.setCellText(cell.id,cell.text);
             }
         }
     };

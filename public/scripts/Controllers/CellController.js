@@ -122,7 +122,7 @@ var CellController = (function (){
         tablesToSync = {};
         var cell = getGlobalCell(CellView.getCurrentCellId());
         var error = false;
-        var switchToCell = false;
+        var switchToCell = false; //Will store the cell ID to switch to, in case of an error
         try{
             cell.evaluateNewFormula(CellView.getCurrentCellFormula());
         }catch(e){
@@ -139,7 +139,7 @@ var CellController = (function (){
             error = true;
             cell.setHasError(true);
             if(!e.type){ //Jison Error
-                var newErrorMessage = CellView.highlighJisonError(e);
+                var newErrorMessage = CellView.highlightJisonError(e);
                 ErrorBarController.displayJisonErrorMessage(newErrorMessage);
             }else{
                 CellView.highlightError(e);
@@ -156,6 +156,7 @@ var CellController = (function (){
             else{
                 CellView.setCurrentCellText(cell.text);
             }
+            //update referenced cells and record cells ready to be synced
             updateReferencedByCells(cell);
             saveReferencedCells(cell);
         }
@@ -166,7 +167,7 @@ var CellController = (function (){
         }else{
             cellController.selectCellBelow();
         }
-
+        //sync tables and cells
         SyncController.save(tablesToSync);
     };
 

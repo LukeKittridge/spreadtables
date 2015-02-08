@@ -198,7 +198,7 @@ var CellView = (function (){
         }
     };
 
-    cellView.highlighJisonError = function(e){
+    cellView.highlightJisonError = function(e){
         var parts = e.message.split('\n');
         var errorPos = parts[2].length-1;
         var newFormula ='';
