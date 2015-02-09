@@ -37,6 +37,10 @@ var CellView = (function (){
       }
     };
 
+    cellView.getCellsHighlighted = function(){
+        return cellsHighLighted;
+    };
+
     cellView.moveCaretToEnd = function(){
       moveCaret(window,document.getElementById(currentCellId).innerHTML.length);
     };

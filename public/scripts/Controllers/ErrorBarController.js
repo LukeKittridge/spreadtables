@@ -11,7 +11,7 @@ var ErrorBarController = (function(){
         }else{
             cellId = CellController.getCurrentCellId();
         }
-        var message = 'Cell ' + cellId + 'has a ';
+        var message = 'Cell ' + cellId + ' has a ';
         switch(e.type){
             case ErrorEnum.DivideByZero:
                 message += "Divide By Zero";
@@ -28,7 +28,7 @@ var ErrorBarController = (function(){
     };
 
     errorBarController.displayJisonErrorMessage = function(e){
-        var message = 'Cell' + CellController.getCurrentEvaluatedCellId() + 'has an error:';
+        var message = 'Cell ' + CellController.getCurrentEvaluatedCellId() + ' has an error:';
         message += e.message.split(':')[1];
         var reg = /\n/g;
         message = message.replace(reg,'<br>');

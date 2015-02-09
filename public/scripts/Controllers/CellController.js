@@ -31,6 +31,12 @@ var CellController = (function (){
         CellView.updateSelectedCells();
         CellView.removeHighLight();
         CellView.selectNewCell(CellView.getCurrentCellId());
+        for(var i =0; i < CellView.getCellsHighlighted().length;i++){
+            var cell = getGlobalCell(CellView.getCellsHighlighted()[i]);
+            updateReferencedByCells(cell);
+            saveReferencedCells(cell);
+        }
+        SyncController.save(tablesToSync);
     };
 
     cellController.changeCurrentCell = function (newCellId){
@@ -316,6 +322,7 @@ var CellController = (function (){
             tablesToSync[cell.tableName] = {name : cell.tableName, cells : {}}
         }
         tablesToSync[cell.tableName].cells[cell.id] = cell;
+
     }
 
 
