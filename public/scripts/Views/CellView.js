@@ -105,6 +105,13 @@ var CellView = (function (){
         mouseDown = false;
     };
 
+    cellView.highlightSingleCell = function(e){
+        var docCell = e.target;
+        cellView.removeHighLight();
+        docCell.style.backgroundColor = cssCellHighLight;
+        cellsHighLighted.push(docCell.id);
+    };
+
     cellView.onMouseOver = function(e){
       if(mouseDown && tablesMatch(startCellId,e.target.id)){
           cellView.removeHighLight();

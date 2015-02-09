@@ -59,4 +59,5 @@ describe("Table Test Suite", function() {
         expect(k20.formula).toEqual('=4+test.K16');
         expect(k20.value).toEqual(24);
     });
+
 });

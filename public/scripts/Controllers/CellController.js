@@ -95,6 +95,9 @@ var CellController = (function (){
         else if (Application.getCurrentState() == ApplicationStates.CellSelected){
             cellController.changeCurrentCell(targetId);
         }
+        else if(Application.getCurrentState() == ApplicationStates.CopyingCell){
+            CellView.highlightSingleCell(event);
+        }
     };
 
     cellController.editCurrentCell = function (){
@@ -284,6 +287,7 @@ var CellController = (function (){
 
     cellController.escape = function(){
         var cell = getGlobalCell(CellView.getCurrentCellId());
+        FormulaBarController.clear();
         if(cell.formula)
             CellView.escape(cell.value);
         else

@@ -143,11 +143,13 @@ var Application = (function (){
                 event.preventDefault();
                 CellController.updateCurrentCell();
             }
-            if(currentState == ApplicationStates.EditingCell){
-                if(event.keyCode == 27){ //Esc
+
+            if(event.keyCode == 27){ //Esc
+                if(currentState == ApplicationStates.EditingCell || currentState == ApplicationStates.FormulaBar){
                     CellController.escape();
                 }
             }
+
         }
 
         if(event.type == 'keyup'){

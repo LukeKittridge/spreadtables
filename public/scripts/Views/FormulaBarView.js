@@ -23,6 +23,10 @@ var FormulaBarView = (function (){
         moveCaret(window,getDocFormulaBar().innerHTML.length);
     };
 
+    formulaBar.clear = function(){
+      getDocFormulaBar().innerHTML = '';
+    };
+
     return formulaBar;
 
 }());

@@ -7,6 +7,8 @@ var TableView = (function (){
 
     tableView.drawTable = function(table){
         var docTable = document.createElement('div');
+        docTable.style.top = table.top + 'px';
+        docTable.style.left = table.left + 'px';
         docTable.className = "table";
         docTable.id = table.name;
         drawTableTitleBar(table,docTable);

@@ -14,8 +14,8 @@ function Table(name, rows, columns){
     }
     this.rows = rows;
     this.columns = columns;
-    this.left = 0;
-    this.top = 0;
+    this.left = 100;
+    this.top = 100;
     var cellId;
     var columnReset = 0;
     var letterCount =0;

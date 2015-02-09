@@ -30,5 +30,9 @@ var FormulaBarController = (function (){
         FormulaBarView.moveCaretToEnd();
     };
 
+    formulaBarController.clear = function(){
+        FormulaBarView.clear();
+    };
+
     return formulaBarController;
 }());
