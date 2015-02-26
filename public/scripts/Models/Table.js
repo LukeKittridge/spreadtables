@@ -128,7 +128,8 @@ function fillCells(selectedCell,startId, endId){
                           id = token.value;
                       }
                       var vec = selectedCell.references[id].vector;
-                      var calcCellId = cellIdPlusVector(newCellId,vec);
+                      var table = Table.tables[selectedCell.tableName];
+                      var calcCellId = cellIdPlusVector(newCellId,vec,table.rows, table.columns);
                       newFormula += calcCellId;
                   }
                 else{

@@ -48,9 +48,16 @@ function convertNumberToLetter(number){
     return result;
 }
 
-function cellIdPlusVector(cellId, vector){
+function cellIdPlusVector(cellId, vector, maxRows, maxColumns){
     var cell = splitCellId(cellId);
-    var letters = convertNumberToLetter(convertLetterToNum(cell.letters) + vector.x);
+    var charNum = convertLetterToNum(cell.letters) + vector.x;
+    if(charNum < 1 || charNum > maxColumns){
+        throw {type:ErrorEnum.InvalidColumn};
+    }
+    var letters = convertNumberToLetter(charNum);
     var numbers = +cell.numbers + vector.y;
+    if(numbers < 1 || numbers > maxRows){
+        throw {type:ErrorEnum.InvalidRow};
+    }
     return cell.table + '.' + letters + numbers;
 }

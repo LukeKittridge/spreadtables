@@ -67,4 +67,59 @@ describe("Vector Test Suite", function(){
         var actualResult = cellIdPlusVector(cell,vec);
         expect(actualResult).toEqual(expectedResult);
     });
+
+    it("Can detect if result is outside table columns", function(){
+        var cell = 'table1.A1';
+        var vec = new Vector(-1,0);
+        var exceptionCaught = false;
+        try{
+            cellIdPlusVector(cell,vec,10,10);
+        }
+        catch(e){
+            expect(e.type).toEqual((ErrorEnum.InvalidColumn));
+            exceptionCaught = true;
+        }
+        //Fail test if no exception
+        expect(exceptionCaught).toEqual(true);
+
+        exceptionCaught = false;
+        vec = new Vector(5,0)
+        try{
+            cellIdPlusVector(cell,vec,10,5)
+        }
+        catch(e)
+        {
+            expect(e.type).toEqual((ErrorEnum.InvalidColumn));
+            exceptionCaught = true;
+        }
+        //Fail test if no exception
+        expect(exceptionCaught).toEqual(true);
+    });
+
+    it("Can detect if result is outside table rows", function(){
+        var cell = "table1.A1";
+        var vec = new Vector(0,-1);
+        var exceptionCaught = false;
+        try{
+            cellIdPlusVector(cell,vec,10,10);
+        }
+        catch(e){
+            expect(e.type).toEqual(ErrorEnum.InvalidRow);
+            exceptionCaught = true;
+        }
+        //Fail test if no exception
+        expect(exceptionCaught).toEqual(true);
+        vec = new Vector(0,10);
+
+        exceptionCaught = false;
+        try{
+            cellIdPlusVector(cell,vec,10,10);
+        }
+        catch(e) {
+            expect(e.type).toEqual(ErrorEnum.InvalidRow);
+            exceptionCaught = true;
+        }
+        //Fail test if no exception
+        expect(exceptionCaught).toEqual(true);
+    });
 });

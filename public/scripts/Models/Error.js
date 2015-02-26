@@ -3,7 +3,9 @@
  */
 
 var ErrorEnum  = Object.freeze({
-   DivideByZero : 'DivideByZero',
-   CircularReference : 'CircularReference',
-   Syntax : 'Syntax'
+    DivideByZero : 'DivideByZero',
+    CircularReference : 'CircularReference',
+    Syntax : 'Syntax',
+    InvalidColumn : 'InvalidColumn',
+    InvalidRow : 'InvalidRow'
 });
