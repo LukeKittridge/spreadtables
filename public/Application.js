@@ -103,6 +103,7 @@ var Application = (function (){
             if(currentState == ApplicationStates.CellSelected && event.ctrlKey){
                 if(event.keyCode == 67){
                     CellController.handleCopy();
+                    ErrorBarController.clearDisplay();
                     return false;
                 }
             }

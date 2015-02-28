@@ -50,7 +50,14 @@ var TableController = (function () {
 
 
     tableController.fillCells = function(selectedCell, startCellId, endCellId){
-        fillCells(selectedCell,startCellId,endCellId);
+        try{
+            fillCells(selectedCell,startCellId,endCellId);
+        }catch(e){
+            if(e.type == ErrorEnum.InvalidRow || e.type == ErrorEnum.InvalidColumn){
+                ErrorBarController.displayOutOfTableErrorMessage(e);
+            }
+        }
+
     };
 
     return tableController;

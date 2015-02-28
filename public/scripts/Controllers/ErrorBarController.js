@@ -35,14 +35,14 @@ var ErrorBarController = (function(){
         ErrorBarView.updateDisplay(message);
     };
 
-    errorBarController.displayOutOfTableErrorMessage(e){
+    errorBarController.displayOutOfTableErrorMessage = function (e){
         var message = "The formula being pasted references a ";
         if(e.type = ErrorEnum.InvalidColumn)
             message += "column";
         else
             message += "row";
 
-        message += "outside the boundaries of this table.";
+        message += " outside the boundaries of this table.";
         ErrorBarView.updateDisplay(message);
     }
 
