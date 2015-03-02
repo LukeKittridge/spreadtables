@@ -166,4 +166,21 @@ describe("Evaluator Test Suite", function () {
         cell1.evaluateNewFormula("=test.B2 + 5");
         expect(cell1.value).toEqual(5);
     });
+
+    it("Can SUM ranges of cells", function(){
+       var table = new Table("test", 30, 100);
+        Table.tables[table.name] = table;
+        var g9 = getGlobalCell('test.G9');
+        g9.evaluateNewFormula('=5');
+
+        var g10 = getGlobalCell('test.G10');
+        g10.evaluateNewFormula('=test.G9+1');
+
+        fillCells(g10,'test.G11','test.G21');
+
+        var m20 = getGlobalCell('test.M20');
+        m20.evaluateNewFormula('=SUM(test.G9:test.G21)');
+
+        expect(m20.value).toEqual(167);
+    });
 });

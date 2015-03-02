@@ -13,6 +13,7 @@ var CellView = (function (){
     var cssCellHighLight = 'rgba(160, 195, 255,0.4)';
     var cssCellBackGroundColor = 'white';
     var cellsHighLighted = [];
+    var rangeCurrentCellFormula; //Formula of cell to add range identifier to
 
     cellView.getCurrentCellId = function(){
         return currentCellId;
@@ -100,6 +101,9 @@ var CellView = (function (){
         if(e.target.className == 'cell'){
             startCellId = e.target.id;
             mouseDown = true;
+            if(Application.getCurrentState() == ApplicationStates.EditingCell){
+                rangeCurrentCellFormula = document.getElementById(currentCellId).innerHTML;
+            }
         }
     };
 
@@ -119,12 +123,17 @@ var CellView = (function (){
     cellView.onMouseOver = function(e){
       if(mouseDown && tablesMatch(startCellId,e.target.id)){
           cellView.removeHighLight();
-          var cellsToHighLight = CellController.cellsToHighlight(startCellId,e.target.id);
+          var cellsToHighLight = CellController.getCellsBetween(startCellId,e.target.id);
           for(var i =0; i < cellsToHighLight.length; i++){
               var cell = document.getElementById(cellsToHighLight[i]);
               cell.style.backgroundColor = cssCellHighLight;
           }
           cellsHighLighted = cellsToHighLight;
+          if(Application.getCurrentState() == ApplicationStates.EditingCell){
+            var docCell = document.getElementById(currentCellId);
+              docCell.innerHTML = (rangeCurrentCellFormula + startCellId + ':' + e.target.id)
+              FormulaBarController.updateFormula(docCell.innerHTML);
+          }
       }
     };
 

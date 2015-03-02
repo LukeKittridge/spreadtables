@@ -10,6 +10,7 @@ var grammar = {
             ["\\s+",        "/* skip whitespace */"],
             ["=",           "/* ignore equals sign*/"],
             ["[0-9]+(?:\\.[0-9]+)?\\b", "return 'Number';"],
+            ["SUM",                     "return 'SUM';"],
             ["\\*",                     "return '*';"],
             ["\\/",                     "return '/';"],
             ["-",                       "return '-';"],
@@ -17,10 +18,10 @@ var grammar = {
             ["\\^",                     "return '^';"],
             ["\\(",                     "return '(';"],
             ["\\)",                     "return ')';"],
+            ["\\:",                     "return ':';"],
             ["[a-zA-Z]+\\d*\\.[a-zA-Z]+\\d*","return 'GlobalCell';"],
             ["[a-zA-Z]+\\d*","return 'LocalCell';"],
             ["$",                       "return 'EOF';"]
-
         ]
     },
 
@@ -44,8 +45,14 @@ var grammar = {
             ["+ e", "$$ = $2;", {"prec": "UnaryPlus"}],
             ["( e )", "$$ = $2;"],
             ["Number", "$$ = Number(yytext);"],
-            ["GlobalCell", "$$ = getCellValue(yytext);"],
-            ["LocalCell", "$$ = getCellValue(yytext);"]]
+            ["cell",   "$$ = $1;"]],
+
+        "cell" : [["GlobalCell", "$$ = getCellValue(yytext);"],
+                  ["LocalCell", "$$ = getCellValue(yytext);"]],
+        "range": [["cell : cell", "$$ = $1 + $2 + $3;"]],
+
+        "func": [["SUM ( range )", "$$ = sum($3);"]]
+
     }
 };
 

@@ -57,7 +57,7 @@ describe("Cell Test Suite", function() {
     });
 
     it("Can generate list of cells to hightlight", function(){
-       var cells = CellController.cellsToHighlight('test.G8','test.K20');
+       var cells = CellController.getCellsBetween('test.G8','test.K20');
         expect(cells.length).toEqual(65);
         expect(cells[0]).toEqual('test.G8');
         expect(cells[64]).toEqual('test.K20');

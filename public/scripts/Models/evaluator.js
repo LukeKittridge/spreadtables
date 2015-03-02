@@ -114,3 +114,12 @@ function power(arg1, arg2){
     var result = Math.pow(arg1.value, arg2.value);
     return result;
 }
+
+function sum(range){
+    var cells = CellController.getCellsInRange(range);
+    var sum = 0;
+    cells.forEach(function(cell){
+        sum += cell.value;
+    });
+    return sum;
+}

@@ -273,7 +273,7 @@ var CellController = (function (){
         return currentEvaluatedCell.id;
     };
 
-    cellController.cellsToHighlight = function (startId,endId) {
+    cellController.getCellsBetween = function (startId,endId) {
         var area = cellIdDifference(startId,endId);
         var yCount = Math.abs(area.y);
         var xCount = Math.abs(area.x);
@@ -299,6 +299,11 @@ var CellController = (function (){
         else
             CellView.escape(cell.text);
         Application.setCurrentState(ApplicationStates.CellSelected);
+    };
+
+    cellController.getCellsInRange = function (range) {
+        var range = range.split(':');
+        return cellController.getCellsBetween(range[0],range[1]);
     };
 
     function updateReferencedByCells(cell){
