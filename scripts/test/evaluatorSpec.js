@@ -181,6 +181,6 @@ describe("Evaluator Test Suite", function () {
         var m20 = getGlobalCell('test.M20');
         m20.evaluateNewFormula('=SUM(test.G9:test.G21)');
 
-        expect(m20.value).toEqual(167);
+        expect(m20.value).toEqual(143);
     });
 });

@@ -56,13 +56,20 @@ var grammar = {
     }
 };
 
-var parser = new Parser(grammar);
-
-// generate source, ready to be written to disk
-var parserSource = parser.generate();
-
-// you can also use the parser directly from memory
-
-console.log(parser.parse("B1+B2"));
+//var parser = new Parser(grammar);
+//
+//// generate source, ready to be written to disk
+//var parserSource = parser.generate();
+//
+//// you can also use the parser directly from memory
+//
+//console.log(parser.parse("B1+B2"));
 // returns true
 
+var fs = require("fs");
+var jison = require("jison");
+
+var bnf = fs.readFileSync("grammar.jison", "utf8");
+var parser = new jison.Parser(bnf).generate();
+
+console.log(parser.parse("B1+B2"));

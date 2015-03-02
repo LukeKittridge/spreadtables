@@ -93,7 +93,10 @@ function lex(input){
 }
 
 function getVariableType(variableName){
-    if(/^#\w+$/.test(variableName)){
+    if(variableName == 'SUM'){
+        return TokenEnum.FunctionName;
+    }
+    else if(/^#\w+$/.test(variableName)){
         return TokenEnum.TableName;
     }
     else if(/^[a-zA-Z](?:[a-zA-Z][a-zA-Z]\w*)?$/.test(variableName)){
@@ -124,5 +127,6 @@ var TokenEnum = Object.freeze({
     GlobalCellName : 'GlobalCellName',
     GlobalCell : 'GlobalCell',
     Result : 'Result',
+    FunctionName : 'FunctionName',
     Unknown : 'Unknown'
 });

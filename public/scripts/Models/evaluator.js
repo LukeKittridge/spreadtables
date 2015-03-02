@@ -118,8 +118,13 @@ function power(arg1, arg2){
 function sum(range){
     var cells = CellController.getCellsInRange(range);
     var sum = 0;
-    cells.forEach(function(cell){
+    cells.forEach(function(cellId){
+        var cell = getGlobalCell(cellId);
         sum += cell.value;
     });
     return sum;
+}
+
+function functionWrapper(name,range){
+    return sum(range);
 }
