@@ -183,4 +183,74 @@ describe("Evaluator Test Suite", function () {
 
         expect(m20.value).toEqual(143);
     });
+
+    it("Can AVG ranges of cells", function(){
+        var table = new Table("test", 30, 100);
+        Table.tables[table.name] = table;
+        var g9 = getGlobalCell('test.G9');
+        g9.evaluateNewFormula('=5');
+
+        var g10 = getGlobalCell('test.G10');
+        g10.evaluateNewFormula('=test.G9+1');
+
+        fillCells(g10,'test.G11','test.G21');
+
+        var m20 = getGlobalCell('test.M20');
+        m20.evaluateNewFormula('=AVG(test.G9:test.G21)');
+
+        expect(m20.value).toEqual(11);
+    });
+
+    it("Can AVG ranges of cells", function(){
+        var table = new Table("test", 30, 100);
+        Table.tables[table.name] = table;
+        var g9 = getGlobalCell('test.G9');
+        g9.evaluateNewFormula('=5.4533');
+
+        var g10 = getGlobalCell('test.G10');
+        g10.evaluateNewFormula('=test.G9+1.47');
+
+        fillCells(g10,'test.G11','test.G21');
+
+        var m20 = getGlobalCell('test.M20');
+        m20.evaluateNewFormula('=AVG(test.G9:test.G21)');
+
+        expect(m20.value).toEqual(14.2733);
+    });
+
+    it("Can MIN ranges of cells", function(){
+        var table = new Table("test", 30, 100);
+        Table.tables[table.name] = table;
+        var g9 = getGlobalCell('test.G9');
+        g9.evaluateNewFormula('=5');
+
+        var g10 = getGlobalCell('test.G10');
+        g10.evaluateNewFormula('=test.G9+1');
+
+        fillCells(g10,'test.G11','test.G21');
+        var g15 = getGlobalCell('test.g15');
+        g15.evaluateNewFormula('=-12');
+        var m20 = getGlobalCell('test.M20');
+        m20.evaluateNewFormula('=MIN(test.G9:test.G21)');
+
+        expect(m20.value).toEqual(-12);
+    });
+
+    it("Can MAX ranges of cells", function(){
+        var table = new Table("test", 30, 100);
+        Table.tables[table.name] = table;
+        var g9 = getGlobalCell('test.G9');
+        g9.evaluateNewFormula('=5');
+
+        var g10 = getGlobalCell('test.G10');
+        g10.evaluateNewFormula('=test.G9+1');
+
+        fillCells(g10,'test.G11','test.G21');
+        var g15 = getGlobalCell('test.g15');
+        g15.evaluateNewFormula('=874');
+        var m20 = getGlobalCell('test.M20');
+        m20.evaluateNewFormula('=MAX(test.G9:test.G21)');
+
+        expect(m20.value).toEqual(880);
+    });
 });

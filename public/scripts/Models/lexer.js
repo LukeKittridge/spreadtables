@@ -96,6 +96,15 @@ function getVariableType(variableName){
     if(variableName == 'SUM'){
         return TokenEnum.FunctionName;
     }
+    else if(variableName == 'AVG'){
+        return TokenEnum.FunctionName;
+    }
+    else if(variableName == 'MIN'){
+        return TokenEnum.FunctionName;
+    }
+    else if(variableName == 'MAX'){
+        return TokenEnum.FunctionName;
+    }
     else if(/^#\w+$/.test(variableName)){
         return TokenEnum.TableName;
     }

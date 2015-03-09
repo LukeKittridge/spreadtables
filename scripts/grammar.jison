@@ -9,7 +9,10 @@
 
 \s+                   /* skip whitespace */
 "="					/*Ignore Equals*/	
-"SUM"											{this.begin("function"); return 'FUNC';} 
+"SUM"											{this.begin("function"); return 'FUNC';}
+"AVG"                                           {this.begin("function"); return 'FUNC';}
+"MAX"                                           {this.begin("function"); return 'FUNC';}  
+"MIN"                                           {this.begin("function"); return 'FUNC';}
 [0-9]+("."[0-9]+)?\b  							return 'NUMBER'
 "*"                   							return '*'
 "/"                   							return '/'

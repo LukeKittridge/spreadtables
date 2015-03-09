@@ -125,6 +125,51 @@ function sum(range){
     return sum;
 }
 
+function average(range){
+    var cells = CellController.getCellsInRange(range);
+    var tempSum = sum(range);
+    return tempSum / cells.length;
+}
+
+function findMin(range){
+    var cells = CellController.getCellsInRange(range);
+    var min = getGlobalCell(cells[0]).value;
+    cells.forEach(function(cellID){
+       var cell = getGlobalCell(cellID);
+        if(cell.value < min){
+            min = cell.value;
+        }
+    });
+    return min;
+}
+
+function findMax(range){
+    var cells = CellController.getCellsInRange(range);
+    var max = getGlobalCell(cells[0]).value;
+    cells.forEach(function(cellID){
+       var cell = getGlobalCell(cellID);
+        if(cell.value > max){
+            max = cell.value;
+        }
+    });
+    return max;
+}
+
 function functionWrapper(name,range){
-    return sum(range);
+    var result;
+    switch(name){
+        case "SUM":
+            result = sum(range);
+            break;
+        case "AVG":
+            result = average(range);
+            break;
+        case "MIN":
+            result = findMin(range);
+            break;
+        case "MAX":
+            result = findMax(range);
+            break;
+    }
+    return result;
 }

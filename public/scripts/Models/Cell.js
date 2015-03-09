@@ -86,7 +86,7 @@ Cell.prototype.evaluate = function(){
         var parseResult = parse(lexResult);
         this.value = evaluate(parseResult, this);
     }else{
-        this.value = parser.parse(this.formula);
+        this.value = +parser.parse(this.formula).toFixed(4);;
     }
     this.setHasError(false);
     for(var cellId in this.references){
