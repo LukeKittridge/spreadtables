@@ -105,6 +105,12 @@ function getVariableType(variableName){
     else if(variableName == 'MAX'){
         return TokenEnum.FunctionName;
     }
+    else if(variableName == 'PI'){
+        return TokenEnum.Number;
+    }
+    else if(variableName == 'E'){
+        return TokenEnum.FunctionName;
+    }
     else if(/^#\w+$/.test(variableName)){
         return TokenEnum.TableName;
     }

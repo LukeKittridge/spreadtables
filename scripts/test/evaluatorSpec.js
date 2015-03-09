@@ -253,4 +253,13 @@ describe("Evaluator Test Suite", function () {
 
         expect(m20.value).toEqual(880);
     });
+
+    it("Can handle PI and E", function(){
+        var table = new Table("test", 30, 100);
+        Table.tables[table.name] = table;
+        var g9 = getGlobalCell('test.G9');
+        g9.evaluateNewFormula('=PI + E');
+
+        expect(g9.value).toEqual(5.8599);
+    });
 });
