@@ -24,7 +24,7 @@ describe("Parser Test Suite", function(){
         expect(actualResult).toEqual(expectedResult);
     });
 
-})
+});
 
 function queueToArray(queue){
     var array = [];

@@ -11,6 +11,6 @@ var SideBarController = (function(){
 
     sideBarController.handleClick = function(event){
         SideBarView.openTable(event);
-    }
+    };
     return sideBarController;
 }());

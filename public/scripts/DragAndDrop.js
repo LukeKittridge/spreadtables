@@ -12,14 +12,6 @@ var _offsetY =0;
 var _dragElement;
 var _oldZIndex =0;
 
-//InitDragDrop();
-
-function InitDragDrop()
-{
-    document.onmousedown = onMouseDown;
-    document.onmouseup = onMouseUp;
-    document.ontouchmove = onTouchMove;
-}
 
 function onMouseDown(e){
     //IE support

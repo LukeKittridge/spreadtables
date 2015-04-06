@@ -54,8 +54,7 @@ var TableController = (function () {
             fillCells(selectedCell,startCellId,endCellId);
         }catch(e){
             if(e.type == ErrorEnum.InvalidRow || e.type == ErrorEnum.InvalidColumn){
-                ErrorBarController.displayOutOfTableErrorMessage(e);
-            }
+                ErrorBarController.displayOutOfTableErrorMessage(e);            }
         }
 
     };
