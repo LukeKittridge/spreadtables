@@ -151,6 +151,12 @@ var Application = (function (){
                 }
             }
 
+            if(event.keyCode == 46){ //Delete
+                if(currentState == ApplicationStates.CellSelected){
+                    CellController.clearCurrentCell();
+                }
+            }
+
         }
 
         if(event.type == 'keyup'){

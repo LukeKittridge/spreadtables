@@ -306,6 +306,12 @@ var CellController = (function (){
         return cellController.getCellsBetween(range[0],range[1]);
     };
 
+    cellController.clearCurrentCell = function(){
+        CellView.setCurrentCellText('=0');
+        FormulaBarController.clear();
+        cellController.updateCurrentCell();
+    };
+
     function updateReferencedByCells(cell){
         addCellToSyncList(cell);
         for(var cellId in cell.referencedBy){

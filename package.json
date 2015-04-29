@@ -14,6 +14,7 @@
     "mongodb": "^1.4.28",
     "monk": "^0.9.1",
     "requirejs": "^2.1.14",
+    "sloc": "^0.1.9",
     "socket.io": "^1.2.1"
   },
   "devDependencies": {},
